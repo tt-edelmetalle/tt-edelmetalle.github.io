@@ -726,7 +726,10 @@
                     <div class="card" style="display:flex; flex-direction:column;">
                         <div class="card-header">
                             <div class="card-title"><i class="fa-solid fa-vault"></i> Mein Portfolio</div>
-                            <div id="port-count" style="font-size:0.9rem; color:var(--c-text-muted);">0 Positionen</div>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <div id="port-count" style="font-size:0.9rem; color:var(--c-text-muted);">0 Positionen</div>
+                                <button class="btn btn-outline btn-sm" onclick="exportPortfolioPDF()">Export PDF</button>
+                            </div>
                         </div>
 
                         <div id="portfolio-container" style="flex-grow:1; margin-bottom: 20px; max-height:420px; overflow-y:auto;">
@@ -843,7 +846,11 @@
         function initMobileOverlay() { const overlay = document.getElementById('mobile-overlay'); overlay.addEventListener('click', closeMobileNav); document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileNav(); }); }
 
         function buildMobileNav() {
-            const mn = document.getElementById('mobile-nav'); const items = document.querySelectorAll('.nav-item'); mn.innerHTML = ''; items.forEach(it => {
+            const mn = document.getElementById('mobile-nav');
+            // BUGFIX: select only the original nav menu items to avoid cloning clones
+            const items = document.querySelectorAll('#navMenu .nav-item');
+            mn.innerHTML = '';
+            items.forEach(it => {
                 const clone = it.cloneNode(true);
                 // ensure cloned item is keyboard-focusable and will close drawer
                 clone.tabIndex = 0;
@@ -890,6 +897,82 @@
         function openLegal(type) { const overlay = document.getElementById('legal-overlay'); const title = document.getElementById('legal-title'); const content = document.getElementById('legal-content'); overlay.style.display = 'flex'; if (type === 'impressum') { title.innerText = 'Impressum'; content.innerHTML = `<strong>Metallindex Group</strong><br>Beispielstraße 1<br>10115 Berlin<br>Telefon: +49 30 1234567<br>E-Mail: info@metallindex.example<br>Geschäftsführer: Max Mustermann<br>Handelsregister: HRB 12345, Amtsgericht Berlin`; } else { title.innerText = 'Haftungsausschluss'; content.innerHTML = `<strong>Haftungsausschluss / Disclaimer</strong><br><br>Die Informationen auf dieser Webseite dienen ausschließlich Informationszwecken und stellen weder ein Angebot noch eine Anlageberatung dar. Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Gewähr für die Aktualität, Richtigkeit, Vollständigkeit oder Qualität der bereitgestellten Informationen. <br><br>Insbesondere sind die dargestellten Preise indikativ und können Abweichungen gegenüber realen Händlerspreisen aufweisen. Entscheidungen, die Sie auf Grundlage der Inhalte dieser Seite treffen, liegen in Ihrer Verantwortung. Wir haften nicht für unmittelbare oder mittelbare Schäden, die aus der Nutzung dieser Informationen entstehen, außer in Fällen von Vorsatz oder grober Fahrlässigkeit.<br><br>Externe Links: Für den Inhalt verlinkter externer Seiten sind ausschließlich deren Betreiber verantwortlich.`; } }
         function closeLegal() { document.getElementById('legal-overlay').style.display = 'none'; }
 
+        // =========================================================================
+        // PDF Export: professional, text-based export using jsPDF
+        // requires jspdf (loaded below). The export uses the same formatMoney helper.
+        // =========================================================================
+        function exportPortfolioPDF() {
+            if (!portfolio || portfolio.length === 0) { alert('Das Portfolio ist leer. Bitte fügen Sie zuerst Positionen hinzu.'); return; }
+            if (!window.jspdf) { alert('PDF-Export: Bibliothek nicht geladen. Bitte prüfen Sie die Verbindung.'); return; }
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+            const margin = 15;
+            let y = 20;
+            doc.setFontSize(14);
+            doc.text('Metallindex – Portfolio', margin, y);
+            doc.setFontSize(10);
+            y += 6;
+            doc.text('Exportdatum: ' + new Date().toLocaleString('de-DE'), margin, y);
+            y += 8;
+
+            // header row
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.text('Pos.', margin, y);
+            doc.text('Bezeichnung', margin + 12, y);
+            doc.text('Anz.', margin + 98, y);
+            doc.text('Einzel', margin + 120, y);
+            doc.text('Gesamt', margin + 160, y);
+            y += 4;
+            doc.setDrawColor(200);
+            doc.setLineWidth(0.3);
+            doc.line(margin, y, 195, y);
+            y += 6;
+
+            doc.setFont(undefined, 'normal');
+            const lineHeight = 7;
+            portfolio.forEach((item, idx) => {
+                const totalItemVal = item.singleVal * item.qty * item.spread;
+                const name = item.name;
+                const qtyStr = String(item.qty);
+                const singleStr = formatMoney(item.singleVal);
+                const totalStr = formatMoney(totalItemVal);
+
+                const maxWidthName = 80; // mm
+                const splitName = doc.splitTextToSize(name, maxWidthName);
+                const lines = Math.max(splitName.length, 1);
+
+                for (let i = 0; i < lines; i++) {
+                    if (y > 275) { doc.addPage(); y = 20; }
+                    if (i === 0) {
+                        doc.text(String(idx + 1), margin, y);
+                        doc.text(splitName[i], margin + 12, y);
+                        doc.text(qtyStr, margin + 98, y);
+                        doc.text(singleStr, margin + 120, y);
+                        doc.text(totalStr, margin + 160, y);
+                    } else {
+                        doc.text(splitName[i], margin + 12, y);
+                    }
+                    y += lineHeight;
+                }
+            });
+
+            if (y > 260) { doc.addPage(); y = 20; }
+            y += 4;
+            doc.setLineWidth(0.4);
+            doc.line(margin, y, 195, y);
+            y += 8;
+            doc.setFont(undefined, 'bold');
+            const totalValueText = document.getElementById('total-value').innerText || formatMoney(0);
+            doc.text('Gesamtwert Portfolio: ' + totalValueText, margin, y);
+
+            const filename = 'Metallindex_Portfolio_' + (new Date()).toISOString().slice(0, 10) + '.pdf';
+            doc.save(filename);
+        }
+
     </script>
+
+    <!-- jspdf (UMD) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
