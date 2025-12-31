@@ -39,11 +39,11 @@
         }
 
         * {
-            box-sizing: border-box;
+            box-sizing: border-box
         }
 
         html, body {
-            height: 100%;
+            height: 100%
         }
 
         body {
@@ -61,18 +61,18 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 16px;
+            padding: 0 16px
         }
 
         .grid-dashboard {
             display: grid;
             gap: 20px;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr
         }
 
         @media(min-width:1024px) {
             .grid-dashboard {
-                grid-template-columns: 320px 1fr;
+                grid-template-columns: 320px 1fr
             }
         }
 
@@ -97,7 +97,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 12px
         }
 
         .brand-logo {
@@ -106,17 +106,17 @@
             gap: 10px;
             cursor: pointer;
             font-weight: 700;
-            font-size: 1.15rem;
+            font-size: 1.15rem
         }
 
             .brand-logo span {
-                color: var(--c-primary);
+                color: var(--c-primary)
             }
 
         .nav-menu {
             display: flex;
             gap: 8px;
-            align-items: center;
+            align-items: center
         }
 
         .nav-item {
@@ -125,45 +125,47 @@
             color: var(--c-text-muted);
             font-weight: 600;
             cursor: pointer;
-            transition: all 160ms ease;
+            transition: all 160ms ease
         }
 
             .nav-item:hover {
                 color: var(--c-text-main);
-                background: var(--glass);
+                background: var(--glass)
             }
 
             .nav-item.active {
                 background: linear-gradient(90deg,var(--c-primary),var(--c-primary-dark));
-                color: #000;
+                color: #000
             }
 
         #hamburger {
-            display: none;
+            display: none
         }
 
         @media(max-width:900px) {
             .nav-menu {
-                display: none;
+                display: none
             }
 
             #hamburger {
-                display: inline-flex;
+                display: inline-flex
             }
         }
 
-        /* MOBILE NAV DRAWER + overlay (improved) */
+        /* MOBILE NAV DRAWER (improved) */
         #mobile-overlay {
+            display: none;
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.45);
             z-index: 140;
             opacity: 0;
-            pointer-events: none;
             transition: opacity 220ms ease;
+            pointer-events: none;
         }
 
-            #mobile-overlay.visible {
+            #mobile-overlay.active {
+                display: block;
                 opacity: 1;
                 pointer-events: auto;
             }
@@ -173,15 +175,17 @@
             top: var(--nav-height);
             left: 0;
             bottom: 0;
-            width: 280px;
-            transform: translateX(-110%);
+            width: 80vw;
+            max-width: 320px;
+            transform: translateX(-120%);
             background: var(--c-bg-card);
             border-right: 1px solid var(--c-border);
             padding: 12px;
             z-index: 150;
             transition: transform 280ms cubic-bezier(.2,.9,.2,1);
             overflow-y: auto;
-            box-shadow: 6px 0 30px rgba(2,6,23,0.6);
+            -webkit-overflow-scrolling: touch;
+            box-shadow: 6px 0 30px rgba(2,6,23,0.5);
         }
 
             #mobile-nav.open {
@@ -190,11 +194,11 @@
 
             #mobile-nav .nav-item {
                 display: block;
-                margin-bottom: 8px;
+                margin-bottom: 8px
             }
 
-        /* prevent background scroll while menu open */
-        body.no-scroll {
+        /* prevent background scroll when menu open */
+        .no-scroll {
             overflow: hidden;
         }
 
@@ -208,12 +212,12 @@
             flex-direction: column;
             gap: 12px;
             box-shadow: 0 8px 30px rgba(2,6,23,0.6);
-            transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms;
+            transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms
         }
 
             .card:hover {
                 transform: translateY(-4px);
-                box-shadow: 0 18px 45px rgba(2,6,23,0.7);
+                box-shadow: 0 18px 45px rgba(2,6,23,0.7)
             }
 
         .card-header {
@@ -222,7 +226,7 @@
             align-items: center;
             gap: 12px;
             padding-bottom: 6px;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.03)
         }
 
         .card-title {
@@ -231,11 +235,11 @@
             color: var(--c-text-main);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 8px
         }
 
             .card-title i {
-                color: var(--c-primary);
+                color: var(--c-primary)
             }
 
         /* inputs */
@@ -246,13 +250,13 @@
             color: var(--c-text-main);
             padding: 10px 12px;
             border-radius: 8px;
-            font-size: 0.95rem;
+            font-size: 0.95rem
         }
 
             .form-control:focus {
                 outline: none;
                 border-color: var(--c-primary);
-                box-shadow: 0 6px 20px rgba(165,130,52,0.12);
+                box-shadow: 0 6px 20px rgba(165,130,52,0.12)
             }
 
         .input-label {
@@ -260,10 +264,10 @@
             text-transform: uppercase;
             color: var(--c-text-muted);
             margin-bottom: 6px;
-            display: block;
+            display: block
         }
 
-        /* custom select */
+        /* custom select (replaces native popup) */
         .select-wrapper {
             position: relative;
         }
@@ -280,7 +284,7 @@
             background: transparent;
             border: 1px solid var(--c-border);
             color: var(--c-text-main);
-            cursor: pointer;
+            cursor: pointer
         }
 
             .select-toggle:focus {
@@ -300,7 +304,7 @@
             overflow-y: auto;
             z-index: 220;
             padding: 6px;
-            box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+            box-shadow: 0 10px 30px rgba(2,6,23,0.6)
         }
 
             .custom-select-list li {
@@ -308,12 +312,12 @@
                 padding: 10px 12px;
                 border-radius: 6px;
                 cursor: pointer;
-                color: var(--c-text-muted);
+                color: var(--c-text-muted)
             }
 
                 .custom-select-list li:hover, .custom-select-list li[aria-selected="true"] {
                     background: var(--glass);
-                    color: var(--c-text-main);
+                    color: var(--c-text-main)
                 }
 
         .visually-hidden {
@@ -322,7 +326,7 @@
             width: 1px;
             overflow: hidden;
             clip: rect(1px,1px,1px,1px);
-            white-space: nowrap;
+            white-space: nowrap
         }
 
         /* buttons */
@@ -336,44 +340,44 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 180ms ease;
-            border: 1px solid transparent;
+            border: 1px solid transparent
         }
 
             .btn:active {
-                transform: translateY(1px);
+                transform: translateY(1px)
             }
 
         .btn-primary {
             background: linear-gradient(135deg,var(--c-primary),var(--c-primary-dark));
-            color: #000;
+            color: #000
         }
 
         .btn-outline {
             background: transparent;
             border-color: var(--c-border);
-            color: var(--c-text-muted);
+            color: var(--c-text-muted)
         }
 
             .btn-outline.active {
                 border-color: var(--c-primary);
-                color: var(--c-primary);
+                color: var(--c-primary)
             }
 
         .btn-sm {
             padding: 8px 10px;
-            font-size: 0.85rem;
+            font-size: 0.85rem
         }
 
         /* Prices */
         .big-price {
             font-size: clamp(1.25rem,2.3vw,2rem);
             font-weight: 800;
-            color: var(--c-primary);
+            color: var(--c-primary)
         }
 
         .sub-price {
             font-size: 0.85rem;
-            color: var(--c-text-muted);
+            color: var(--c-text-muted)
         }
 
         .source-badge {
@@ -382,14 +386,14 @@
             padding: 6px 10px;
             border-radius: 8px;
             color: var(--c-text-muted);
-            border: 1px solid var(--c-border);
+            border: 1px solid var(--c-border)
         }
 
         /* inventory */
         .inventory-list {
             margin-top: 6px;
             border-radius: 8px;
-            overflow: hidden;
+            overflow: hidden
         }
 
         .inventory-item {
@@ -400,11 +404,11 @@
             gap: 14px;
             border-bottom: 1px solid var(--c-border);
             background: linear-gradient(180deg, transparent, rgba(0,0,0,0.02));
-            transition: transform 300ms ease, opacity 260ms;
+            transition: transform 300ms ease, opacity 260ms
         }
 
             .inventory-item:last-child {
-                border-bottom: none;
+                border-bottom: none
             }
 
         /* animations */
@@ -425,11 +429,11 @@
         }
 
         .item-added {
-            animation: popIn 360ms cubic-bezier(.2,.9,.2,1);
+            animation: popIn 360ms cubic-bezier(.2,.9,.2,1)
         }
 
         .fade-in {
-            animation: fadeIn 420ms ease;
+            animation: fadeIn 420ms ease
         }
 
         @keyframes fadeIn {
@@ -447,42 +451,42 @@
         /* responsive adjustments */
         @media(max-width:768px) {
             .container {
-                padding: 0 12px;
+                padding: 0 12px
             }
 
             .card {
-                padding: 14px;
+                padding: 14px
             }
 
             .big-price {
-                font-size: 1.3rem;
+                font-size: 1.3rem
             }
 
             .tradingview-widget-container {
-                height: 220px !important;
+                height: 220px !important
             }
 
             .brand-logo {
-                font-size: 1rem;
+                font-size: 1rem
             }
 
             .navbar {
-                height: 64px;
+                height: 64px
             }
 
             #mobile-nav {
-                top: 64px;
+                top: 64px
             }
 
             .custom-select-list {
-                max-height: 40vh;
+                max-height: 40vh
             }
         }
 
         .tradingview-widget-container {
             width: 100%;
             height: 100%;
-            min-height: 180px;
+            min-height: 180px
         }
 
         footer {
@@ -491,22 +495,22 @@
             padding: 28px 0;
             text-align: center;
             color: var(--c-text-muted);
-            font-size: 0.88rem;
+            font-size: 0.88rem
         }
 
         .btn:focus, .form-control:focus, .nav-item:focus {
             outline: 3px solid rgba(197,160,89,0.12);
-            outline-offset: 2px;
+            outline-offset: 2px
         }
 
         .text-muted {
-            color: var(--c-text-muted);
+            color: var(--c-text-muted)
         }
 
         .grid-2 {
             display: grid;
             gap: 12px;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr
         }
     </style>
 </head>
@@ -537,15 +541,12 @@
         <nav class="navbar" role="navigation" aria-label="Hauptnavigation">
             <div class="nav-inner">
                 <div style="display:flex; align-items:center; gap:12px;">
-                    <div class="brand-logo" onclick="switchView('dashboard')" title="Zur Startseite" role="button" tabindex="0">
+                    <div class="brand-logo" onclick="switchView('dashboard')" title="Zur Startseite">
                         <i class="fa-solid fa-layer-group"></i>
                         <span>Metall</span>index
                     </div>
 
-                    <button id="hamburger" class="btn btn-outline" onclick="toggleMobileNav()" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menü öffnen">
-                        <i class="fa-solid fa-bars" aria-hidden="true"></i>
-                        <span class="visually-hidden">Menü</span>
-                    </button>
+                    <button id="hamburger" class="btn btn-outline" onclick="toggleMobileNav()" aria-expanded="false" aria-controls="mobile-nav"><i class="fa-solid fa-bars"></i></button>
                 </div>
 
                 <div class="nav-menu" id="navMenu">
@@ -558,13 +559,11 @@
                     <span style="font-size:0.82rem; color:var(--c-text-muted);">Basis: EUR</span>
                 </div>
             </div>
-
-            <!-- mobile nav container placed here but off-canvas -->
-            <div id="mobile-nav" aria-hidden="true" role="menu"></div>
         </nav>
 
-        <!-- overlay for mobile drawer (improved, visibility via class) -->
+        <!-- overlay + mobile drawer moved outside the nav to avoid stacking issues -->
         <div id="mobile-overlay" tabindex="-1" aria-hidden="true"></div>
+        <div id="mobile-nav" aria-hidden="true"></div>
 
         <div style="height:46px; background:transparent; border-bottom:1px solid var(--c-border);">
             <div class="tradingview-widget-container" style="height:46px;">
@@ -782,15 +781,18 @@
 
     <script>
         // =========================================================================
-        // Verbesserte und zuverlässige Mobile-Drawer-Implementierung.
-        // Grundprinzipien, DOM-IDs und bestehende Funktionen bleiben erhalten.
+        // Anpassungen: Mobile Nav fix
+        // - mobile-overlay + mobile-nav moved outside the nav to avoid stacking context issues
+        // - overlay uses opacity & pointer-events; body scrolling disabled while open
+        // - drawer width responsive (80vw / max 320px)
+        // - keyboard accessible (Escape closes), clones nav items into drawer
         // =========================================================================
 
         const DAILY_SPOT_EUR = { gold: 3625, silver: 60, platinum: 1650, palladium: 1300 };
         const LAST_UPDATE = "31.12.2025, 08:30 Uhr";
         const PREMIUMS = { gold_coin: 1, gold_bar: 1, silver_coin: 1, silver_bar: 1, plat_coin: 1, pall_coin: 1 };
         const COIN_MODIFIERS = { 'g_phil_1': 1.00, 'g_krue_1': 0.97, 'g_maple_1': 0.99, 'g_brit_1': 1.01, 'g_eagle_1': 0.995, 'g_buff_1': 1.03, 'g_krue_05': 0.99 };
-        const catalogDB = [
+        const catalogDB = [ /* same as before */
             { id: 'g_krue_1', name: 'Krügerrand 1 oz', metal: 'gold', type: 'coin', fine: 31.103 },
             { id: 'g_krue_05', name: 'Krügerrand 1/2 oz', metal: 'gold', type: 'coin', fine: 15.552 },
             { id: 'g_maple_1', name: 'Maple Leaf 1 oz', metal: 'gold', type: 'coin', fine: 31.103 },
@@ -817,275 +819,75 @@
             { id: 'pd_bar_1', name: 'Palladiumbarren 1 oz', metal: 'palladium', type: 'bar', fine: 31.103 }
         ];
 
-        let portfolio = [];
-        let lastAddedIndex = -1;
-        const STANDARD_ANKAUF_SPREAD = 1;
+        let portfolio = []; let lastAddedIndex = -1; const STANDARD_ANKAUF_SPREAD = 1
+            ;
 
         window.onload = function () {
-            initCustomSelect();
-            populateCatalog('all');
-            renderPrices();
-            renderCoinComparison();
-            renderPortfolio();
-            buildMobileNav();
-            responsiveInit();
-            initMobileOverlay(); // sets click + keyboard handlers for overlay
+            initCustomSelect(); populateCatalog('all'); renderPrices(); renderCoinComparison(); renderPortfolio(); buildMobileNav(); responsiveInit(); initMobileOverlay();
         };
 
-        function checkPassword() {
-            if (document.getElementById('passwordInput').value === "Magnetar9!") {
-                document.getElementById('login-overlay').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
-                renderPrices();
-            } else {
-                const err = document.getElementById('loginError'); err.style.display = 'block'; err.classList.add('fade-in');
-            }
-        }
+        function checkPassword() { if (document.getElementById('passwordInput').value === "Magnetar9!") { document.getElementById('login-overlay').style.display = 'none'; document.getElementById('main-app').style.display = 'block'; renderPrices(); } else { const err = document.getElementById('loginError'); err.style.display = 'block'; err.classList.add('fade-in'); } }
 
-        function switchView(viewId) {
-            document.querySelectorAll('.hidden-section').forEach(el => el.style.display = 'none');
-            document.getElementById(viewId).style.display = 'block';
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            if (viewId === 'dashboard') document.getElementById('nav-dash').classList.add('active');
-            if (viewId === 'calculator') document.getElementById('nav-calc').classList.add('active');
-            if (viewId === 'analysis') document.getElementById('nav-ana').classList.add('active');
-            closeMobileNav();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        function switchView(viewId) { document.querySelectorAll('.hidden-section').forEach(el => el.style.display = 'none'); document.getElementById(viewId).style.display = 'block'; document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); if (viewId === 'dashboard') document.getElementById('nav-dash').classList.add('active'); if (viewId === 'calculator') document.getElementById('nav-calc').classList.add('active'); if (viewId === 'analysis') document.getElementById('nav-ana').classList.add('active'); closeMobileNav(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        /* ----------------------------
-           MOBILE NAV: open / close
-           ---------------------------- */
+        // MOBILE NAV: improved toggling + body-scroll lock
         function toggleMobileNav() {
-            const mn = document.getElementById('mobile-nav');
-            if (mn.classList.contains('open')) {
-                closeMobileNav();
-            } else {
-                openMobileNav();
+            const mn = document.getElementById('mobile-nav'); const overlay = document.getElementById('mobile-overlay'); const btn = document.getElementById('hamburger'); const isOpen = mn.classList.contains('open');
+            if (isOpen) closeMobileNav(); else {
+                mn.classList.add('open'); overlay.classList.add('active'); overlay.setAttribute('aria-hidden', 'false'); btn.setAttribute('aria-expanded', 'true'); mn.setAttribute('aria-hidden', 'false'); document.body.classList.add('no-scroll'); // lock scroll
+                // focus management: focus first link inside the drawer if exists
+                setTimeout(() => { const first = mn.querySelector('.nav-item'); if (first) first.focus(); }, 220);
             }
         }
+        function closeMobileNav() { const mn = document.getElementById('mobile-nav'); const overlay = document.getElementById('mobile-overlay'); const btn = document.getElementById('hamburger'); mn.classList.remove('open'); overlay.classList.remove('active'); overlay.setAttribute('aria-hidden', 'true'); btn.setAttribute('aria-expanded', 'false'); mn.setAttribute('aria-hidden', 'true'); document.body.classList.remove('no-scroll'); }
+        function initMobileOverlay() { const overlay = document.getElementById('mobile-overlay'); overlay.addEventListener('click', closeMobileNav); document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileNav(); }); }
 
-        function openMobileNav() {
-            const mn = document.getElementById('mobile-nav');
-            const overlay = document.getElementById('mobile-overlay');
-            const btn = document.getElementById('hamburger');
-            mn.classList.add('open');
-            overlay.classList.add('visible');
-            document.body.classList.add('no-scroll');
-            overlay.setAttribute('aria-hidden', 'false');
-            btn.setAttribute('aria-expanded', 'true');
-            mn.setAttribute('aria-hidden', 'false');
-
-            // move focus to first focusable element inside the drawer for accessibility
-            setTimeout(() => {
-                const first = mn.querySelector('.nav-item');
-                if (first && typeof first.focus === 'function') first.focus();
-            }, 150);
-        }
-
-        function closeMobileNav() {
-            const mn = document.getElementById('mobile-nav');
-            const overlay = document.getElementById('mobile-overlay');
-            const btn = document.getElementById('hamburger');
-            mn.classList.remove('open');
-            overlay.classList.remove('visible');
-            document.body.classList.remove('no-scroll');
-            overlay.setAttribute('aria-hidden', 'true');
-            btn.setAttribute('aria-expanded', 'false');
-            mn.setAttribute('aria-hidden', 'true');
-
-            // return focus to hamburger button
-            setTimeout(() => {
-                const hb = document.getElementById('hamburger');
-                if (hb) hb.focus();
-            }, 200);
-        }
-
-        function initMobileOverlay() {
-            const overlay = document.getElementById('mobile-overlay');
-            overlay.addEventListener('click', closeMobileNav);
-            // keydown on document handles Escape globally
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') closeMobileNav();
-            });
-        }
-
-        /* buildMobileNav: clones nav items but wires them to switchView(view) directly */
         function buildMobileNav() {
-            const mn = document.getElementById('mobile-nav');
-            const items = document.querySelectorAll('.nav-menu .nav-item');
-            mn.innerHTML = ''; // clear
-            items.forEach(it => {
-                // create a clone element with same label but explicit handler
-                const clone = document.createElement('button');
-                clone.className = 'nav-item btn-outline';
-                clone.setAttribute('type', 'button');
-                clone.setAttribute('role', 'menuitem');
+            const mn = document.getElementById('mobile-nav'); const items = document.querySelectorAll('.nav-item'); mn.innerHTML = ''; items.forEach(it => {
+                const clone = it.cloneNode(true);
+                // ensure cloned item is keyboard-focusable and will close drawer
                 clone.tabIndex = 0;
-                clone.innerText = it.innerText;
-                // determine view mapping based on original id
-                const view = mapNavIdToView(it.id);
-                clone.addEventListener('click', () => { if (view) switchView(view); closeMobileNav(); });
-                clone.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); clone.click(); }
-                });
+                clone.onclick = function (ev) { ev.preventDefault(); it.onclick(); closeMobileNav(); };
+                clone.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { it.onclick(); closeMobileNav(); } });
+                clone.classList.remove('active');
                 mn.appendChild(clone);
             });
         }
 
-        function mapNavIdToView(navId) {
-            // robust mapping: don't rely on fragile closures
-            if (!navId) return null;
-            switch (navId) {
-                case 'nav-dash': return 'dashboard';
-                case 'nav-calc': return 'calculator';
-                case 'nav-ana': return 'analysis';
-                default: return null;
-            }
-        }
-
-        // core pricing / format helpers (unchanged in behaviour)
-        function calculateItemPrice(item) {
-            const spotPerOz = DAILY_SPOT_EUR[item.metal]; const spotPerGram = spotPerOz / 31.1034768;
-            let premium = 1.0; if (item.metal === 'gold') premium = (item.type === 'coin') ? PREMIUMS.gold_coin : PREMIUMS.gold_bar;
-            if (item.metal === 'silver') premium = (item.type === 'coin') ? PREMIUMS.silver_coin : PREMIUMS.silver_bar;
-            if (item.metal === 'platinum') premium = PREMIUMS.plat_coin; if (item.metal === 'palladium') premium = PREMIUMS.pall_coin;
-            const coinModifier = (item.type === 'coin' && COIN_MODIFIERS[item.id]) ? COIN_MODIFIERS[item.id] : 1.0;
-            return item.fine * spotPerGram * premium * coinModifier;
-        }
+        // core functions unchanged (calculate, render etc.)
+        function calculateItemPrice(item) { const spotPerOz = DAILY_SPOT_EUR[item.metal]; const spotPerGram = spotPerOz / 31.1034768; let premium = 1.0; if (item.metal === 'gold') premium = (item.type === 'coin') ? PREMIUMS.gold_coin : PREMIUMS.gold_bar; if (item.metal === 'silver') premium = (item.type === 'coin') ? PREMIUMS.silver_coin : PREMIUMS.silver_bar; if (item.metal === 'platinum') premium = PREMIUMS.plat_coin; if (item.metal === 'palladium') premium = PREMIUMS.pall_coin; const coinModifier = (item.type === 'coin' && COIN_MODIFIERS[item.id]) ? COIN_MODIFIERS[item.id] : 1.0; return item.fine * spotPerGram * premium * coinModifier; }
         function formatMoney(val) { return val.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }); }
 
-        function renderPrices() {
-            const phil = catalogDB.find(i => i.id === 'g_phil_1'); const philPrice = (phil) ? calculateItemPrice(phil) : (DAILY_SPOT_EUR.gold * PREMIUMS.gold_coin);
-            document.getElementById('dash-gold').innerText = formatMoney(philPrice);
-            const silver1 = catalogDB.find(i => i.id === 's_maple') || { metal: 'silver' };
-            const plat1 = catalogDB.find(i => i.id === 'pt_maple') || { metal: 'platinum' };
-            const pall1 = catalogDB.find(i => i.id === 'pd_maple') || { metal: 'palladium' };
-            document.getElementById('dash-silver').innerText = formatMoney(calculateItemPrice(silver1));
-            document.getElementById('dash-plat').innerText = formatMoney(calculateItemPrice(plat1));
-            document.getElementById('dash-pall').innerText = formatMoney(calculateItemPrice(pall1));
-            document.getElementById('update-date').innerText = LAST_UPDATE;
-        }
+        function renderPrices() { const phil = catalogDB.find(i => i.id === 'g_phil_1'); const philPrice = (phil) ? calculateItemPrice(phil) : (DAILY_SPOT_EUR.gold * PREMIUMS.gold_coin); document.getElementById('dash-gold').innerText = formatMoney(philPrice); const silver1 = catalogDB.find(i => i.id === 's_maple') || { metal: 'silver' }; const plat1 = catalogDB.find(i => i.id === 'pt_maple') || { metal: 'platinum' }; const pall1 = catalogDB.find(i => i.id === 'pd_maple') || { metal: 'palladium' }; document.getElementById('dash-silver').innerText = formatMoney(calculateItemPrice(silver1)); document.getElementById('dash-plat').innerText = formatMoney(calculateItemPrice(plat1)); document.getElementById('dash-pall').innerText = formatMoney(calculateItemPrice(pall1)); document.getElementById('update-date').innerText = LAST_UPDATE; }
 
-        function renderCoinComparison() {
-            const compareIds = ['g_phil_1', 'g_krue_1', 'g_maple_1', 'g_brit_1', 'g_eagle_1', 'g_buff_1'];
-            const container = document.getElementById('coin-compare'); container.innerHTML = '';
-            compareIds.forEach(id => {
-                const item = catalogDB.find(i => i.id === id); if (!item) return;
-                const price = calculateItemPrice(item);
-                const el = document.createElement('div');
-                el.style.display = 'flex'; el.style.justifyContent = 'space-between'; el.style.alignItems = 'center'; el.style.gap = '8px';
-                el.innerHTML = `<div style="font-weight:700; color:var(--c-text-main); font-size:0.95rem;">${item.name}</div><div style='text-align:right; font-size:0.95rem; color:var(--c-primary);'>${formatMoney(price)}</div>`;
-                container.appendChild(el);
-            });
-        }
+        function renderCoinComparison() { const compareIds = ['g_phil_1', 'g_krue_1', 'g_maple_1', 'g_brit_1', 'g_eagle_1', 'g_buff_1']; const container = document.getElementById('coin-compare'); container.innerHTML = ''; compareIds.forEach(id => { const item = catalogDB.find(i => i.id === id); if (!item) return; const price = calculateItemPrice(item); const el = document.createElement('div'); el.style.display = 'flex'; el.style.justifyContent = 'space-between'; el.style.alignItems = 'center'; el.style.gap = '8px'; el.innerHTML = `<div style="font-weight:700; color:var(--c-text-main); font-size:0.95rem;">${item.name}</div><div style='text-align:right; font-size:0.95rem; color:var(--c-primary);'>${formatMoney(price)}</div>`; container.appendChild(el); }); }
 
         // CUSTOM SELECT IMPLEMENTATION
-        function initCustomSelect() {
-            const toggle = document.getElementById('catalogToggle'); const list = document.getElementById('catalogList'); const native = document.getElementById('catalogSelect');
-            toggle.addEventListener('click', (e) => { const open = list.hasAttribute('hidden'); if (open) { openCatalogList(); } else { closeCatalogList(); } });
-            document.addEventListener('click', (e) => { if (!e.target.closest('.select-wrapper')) closeCatalogList(); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCatalogList(); });
+        function initCustomSelect() { const toggle = document.getElementById('catalogToggle'); const list = document.getElementById('catalogList'); const native = document.getElementById('catalogSelect'); toggle.addEventListener('click', (e) => { const open = list.hasAttribute('hidden'); if (open) { openCatalogList(); } else { closeCatalogList(); } }); document.addEventListener('click', (e) => { if (!e.target.closest('.select-wrapper')) closeCatalogList(); }); document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCatalogList(); }); function openCatalogList() { list.hidden = false; list.removeAttribute('hidden'); toggle.setAttribute('aria-expanded', 'true'); list.focus(); } function closeCatalogList() { list.hidden = true; toggle.setAttribute('aria-expanded', 'false'); } }
 
-            function openCatalogList() { list.hidden = false; list.removeAttribute('hidden'); toggle.setAttribute('aria-expanded', 'true'); list.focus(); }
-            function closeCatalogList() { list.hidden = true; toggle.setAttribute('aria-expanded', 'false'); }
-        }
+        function populateCatalog(filter) { const sel = document.getElementById('catalogSelect'); const list = document.getElementById('catalogList'); sel.innerHTML = ''; list.innerHTML = ''; catalogDB.forEach(item => { if (filter === 'all' || item.metal === filter) { let opt = document.createElement('option'); opt.value = item.id; opt.text = item.name; sel.appendChild(opt); let li = document.createElement('li'); li.tabIndex = 0; li.setAttribute('role', 'option'); li.dataset.value = item.id; li.innerText = item.name; li.addEventListener('click', () => { selectCatalogItem(item.id); }); li.addEventListener('keydown', (e) => { if (e.key === 'Enter') selectCatalogItem(item.id); }); list.appendChild(li); } }); if (sel.options && sel.options.length > 0) { sel.selectedIndex = 0; selectCatalogItem(sel.options[0].value); } }
 
-        function populateCatalog(filter) {
-            const sel = document.getElementById('catalogSelect'); const list = document.getElementById('catalogList'); sel.innerHTML = ''; list.innerHTML = '';
-            catalogDB.forEach(item => {
-                if (filter === 'all' || item.metal === filter) {
-                    let opt = document.createElement('option'); opt.value = item.id; opt.text = item.name; sel.appendChild(opt);
+        function selectCatalogItem(id) { const sel = document.getElementById('catalogSelect'); const list = document.getElementById('catalogList'); const toggle = document.getElementById('catalogToggle'); sel.value = id; Array.from(list.children).forEach(li => { li.removeAttribute('aria-selected'); if (li.dataset.value === id) { li.setAttribute('aria-selected', 'true'); li.scrollIntoView({ block: 'nearest' }); } }); const item = catalogDB.find(x => x.id === id); toggle.innerHTML = `${item.name} <i class="fa-solid fa-caret-down"></i>`; updateCatDetails(); list.hidden = true; toggle.setAttribute('aria-expanded', 'false'); }
 
-                    let li = document.createElement('li'); li.tabIndex = 0; li.setAttribute('role', 'option'); li.dataset.value = item.id; li.innerText = item.name;
-                    li.addEventListener('click', () => { selectCatalogItem(item.id); });
-                    li.addEventListener('keydown', (e) => { if (e.key === 'Enter') selectCatalogItem(item.id); });
-                    list.appendChild(li);
-                }
-            });
-            // set default selection
-            if (sel.options && sel.options.length > 0) { sel.selectedIndex = 0; selectCatalogItem(sel.options[0].value); }
-        }
+        function updateCatDetails() { const sel = document.getElementById('catalogSelect'); const id = sel.value || (sel.options[0] && sel.options[0].value); if (!id) return; const item = catalogDB.find(x => x.id === id); if (!item) return; const price = calculateItemPrice(item); document.getElementById('cat-price-display').value = formatMoney(price); }
 
-        function selectCatalogItem(id) {
-            const sel = document.getElementById('catalogSelect'); const list = document.getElementById('catalogList'); const toggle = document.getElementById('catalogToggle');
-            sel.value = id;
-            // highlight in list
-            Array.from(list.children).forEach(li => { li.removeAttribute('aria-selected'); if (li.dataset.value === id) { li.setAttribute('aria-selected', 'true'); li.scrollIntoView({ block: 'nearest' }); } });
-            const item = catalogDB.find(x => x.id === id);
-            toggle.innerHTML = `${item.name} <i class="fa-solid fa-caret-down"></i>`;
-            updateCatDetails();
-            // close list for UX
-            list.hidden = true; toggle.setAttribute('aria-expanded', 'false');
-        }
-
-        function updateCatDetails() {
-            const sel = document.getElementById('catalogSelect'); const id = sel.value || (sel.options[0] && sel.options[0].value); if (!id) return; const item = catalogDB.find(x => x.id === id); if (!item) return; const price = calculateItemPrice(item); document.getElementById('cat-price-display').value = formatMoney(price);
-        }
-
-        function toggleCalcMode(mode) {
-            document.getElementById('mode-catalog').style.display = (mode === 'catalog') ? 'block' : 'none';
-            document.getElementById('mode-raw').style.display = (mode === 'raw') ? 'block' : 'none';
-            document.getElementById('tab-cat').classList.toggle('active', mode === 'catalog');
-            document.getElementById('tab-raw').classList.toggle('active', mode === 'raw');
-        }
+        function toggleCalcMode(mode) { document.getElementById('mode-catalog').style.display = (mode === 'catalog') ? 'block' : 'none'; document.getElementById('mode-raw').style.display = (mode === 'raw') ? 'block' : 'none'; document.getElementById('tab-cat').classList.toggle('active', mode === 'catalog'); document.getElementById('tab-raw').classList.toggle('active', mode === 'raw'); }
         function filterCatalog(metalType) { populateCatalog(metalType); }
 
         function addToPortfolio() {
-            let itemToAdd = {}; const spreadVal = STANDARD_ANKAUF_SPREAD; const catalogMode = document.getElementById('tab-cat').classList.contains('active');
-            if (catalogMode) {
-                const id = document.getElementById('catalogSelect').value; const qty = parseInt(document.getElementById('cat-qty').value) || 1; const dbItem = catalogDB.find(x => x.id === id); if (!dbItem) return alert('Kein Produkt gewählt'); let basePrice = calculateItemPrice(dbItem); itemToAdd = { name: dbItem.name, metal: dbItem.metal, singleVal: basePrice, qty: qty, spread: spreadVal };
-            } else {
-                const metal = document.getElementById('raw-metal').value; const weight = parseFloat(document.getElementById('raw-weight').value); const purity = parseFloat(document.getElementById('raw-purity').value); if (!weight || weight <= 0) return alert("Gewicht fehlt oder ungültig"); const spotPerOz = DAILY_SPOT_EUR[metal]; const spotPerGram = spotPerOz / 31.1034768; let basePrice = (weight * purity) * spotPerGram; itemToAdd = { name: `Manuell (${metal.toUpperCase()})`, metal: metal, singleVal: basePrice, qty: 1, spread: spreadVal };
-            }
+            let itemToAdd = {}; const spreadVal = STANDARD_ANKAUF_SPREAD; const catalogMode = document.getElementById('tab-cat').classList.contains('active'); if (catalogMode) { const id = document.getElementById('catalogSelect').value; const qty = parseInt(document.getElementById('cat-qty').value) || 1; const dbItem = catalogDB.find(x => x.id === id); if (!dbItem) return alert('Kein Produkt gewählt'); let basePrice = calculateItemPrice(dbItem); itemToAdd = { name: dbItem.name, metal: dbItem.metal, singleVal: basePrice, qty: qty, spread: spreadVal }; } else { const metal = document.getElementById('raw-metal').value; const weight = parseFloat(document.getElementById('raw-weight').value); const purity = parseFloat(document.getElementById('raw-purity').value); if (!weight || weight <= 0) return alert("Gewicht fehlt oder ungültig"); const spotPerOz = DAILY_SPOT_EUR[metal]; const spotPerGram = spotPerOz / 31.1034768; let basePrice = (weight * purity) * spotPerGram; itemToAdd = { name: `Manuell (${metal.toUpperCase()})`, metal: metal, singleVal: basePrice, qty: 1, spread: spreadVal }; }
             portfolio.push(itemToAdd); lastAddedIndex = portfolio.length - 1; renderPortfolio(); const addBtn = document.querySelector('.btn.btn-primary'); addBtn.style.transform = 'scale(0.98)'; setTimeout(() => addBtn.style.transform = '', 140);
         }
 
-        function renderPortfolio() {
-            const container = document.getElementById('portfolio-container'); let total = 0; if (portfolio.length === 0) { container.innerHTML = '<p style="text-align:center; color: var(--c-text-muted); padding-top: 40px;">Noch keine Positionen.</p>'; document.getElementById('total-value').innerText = formatMoney(0); document.getElementById('port-count').innerText = "0 Positionen"; return; }
-            let html = '<div class="inventory-list">'; portfolio.forEach((item, index) => {
-                const totalItemVal = item.singleVal * item.qty * item.spread; total += totalItemVal; let spreadLabel = ""; if (item.spread < 1.0 && item.spread > 0.8) spreadLabel = '<span style="font-size:0.7rem; color:var(--c-text-muted)">(Ankaufswert)</span>'; let iconColor = 'var(--c-text-main)'; if (item.metal === 'gold') iconColor = 'var(--color-gold)'; if (item.metal === 'silver') iconColor = 'var(--color-silver)'; if (item.metal === 'platinum') iconColor = 'var(--color-plat)'; if (item.metal === 'palladium') iconColor = 'var(--color-pall)'; html += `
-<div class="inventory-item" data-idx="${index}">
-      <div style="display:flex; align-items:center; gap:10px;">
-        <i class="fa-solid fa-circle" style="font-size:0.7rem; color:${iconColor};"></i>
-        <div>
-          <div style="font-weight:700; color:var(--c-text-main);">${item.name}</div>
-          <div style="font-size:0.82rem; color:var(--c-text-muted);">${item.qty} Stück ${spreadLabel}</div>
-        </div>
-      </div>
-      <div style="text-align:right;">
-        <div style="font-weight:700; color:var(--c-primary);">${formatMoney(totalItemVal)}</div>
-        <i class="fa-solid fa-trash" style="cursor:pointer; color:var(--c-text-muted); font-size:0.88rem; margin-top:6px;" onclick="removeFromPortfolio(${index})" aria-label="Position löschen"></i>
-      </div>
-</div>`;
-            }); html += '</div>'; container.innerHTML = html; if (lastAddedIndex >= 0) { const itemEl = container.querySelector(`.inventory-item[data-idx='${lastAddedIndex}']`); if (itemEl) { itemEl.classList.add('item-added'); setTimeout(() => itemEl.classList.remove('item-added'), 600); } lastAddedIndex = -1; } document.getElementById('total-value').innerText = formatMoney(total); document.getElementById('port-count').innerText = portfolio.length + " Positionen";
-        }
+        function renderPortfolio() { const container = document.getElementById('portfolio-container'); let total = 0; if (portfolio.length === 0) { container.innerHTML = '<p style="text-align:center; color: var(--c-text-muted); padding-top: 40px;">Noch keine Positionen.</p>'; document.getElementById('total-value').innerText = formatMoney(0); document.getElementById('port-count').innerText = "0 Positionen"; return; } let html = '<div class="inventory-list">'; portfolio.forEach((item, index) => { const totalItemVal = item.singleVal * item.qty * item.spread; total += totalItemVal; let spreadLabel = ""; if (item.spread < 1.0 && item.spread > 0.8) spreadLabel = '<span style="font-size:0.7rem; color:var(--c-text-muted)">(Ankaufswert)</span>'; let iconColor = 'var(--c-text-main)'; if (item.metal === 'gold') iconColor = 'var(--color-gold)'; if (item.metal === 'silver') iconColor = 'var(--color-silver)'; if (item.metal === 'platinum') iconColor = 'var(--color-plat)'; if (item.metal === 'palladium') iconColor = 'var(--color-pall)'; html += `\n<div class="inventory-item" data-idx="${index}">\n  <div style="display:flex; align-items:center; gap:10px;">\n    <i class="fa-solid fa-circle" style="font-size:0.7rem; color:${iconColor};"></i>\n    <div>\n      <div style="font-weight:700; color:var(--c-text-main);">${item.name}</div>\n      <div style="font-size:0.82rem; color:var(--c-text-muted);">${item.qty} Stück ${spreadLabel}</div>\n    </div>\n  </div>\n  <div style="text-align:right;">\n    <div style="font-weight:700; color:var(--c-primary);">${formatMoney(totalItemVal)}</div>\n    <i class="fa-solid fa-trash" style="cursor:pointer; color:var(--c-text-muted); font-size:0.88rem; margin-top:6px;" onclick="removeFromPortfolio(${index})" aria-label="Position löschen"></i>\n  </div>\n</div>`; }); html += '</div>'; container.innerHTML = html; if (lastAddedIndex >= 0) { const itemEl = container.querySelector(`.inventory-item[data-idx='${lastAddedIndex}']`); if (itemEl) { itemEl.classList.add('item-added'); setTimeout(() => itemEl.classList.remove('item-added'), 600); } lastAddedIndex = -1; } document.getElementById('total-value').innerText = formatMoney(total); document.getElementById('port-count').innerText = portfolio.length + " Positionen"; }
 
         function removeFromPortfolio(idx) { portfolio.splice(idx, 1); renderPortfolio(); }
         function clearPortfolio() { portfolio = []; renderPortfolio(); }
 
-        function responsiveInit() {
-            buildMobileNav();
-            function adjustCharts() {
-                const tvs = document.querySelectorAll('.tradingview-widget-container'); tvs.forEach(el => {
-                    if (window.innerWidth < 700) el.style.minHeight = '220px';
-                    else if (window.innerWidth < 1100) el.style.minHeight = '360px';
-                    else el.style.minHeight = '540px';
-                });
-            }
-            adjustCharts();
-            window.addEventListener('resize', adjustCharts);
-        }
+        function responsiveInit() { buildMobileNav(); function adjustCharts() { const tvs = document.querySelectorAll('.tradingview-widget-container'); tvs.forEach(el => { if (window.innerWidth < 700) el.style.minHeight = '220px'; else if (window.innerWidth < 1100) el.style.minHeight = '360px'; else el.style.minHeight = '540px'; }); } adjustCharts(); window.addEventListener('resize', adjustCharts); }
 
         // LEGAL modal
-        function openLegal(type) {
-            const overlay = document.getElementById('legal-overlay'); const title = document.getElementById('legal-title'); const content = document.getElementById('legal-content'); overlay.style.display = 'flex';
-            if (type === 'impressum') {
-                title.innerText = 'Impressum'; content.innerHTML = `<strong>Metallindex Group</strong><br>Beispielstraße 1<br>10115 Berlin<br>Telefon: +49 30 1234567<br>E-Mail: info@metallindex.example<br>Geschäftsführer: Max Mustermann<br>Handelsregister: HRB 12345, Amtsgericht Berlin`;
-            } else {
-                title.innerText = 'Haftungsausschluss'; content.innerHTML = `<strong>Haftungsausschluss / Disclaimer</strong><br><br>Die Informationen auf dieser Webseite dienen ausschließlich Informationszwecken und stellen weder ein Angebot noch eine Anlageberatung dar. Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Gewähr für die Aktualität, Richtigkeit, Vollständigkeit oder Qualität der bereitgestellten Informationen. <br><br>Insbesondere sind die dargestellten Preise indikativ und können Abweichungen gegenüber realen Händlerspreisen aufweisen. Entscheidungen, die Sie auf Grundlage der Inhalte dieser Seite treffen, liegen in Ihrer Verantwortung. Wir haften nicht für unmittelbare oder mittelbare Schäden, die aus der Nutzung dieser Informationen entstehen, außer in Fällen von Vorsatz oder grober Fahrlässigkeit.<br><br>Externe Links: Für den Inhalt verlinkter externer Seiten sind ausschließlich deren Betreiber verantwortlich.`;
-            }
-        }
+        function openLegal(type) { const overlay = document.getElementById('legal-overlay'); const title = document.getElementById('legal-title'); const content = document.getElementById('legal-content'); overlay.style.display = 'flex'; if (type === 'impressum') { title.innerText = 'Impressum'; content.innerHTML = `<strong>Metallindex Group</strong><br>Beispielstraße 1<br>10115 Berlin<br>Telefon: +49 30 1234567<br>E-Mail: info@metallindex.example<br>Geschäftsführer: Max Mustermann<br>Handelsregister: HRB 12345, Amtsgericht Berlin`; } else { title.innerText = 'Haftungsausschluss'; content.innerHTML = `<strong>Haftungsausschluss / Disclaimer</strong><br><br>Die Informationen auf dieser Webseite dienen ausschließlich Informationszwecken und stellen weder ein Angebot noch eine Anlageberatung dar. Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Gewähr für die Aktualität, Richtigkeit, Vollständigkeit oder Qualität der bereitgestellten Informationen. <br><br>Insbesondere sind die dargestellten Preise indikativ und können Abweichungen gegenüber realen Händlerspreisen aufweisen. Entscheidungen, die Sie auf Grundlage der Inhalte dieser Seite treffen, liegen in Ihrer Verantwortung. Wir haften nicht für unmittelbare oder mittelbare Schäden, die aus der Nutzung dieser Informationen entstehen, außer in Fällen von Vorsatz oder grober Fahrlässigkeit.<br><br>Externe Links: Für den Inhalt verlinkter externer Seiten sind ausschließlich deren Betreiber verantwortlich.`; } }
         function closeLegal() { document.getElementById('legal-overlay').style.display = 'none'; }
 
     </script>
