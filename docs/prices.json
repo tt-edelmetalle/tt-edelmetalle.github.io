@@ -1,0 +1,10 @@
+{
+  "fetched_from": "manual-test",
+  "updated_at": "2026-01-01T00:00:00Z",
+  "rates": {
+    "gold": { "per_oz": 3625.12 },
+    "silver": { "per_oz": 60.34 },
+    "platinum": { "per_oz": 1650.5 },
+    "palladium": { "per_oz": 1300.0 }
+  }
+}
