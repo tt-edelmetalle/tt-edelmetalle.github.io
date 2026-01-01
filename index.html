@@ -813,8 +813,9 @@
         // - native selects optisch an dunkles Theme angepasst (best-effort)
         // =========================================================================
 
-        const DAILY_SPOT_EUR = { gold: 3625, silver: 60, platinum: 1650, palladium: 1300 };
-        const LAST_UPDATE = "31.12.2025, 08:30 Uhr";
+        // <-- Minimal change: make these mutable (let) so we can overwrite them from prices.json -->
+        let DAILY_SPOT_EUR = { gold: 3625, silver: 60, platinum: 1650, palladium: 1300 };
+        let LAST_UPDATE = "31.12.2025, 08:30 Uhr";
         const PREMIUMS = { gold_coin: 1, gold_bar: 1, silver_coin: 1, silver_bar: 1, plat_coin: 1, pall_coin: 1 };
         const COIN_MODIFIERS = { 'g_phil_1': 1.00, 'g_krue_1': 0.97, 'g_maple_1': 0.99, 'g_brit_1': 1.01, 'g_eagle_1': 0.995, 'g_buff_1': 1.03, 'g_krue_05': 0.99 };
         const catalogDB = [ /* same as before */
@@ -847,10 +848,50 @@
         let portfolio = []; let lastAddedIndex = -1; const STANDARD_ANKAUF_SPREAD = 1
             ;
 
+        /* ---------------------
+           NEUE MINIMALE ERWEITERUNG:
+           Lade ./prices.json (statisch) und überschreibe die
+           Basis-Spotpreise (DAILY_SPOT_EUR) + LAST_UPDATE.
+           Wenn das Laden fehlschlägt -> benutze die Fallback-Werte oben.
+           --------------------- */
+        async function loadPricesThenInit() {
+            const PRICE_JSON_PATH = "./prices.json"; // relative Datei, z.B. von GitHub Pages docs/prices.json
+            try {
+                const resp = await fetch(PRICE_JSON_PATH, { cache: "no-store" });
+                if (!resp.ok) throw new Error("prices.json nicht erreichbar: " + resp.status);
+                const data = await resp.json();
+                // Erwartete Struktur: { updated_at: "...", fetched_from: "...", rates: { gold: { per_oz: 3625.12 }, silver: {...}, ... } }
+                if (data && data.rates) {
+                    if (data.rates.gold && typeof data.rates.gold.per_oz === 'number') DAILY_SPOT_EUR.gold = data.rates.gold.per_oz;
+                    if (data.rates.silver && typeof data.rates.silver.per_oz === 'number') DAILY_SPOT_EUR.silver = data.rates.silver.per_oz;
+                    if (data.rates.platinum && typeof data.rates.platinum.per_oz === 'number') DAILY_SPOT_EUR.platinum = data.rates.platinum.per_oz;
+                    if (data.rates.palladium && typeof data.rates.palladium.per_oz === 'number') DAILY_SPOT_EUR.palladium = data.rates.palladium.per_oz;
+                    LAST_UPDATE = data.updated_at || data.fetched_from || new Date().toLocaleString('de-DE');
+                    console.log('prices.json geladen — Spotpreise aktualisiert:', DAILY_SPOT_EUR);
+                } else {
+                    console.warn('prices.json geladen, aber Struktur ungültig. Verwende Fallbacks.');
+                }
+            } catch (err) {
+                console.warn('Laden von prices.json fehlgeschlagen — benutze lokale Fallbacks:', err);
+                LAST_UPDATE = "Fallback (offline) " + new Date().toLocaleString('de-DE');
+            }
+
+            // init UI wie bisher (keine Änderung)
+            try {
+                initCustomSelect(); populateCatalog('all'); renderPrices(); renderCoinComparison(); renderPortfolio(); buildMobileNav(); responsiveInit(); initMobileOverlay();
+            } catch (e) {
+                console.error('Fehler beim Initialisieren der UI:', e);
+            }
+            // show main content & update date label
+            const main = document.getElementById('main-app'); if (main) main.style.display = 'block';
+            const updEl = document.getElementById('update-date'); if (updEl) updEl.innerText = LAST_UPDATE;
+        }
+
         window.onload = function () {
-            initCustomSelect(); populateCatalog('all'); renderPrices(); renderCoinComparison(); renderPortfolio(); buildMobileNav(); responsiveInit(); initMobileOverlay();
-            // ensure default view shown
-            document.getElementById('main-app').style.display = 'block';
+            // zuvor wurden hier direkt die Init-Funktionen aufgerufen.
+            // Jetzt rufen wir zuerst loadPricesThenInit() auf, die die Preise lädt (falls vorhanden)
+            // und danach die gleichen Init-Funktionen.
+            loadPricesThenInit();
         };
 
         // removed checkPassword() and login overlay. App is directly visible.
