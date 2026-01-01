@@ -1032,14 +1032,41 @@
             doc.text('Gesamtwert: ' + totalValueText, margin, y);
 
             const filename = 'Metallindex_Portfolio_' + (new Date()).toISOString().slice(0, 10) + '.pdf';
-            doc.save(filename);
-        }
+            
+            // --- FIX FÜR iOS / iPhone ---
+            // Wir prüfen grob, ob es sich um ein Apple-Mobilgerät handelt
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
+            if (isIOS) {
+                // Für iOS: PDF als Blob generieren
+                const blob = doc.output('blob');
+                // URL objekt erzeugen
+                const url = URL.createObjectURL(blob);
+                
+                // Einen Link erstellen
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = filename;
+                
+                // WICHTIG: Der Link muss im Body existieren, damit iOS den Klick akzeptiert
+                document.body.appendChild(link);
+                link.click();
+                
+                // Aufräumen
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            } else {
+                // Standard für Desktop / Android
+                doc.save(filename);
+            }
+}
     </script>
 
     <!-- jspdf (UMD) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
+
 
 
