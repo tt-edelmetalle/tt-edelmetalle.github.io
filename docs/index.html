@@ -957,7 +957,7 @@
         function responsiveInit() { buildMobileNav(); function adjustCharts() { const tvs = document.querySelectorAll('.tradingview-widget-container'); tvs.forEach(el => { if (window.innerWidth < 700) el.style.minHeight = '220px'; else if (window.innerWidth < 1100) el.style.minHeight = '360px'; else el.style.minHeight = '540px'; }); } adjustCharts(); window.addEventListener('resize', adjustCharts); }
 
         // LEGAL modal
-        function openLegal(type) { const overlay = document.getElementById('legal-overlay'); const title = document.getElementById('legal-title'); const content = document.getElementById('legal-content'); overlay.style.display = 'flex'; if (type === 'impressum') { title.innerText = 'Impressum'; content.innerHTML = `<strong>Metallindex Group</strong><br>Österreich<br>Telefon: -------------- <br>E-Mail: business.metallindex@gmail.com<br>Betreiber: Tobias T.`; } else { title.innerText = 'Haftungsausschluss'; content.innerHTML = `<strong>Haftungsausschluss / Disclaimer</strong><br><br>Die Informationen auf dieser Webseite dienen ausschließlich Informationszwecken und stellen weder ein Angebot noch eine Anlageberatung dar. Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Gewähr für die Aktualität, Richtigkeit, Vollständigkeit oder Qualität der bereitgestellten Informationen. <br><br>Insbesondere sind die dargestellten Preise indikativ und können Abweichungen gegenüber konkreten Händlerspreisen aufweisen. Entscheidungen, die Sie auf Grundlage der Inhalte dieser Seite treffen, liegen in Ihrer Verantwortung. Wir haften nicht für unmittelbare oder mittelbare Schäden, die aus der Nutzung dieser Informationen entstehen.`; } }
+        function openLegal(type) { const overlay = document.getElementById('legal-overlay'); const title = document.getElementById('legal-title'); const content = document.getElementById('legal-content'); overlay.style.display = 'flex'; if (type === 'impressum') { title.innerText = 'Impressum'; content.innerHTML = `<strong>Metallindex Group</strong><br>Österreich<br>Telefon: -------------- <br>E-Mail: info.ttedelmetalle@gmail.com<br>Betreiber: Tobias T.`; } else { title.innerText = 'Haftungsausschluss'; content.innerHTML = `<strong>Haftungsausschluss / Disclaimer</strong><br><br>Die Informationen auf dieser Webseite dienen ausschließlich Informationszwecken und stellen weder ein Angebot noch eine Anlageberatung dar. Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Gewähr für die Aktualität, Richtigkeit, Vollständigkeit oder Qualität der bereitgestellten Informationen. <br><br>Insbesondere sind die dargestellten Preise indikativ und können Abweichungen gegenüber konkreten Händlerspreisen aufweisen. Entscheidungen, die Sie auf Grundlage der Inhalte dieser Seite treffen, liegen in Ihrer Verantwortung. Wir haften nicht für unmittelbare oder mittelbare Schäden, die aus der Nutzung dieser Informationen entstehen.`; } }
         function closeLegal() { document.getElementById('legal-overlay').style.display = 'none'; }
 
         // =========================================================================
@@ -1066,6 +1066,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
+
 
 
 
