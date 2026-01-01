@@ -2,6 +2,13 @@
   "name": "metallindex",
   "version": "1.0.0",
   "type": "module",
-  "scripts": {},
+  "description": "Fetches precious metal prices from GoldAPI",
+  "main": "index.js",
+  "scripts": {
+    "fetch-prices": "node scripts/fetch_prices.js"
+  },
+  "keywords": ["gold", "silver", "platinum", "palladium", "prices"],
+  "author": "",
+  "license": "MIT",
   "dependencies": {}
 }
