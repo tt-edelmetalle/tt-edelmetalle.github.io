@@ -24,7 +24,7 @@ const pairs = [
 ];
 
 function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function fetchWithRetry(url, options = {}, retries = 2, timeoutMs = 10000) {
@@ -41,12 +41,9 @@ async function fetchWithRetry(url, options = {}, retries = 2, timeoutMs = 10000)
       return res;
     } catch (err) {
       clearTimeout(timer);
-      const isAbort = err && err.name === "AbortError";
-      const msg = isAbort ? "Timeout/Abort" : err.message || String(err);
+      const msg = err?.name === "AbortError" ? "Timeout/Abort" : err.message;
       if (attempt > retries) {
-        const finalErr = new Error(`Fetch failed (${msg}) after ${attempt} attempts: ${url}`);
-        finalErr.cause = err;
-        throw finalErr;
+        throw new Error(`Fetch failed (${msg}) after ${attempt} attempts: ${url}`);
       }
       console.warn(`Fetch attempt ${attempt} failed for ${url}: ${msg}. Retrying in ${backoff}ms...`);
       await sleep(backoff);
@@ -77,11 +74,11 @@ async function fetchPair(symbol, currency = "EUR") {
       console.log(`Requesting ${p.symbol}/EUR`);
       const r = await fetchPair(p.symbol, "EUR");
       let pricePerOz = null;
-      if (r && (typeof r.price === "number" || typeof r.price === "string")) {
+      if (r?.price !== undefined) {
         const n = Number(r.price);
         pricePerOz = Number.isFinite(n) ? n : null;
       }
-      if (pricePerOz === null && r && (typeof r.ask === "number" || typeof r.ask === "string")) {
+      if (pricePerOz === null && r?.ask !== undefined) {
         const n = Number(r.ask);
         pricePerOz = Number.isFinite(n) ? n : null;
       }
@@ -100,10 +97,11 @@ async function fetchPair(symbol, currency = "EUR") {
   fs.writeFileSync(outPath, JSON.stringify(out, null, 2), "utf8");
   console.log("WROTE", outPath);
 
-  const anyNumber = Object.values(out.rates).some((r) => typeof r.per_oz === "number");
+  const anyNumber = Object.values(out.rates).some(r => typeof r.per_oz === "number");
   if (!anyNumber) {
     console.error("ERROR: No valid prices retrieved.");
     process.exit(3);
   }
+
   process.exit(0);
 })();
