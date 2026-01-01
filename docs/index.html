@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Metallindex | Händlerpreise & Portfolio</title>
+    <title>T&T Edelmetalle | Händlerpreise & Portfolio</title>
     <meta name="description" content="Aktuelle Händlerpreise für Gold, Silber, Platin und Palladium. Portfolio-Management." />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -563,7 +563,7 @@
                 <div style="display:flex; align-items:center; gap:12px;">
                     <div class="brand-logo" onclick="switchView('dashboard')" title="Zur Startseite">
                         <i class="fa-solid fa-layer-group"></i>
-                        <span>Metall</span>index
+                        <span>T&T</span>Edelmetalle
                     </div>
 
                     <button id="hamburger" class="btn btn-outline" onclick="toggleMobileNav()" aria-expanded="false" aria-controls="mobile-nav"><i class="fa-solid fa-bars"></i></button>
@@ -776,10 +776,10 @@
 
         <footer>
             <div class="container" style="display:flex; flex-direction:column; gap:8px; align-items:center;">
-                <div style="display:flex; gap:10px; align-items:center;"><i class="fa-solid fa-layer-group" style="color:var(--c-primary);"></i> Metallindex Group</div>
+                <div style="display:flex; gap:10px; align-items:center;"><i class="fa-solid fa-layer-group" style="color:var(--c-primary);"></i> T&T Edelmetalle</div>
                 <div style="max-width:1000px; text-align:center; color:var(--c-text-muted); font-size:0.9rem;">
                     &copy; 2025. Alle Rechte vorbehalten.<br>
-                    Die angezeigten Preise sind indikative Händlerpreise basierend auf Tageswerten.
+                    Die angezeigten Preise können sich von konkreten Angeboten unterscheiden.
                 </div>
 
                 <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:6px;">
@@ -888,9 +888,7 @@
         }
 
         window.onload = function () {
-            // zuvor wurden hier direkt die Init-Funktionen aufgerufen.
-            // Jetzt rufen wir zuerst loadPricesThenInit() auf, die die Preise lädt (falls vorhanden)
-            // und danach die gleichen Init-Funktionen.
+            
             loadPricesThenInit();
         };
 
@@ -959,7 +957,7 @@
         function responsiveInit() { buildMobileNav(); function adjustCharts() { const tvs = document.querySelectorAll('.tradingview-widget-container'); tvs.forEach(el => { if (window.innerWidth < 700) el.style.minHeight = '220px'; else if (window.innerWidth < 1100) el.style.minHeight = '360px'; else el.style.minHeight = '540px'; }); } adjustCharts(); window.addEventListener('resize', adjustCharts); }
 
         // LEGAL modal
-        function openLegal(type) { const overlay = document.getElementById('legal-overlay'); const title = document.getElementById('legal-title'); const content = document.getElementById('legal-content'); overlay.style.display = 'flex'; if (type === 'impressum') { title.innerText = 'Impressum'; content.innerHTML = `<strong>Metallindex Group</strong><br>Österreich<br>Marchegg<br>Telefon: -------------- <br>E-Mail: business.metallindex@gmail.com<br>Betreiber: Tobias T.`; } else { title.innerText = 'Haftungsausschluss'; content.innerHTML = `<strong>Haftungsausschluss / Disclaimer</strong><br><br>Die Informationen auf dieser Webseite dienen ausschließlich Informationszwecken und stellen weder ein Angebot noch eine Anlageberatung dar. Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Gewähr für die Aktualität, Richtigkeit, Vollständigkeit oder Qualität der bereitgestellten Informationen. <br><br>Insbesondere sind die dargestellten Preise indikativ und können Abweichungen gegenüber konkreten Händlerspreisen aufweisen. Entscheidungen, die Sie auf Grundlage der Inhalte dieser Seite treffen, liegen in Ihrer Verantwortung. Wir haften nicht für unmittelbare oder mittelbare Schäden, die aus der Nutzung dieser Informationen entstehen.`; } }
+        function openLegal(type) { const overlay = document.getElementById('legal-overlay'); const title = document.getElementById('legal-title'); const content = document.getElementById('legal-content'); overlay.style.display = 'flex'; if (type === 'impressum') { title.innerText = 'Impressum'; content.innerHTML = `<strong>Metallindex Group</strong><br>Österreich<br>Telefon: -------------- <br>E-Mail: business.metallindex@gmail.com<br>Betreiber: Tobias T.`; } else { title.innerText = 'Haftungsausschluss'; content.innerHTML = `<strong>Haftungsausschluss / Disclaimer</strong><br><br>Die Informationen auf dieser Webseite dienen ausschließlich Informationszwecken und stellen weder ein Angebot noch eine Anlageberatung dar. Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Gewähr für die Aktualität, Richtigkeit, Vollständigkeit oder Qualität der bereitgestellten Informationen. <br><br>Insbesondere sind die dargestellten Preise indikativ und können Abweichungen gegenüber konkreten Händlerspreisen aufweisen. Entscheidungen, die Sie auf Grundlage der Inhalte dieser Seite treffen, liegen in Ihrer Verantwortung. Wir haften nicht für unmittelbare oder mittelbare Schäden, die aus der Nutzung dieser Informationen entstehen.`; } }
         function closeLegal() { document.getElementById('legal-overlay').style.display = 'none'; }
 
         // =========================================================================
@@ -974,7 +972,7 @@
             const margin = 15;
             let y = 20;
             doc.setFontSize(14);
-            doc.text('Metallindex – Portfolio', margin, y);
+            doc.text('T&T Edelmetalle – Portfolio', margin, y);
             doc.setFontSize(10);
             y += 6;
             doc.text('Exportdatum: ' + new Date().toLocaleString('de-DE'), margin, y);
@@ -1048,7 +1046,7 @@
                     navigator.share({
                         files: [file],
                         title: 'Portfolio Export',
-                        text: 'Hier ist dein Metallindex Portfolio Export.'
+                        text: 'Hier ist dein Portfolio Export.'
                     }).catch((err) => {
                         console.error('Teilen abgebrochen oder fehlgeschlagen:', err);
                         // Fallback, falls Teilen abgebrochen wurde (nichts tun oder alert)
@@ -1068,6 +1066,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
+
 
 
 
