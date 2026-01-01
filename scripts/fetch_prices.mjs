@@ -2,8 +2,12 @@
 // Node 18+ (global fetch). Schreibt docs/prices.json
 // ENV: GOLDAPI_KEY
 
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const KEY = process.env.GOLDAPI_KEY;
 if (!KEY) {
@@ -23,13 +27,6 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-/**
- * Fetch with retries, exponential backoff and timeout via AbortController.
- * @param {string} url
- * @param {object} options fetch options (headers etc.)
- * @param {number} retries number of retries
- * @param {number} timeoutMs timeout per request in ms
- */
 async function fetchWithRetry(url, options = {}, retries = 2, timeoutMs = 10000) {
   let attempt = 0;
   let backoff = 1000;
@@ -47,7 +44,6 @@ async function fetchWithRetry(url, options = {}, retries = 2, timeoutMs = 10000)
       const isAbort = err && err.name === "AbortError";
       const msg = isAbort ? "Timeout/Abort" : err.message || String(err);
       if (attempt > retries) {
-        // no more retries
         const finalErr = new Error(`Fetch failed (${msg}) after ${attempt} attempts: ${url}`);
         finalErr.cause = err;
         throw finalErr;
@@ -55,7 +51,6 @@ async function fetchWithRetry(url, options = {}, retries = 2, timeoutMs = 10000)
       console.warn(`Fetch attempt ${attempt} failed for ${url}: ${msg}. Retrying in ${backoff}ms...`);
       await sleep(backoff);
       backoff *= 2;
-      // loop to retry
     }
   }
 }
@@ -63,7 +58,7 @@ async function fetchWithRetry(url, options = {}, retries = 2, timeoutMs = 10000)
 async function fetchPair(symbol, currency = "EUR") {
   const url = `${ENDPOINT_BASE}/${symbol}/${currency}`;
   const headers = { "x-access-token": KEY, "Content-Type": "application/json" };
-  const res = await fetchWithRetry(url, { headers }, 3, 12000); // 3 retries, 12s timeout
+  const res = await fetchWithRetry(url, { headers }, 3, 12000);
   if (!res.ok) {
     const body = await res.text().catch(() => "<unreadable body>");
     const err = new Error(`HTTP ${res.status} for ${url}: ${body}`);
@@ -81,7 +76,6 @@ async function fetchPair(symbol, currency = "EUR") {
     try {
       console.log(`Requesting ${p.symbol}/EUR`);
       const r = await fetchPair(p.symbol, "EUR");
-      // normalize price fields (allow strings containing numbers)
       let pricePerOz = null;
       if (r && (typeof r.price === "number" || typeof r.price === "string")) {
         const n = Number(r.price);
@@ -94,28 +88,17 @@ async function fetchPair(symbol, currency = "EUR") {
       out.rates[p.name] = { per_oz: pricePerOz, raw: r };
       console.log(`  -> ${p.name}: ${pricePerOz}`);
     } catch (err) {
-      const message = err && err.message ? err.message : String(err);
+      const message = err?.message || String(err);
       console.error(`Error fetching ${p.symbol}:`, message);
       out.rates[p.name] = { per_oz: null, error: message, status: err.status || null };
     }
   }
 
   const docsDir = path.join(__dirname, "..", "docs");
-  try {
-    fs.mkdirSync(docsDir, { recursive: true });
-  } catch (e) {
-    console.error("Failed to create docs directory:", e.message || e);
-    process.exit(4);
-  }
-
+  fs.mkdirSync(docsDir, { recursive: true });
   const outPath = path.join(docsDir, "prices.json");
-  try {
-    fs.writeFileSync(outPath, JSON.stringify(out, null, 2), "utf8");
-    console.log("WROTE", outPath);
-  } catch (e) {
-    console.error("Failed to write output file:", e.message || e);
-    process.exit(5);
-  }
+  fs.writeFileSync(outPath, JSON.stringify(out, null, 2), "utf8");
+  console.log("WROTE", outPath);
 
   const anyNumber = Object.values(out.rates).some((r) => typeof r.per_oz === "number");
   if (!anyNumber) {
