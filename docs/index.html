@@ -1029,35 +1029,36 @@
             y += 8;
             doc.setFont(undefined, 'bold');
             const totalValueText = document.getElementById('total-value').innerText || formatMoney(0);
+           // ... (oberer Teil der Funktion bleibt gleich) ...
+            
             doc.text('Gesamtwert: ' + totalValueText, margin, y);
 
             const filename = 'Metallindex_Portfolio_' + (new Date()).toISOString().slice(0, 10) + '.pdf';
-            
-            // --- FIX FÜR iOS / iPhone ---
-            // Wir prüfen grob, ob es sich um ein Apple-Mobilgerät handelt
+
+            // --- NEUE LÖSUNG FÜR iPHONE (Native Share API) ---
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
                           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-            if (isIOS) {
-                // Für iOS: PDF als Blob generieren
+            // Prüfen, ob der Browser das "Teilen" von Dateien unterstützt (Standard auf iOS)
+            if (isIOS && navigator.share && navigator.canShare) {
                 const blob = doc.output('blob');
-                // URL objekt erzeugen
-                const url = URL.createObjectURL(blob);
-                
-                // Einen Link erstellen
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = filename;
-                
-                // WICHTIG: Der Link muss im Body existieren, damit iOS den Klick akzeptiert
-                document.body.appendChild(link);
-                link.click();
-                
-                // Aufräumen
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
+                const file = new File([blob], filename, { type: 'application/pdf' });
+
+                if (navigator.canShare({ files: [file] })) {
+                    navigator.share({
+                        files: [file],
+                        title: 'Portfolio Export',
+                        text: 'Hier ist dein Metallindex Portfolio Export.'
+                    }).catch((err) => {
+                        console.error('Teilen abgebrochen oder fehlgeschlagen:', err);
+                        // Fallback, falls Teilen abgebrochen wurde (nichts tun oder alert)
+                    });
+                } else {
+                    // Fallback für ältere iOS Versionen
+                    window.open(doc.output('bloburl'), '_blank');
+                }
             } else {
-                // Standard für Desktop / Android
+                // Standardweg für Android / Desktop PC
                 doc.save(filename);
             }
 }
@@ -1067,6 +1068,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
+
 
 
 
