@@ -1,25 +1,127 @@
-/* --- Grundfarben & System --- */
+/* assets/css/style.css */
+
+/* --------------------------------------------------
+   DESIGN SYSTEM: Compact, trustful, responsive
+   (Basierend auf deinem Original-Upload; Buttons/Nav angepasst)
+   -------------------------------------------------- */
 :root {
-  --c-primary: #c5a059;
-  --c-primary-dark: #a38234;
-  --c-bg-app: #0b1120;
-  --c-bg-card: #121824;
-  --c-text-main: #f1f5f9;
-  --c-text-muted: #9aa7bb;
-  --c-border: #24313f;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --font-stack: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  --nav-height: 72px;
+    --c-primary: #c5a059;
+    --c-primary-dark: #a38234;
+    --c-bg-app: #0b1120;
+    --c-bg-card: #121824;
+    --c-text-main: #f1f5f9;
+    --c-text-muted: #9aa7bb;
+    --c-border: #24313f;
+    --c-success: #10b981;
+    --c-danger: #ef4444;
+    --color-gold: #c5a059;
+    --color-silver: #cbd5e1;
+    --color-plat: #e2e8f0;
+    --color-pall: #a8a29e;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --font-stack: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    --nav-height: 72px;
+    --glass: rgba(255,255,255,0.03);
+    --card-elev: 18px;
 }
-/* (Die restlichen Regeln aus deinem Original: Container, navbar, cards, inputs,
-   buttons, inventory list etc. - kopiere dort den CSS-Block aus deinem Upload) */
 
-/* Sicherstellen: TradingView / widget Containers haben min-height */
-.tradingview-widget-container { width:100%; height:100%; min-height:180px; }
+/* Reset & base */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+    margin:0;
+    padding:0;
+    font-family:var(--font-stack);
+    background: linear-gradient(180deg,#070912 0%,var(--c-bg-app) 100%);
+    color:var(--c-text-main);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    -webkit-tap-highlight-color:transparent;
+}
 
-/* Fokusindikatoren für Accessibility */
-.btn:focus, .form-control:focus, .nav-item:focus { outline: 3px solid rgba(197,160,89,0.12); outline-offset:2px; }
+/* Layout container */
+.container{max-width:1400px;margin:0 auto;padding:0 16px}
 
-/* Weitere Styles: kopiere den Original-CSS-Block hier vollständig. */
+/* Grid structure for main app pages */
+.grid-dashboard{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:1024px){ .grid-dashboard{grid-template-columns:320px 1fr} }
+
+/* NAV */
+.navbar{
+    position:sticky;top:0;z-index:120;height:var(--nav-height);
+    display:flex;align-items:center;backdrop-filter:blur(8px);
+    background: linear-gradient(180deg, rgba(11,17,32,0.95), rgba(11,17,32,0.8));
+    border-bottom:1px solid var(--c-border);padding:0 8px;
+}
+.nav-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:700;font-size:1.15rem;color:var(--c-text-main)}
+.brand span{color:var(--c-primary)}
+
+/* nav links styled as neutral buttons */
+.nav-link{
+    color:var(--c-text-main); text-decoration:none; padding:8px 12px; border-radius:8px;
+    font-weight:500; display:inline-block;
+}
+.nav-link:hover{ background: rgba(255,255,255,0.02); color:var(--c-primary); transform:translateY(-1px); transition:all .15s ease; }
+
+/* Cards */
+.card{
+    background: linear-gradient(180deg, var(--c-bg-card) 0%, rgba(255,255,255,0.01) 100%);
+    border-radius:var(--radius-md);
+    padding:16px; border:1px solid rgba(255,255,255,0.02); box-shadow:0 6px 20px rgba(0,0,0,0.4);
+}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.card-title{font-size:1rem;margin:0}
+
+/* Buttons (fix: not blue) */
+.btn{display:inline-flex;align-items:center;gap:8px;cursor:pointer;border-radius:10px;padding:8px 12px;font-weight:600;border:none;background:transparent;color:var(--c-text-main)}
+.btn:focus{outline:3px solid rgba(197,160,89,0.12);outline-offset:3px}
+.btn-sm{padding:6px 8px;font-size:0.85rem;border-radius:8px}
+.btn-primary{background:linear-gradient(135deg,var(--c-primary),var(--c-primary-dark));color:#000;padding:10px 14px;border-radius:12px;box-shadow:0 6px 18px rgba(163,129,52,0.12)}
+.btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--c-text-main);padding:8px 10px;border-radius:10px}
+.btn-outline.btn-sm{padding:6px 8px}
+
+/* Inputs / selects */
+.input-label{display:block;font-size:0.85rem;color:var(--c-text-muted);margin-bottom:6px}
+.form-control{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:rgba(255,255,255,0.02);color:var(--c-text-main)}
+.form-control:focus{box-shadow:0 4px 12px rgba(0,0,0,0.6);outline:none;border-color:rgba(197,160,89,0.12)}
+
+/* Tabs */
+.calc-tabs{display:flex;gap:8px}
+.calc-tab{cursor:pointer;padding:8px 10px;border-radius:8px;background:transparent;border:1px solid transparent}
+.calc-tab.active{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.02)}
+
+/* inventory list */
+.inventory-list{display:flex;flex-direction:column;gap:10px}
+.inventory-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);background:rgba(255,255,255,0.01)}
+.inventory-item .fa-trash{opacity:0.9}
+
+/* price / badges */
+.source-badge{display:inline-block;padding:6px 8px;border-radius:8px;font-size:0.85rem;background:rgba(255,255,255,0.02);border:1px solid rgba(197,160,89,0.06)}
+.sub-price{font-size:0.85rem;color:var(--c-text-muted)}
+.big-price{font-size:1.45rem;font-weight:800;color:var(--c-primary)}
+
+/* ticker reserve + tradingview containers */
+.tradingview-widget-container{width:100%;height:100%;min-height:180px}
+
+/* consent overlay */
+#consent-overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:flex-end;justify-content:center;padding:18px;pointer-events:none}
+#consent-overlay #consent-banner{pointer-events:all;background:var(--c-bg-card);border:1px solid var(--c-border);padding:14px;border-radius:12px;color:var(--c-text-main);max-width:980px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+.consent-small{color:var(--c-text-muted);font-size:0.9rem}
+.consent-text{display:flex;flex-direction:column;gap:10px}
+
+/* small utilities */
+.visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+.hidden-section{display:block}
+
+/* responsive tweaks */
+@media(max-width:1023px){
+    .nav-inner{padding:0 8px}
+    .grid-dashboard{grid-template-columns:1fr}
+}
+
+/* subtle animations */
+.item-added{animation:pop .6s ease}
+@keyframes pop{0%{transform:scale(.98);opacity:.6}50%{transform:scale(1.02)}100%{transform:scale(1);opacity:1}}
