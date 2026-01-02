@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portfolio Rechner — T&T Edelmetalle</title>
+  <meta name="robots" content="index, follow" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="navbar container">
+    <div class="brand" onclick="location.href='index.html'"><span style="color:var(--c-primary)">T&T</span> Edelmetalle</div>
+    <nav><a href="index.html">Start</a> · <a href="dashboard.html">Marktübersicht</a></nav>
+  </header>
+
+  <main class="container" role="main">
+    <h1>Portfolio Rechner</h1>
+
+    <section id="calculator" aria-labelledby="calculator">
+      <!-- Kopiere hier die komplette Rechner-HTML aus deinem Onepager (Formulare, Selects, Portfolio-Container).
+           Ich habe die IDs beibehalten, damit die JS-Logik in app.js funktioniert. -->
+      <!-- BEGIN Rechner (vereinfachter Ausschnitt; volle Struktur siehe Anhang / full repo) -->
+      <div class="grid-dashboard">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Bestand erweitern</h2>
+            <button class="btn btn-outline btn-sm" onclick="clearPortfolio()">Reset</button>
+          </div>
+
+          <div class="calc-tabs" style="display:flex;gap:10px;margin-bottom:16px;">
+            <div id="tab-cat" class="calc-tab btn btn-sm active" onclick="toggleCalcMode('catalog')">Katalog Auswahl</div>
+            <div id="tab-raw" class="calc-tab btn btn-sm" onclick="toggleCalcMode('raw')">Manuell (Gramm)</div>
+          </div>
+
+          <div id="mode-catalog">
+            <label class="input-label">Produkt wählen</label>
+            <div class="select-wrapper">
+              <button id="catalogToggle" class="select-toggle" aria-haspopup="listbox" aria-expanded="false">Wähle ein Produkt</button>
+              <ul id="catalogList" class="custom-select-list" role="listbox" hidden></ul>
+              <select id="catalogSelect" class="form-control visually-hidden" aria-hidden="true"></select>
+            </div>
+
+            <div style="display:flex;gap:10px;margin-top:10px">
+              <div style="flex:1">
+                <label class="input-label">Anzahl</label>
+                <input id="cat-qty" type="number" min="1" value="1" class="form-control">
+              </div>
+              <div style="flex:1">
+                <label class="input-label">Einzelpreis (Est.)</label>
+                <input id="cat-price-display" class="form-control" disabled>
+              </div>
+            </div>
+          </div>
+
+          <div id="mode-raw" style="display:none">
+            <label class="input-label">Metall</label>
+            <select id="raw-metal" class="form-control">
+              <option value="gold">Gold</option>
+              <option value="silver">Silber</option>
+              <option value="platinum">Platin</option>
+              <option value="palladium">Palladium</option>
+            </select>
+            <label class="input-label">Gewicht (Gramm)</label>
+            <input id="raw-weight" type="number" class="form-control" placeholder="z.B. 31.1">
+            <label class="input-label">Feinheit</label>
+            <select id="raw-purity" class="form-control">
+              <option value="0.999">999 (Fein)</option>
+              <option value="0.916">916 (22k)</option>
+              <option value="0.750">750 (18k)</option>
+              <option value="0.585">585 (14k)</option>
+            </select>
+          </div>
+
+          <div style="margin-top:12px;border-top:1px solid var(--c-border);padding-top:14px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div class="input-label">Bewertungs-Basis</div>
+              <div class="source-badge">Händler-Ankauf</div>
+            </div>
+            <button class="btn btn-primary" style="width:220px" onclick="addToPortfolio()">Zur Liste hinzufügen</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Mein Portfolio</h2>
+            <div>
+              <span id="port-count">0 Positionen</span>
+              <button class="btn btn-outline btn-sm" onclick="exportPortfolioPDF()">Export PDF</button>
+            </div>
+          </div>
+
+          <div id="portfolio-container" style="max-height:420px;overflow:auto">
+            <p style="text-align:center;color:var(--muted);padding-top:40px">Noch keine Einträge.</p>
+          </div>
+
+          <div style="background:rgba(197,160,89,0.08);padding:14px;border-radius:10px">
+            <div class="sub-price">Gesamtwert Portfolio</div>
+            <div class="big-price" id="total-value">0,00 €</div>
+          </div>
+        </div>
+      </div>
+      <!-- END Rechner -->
+    </section>
+  </main>
+
+  <footer class="container" style="padding:28px 0">
+    <div style="text-align:center;color:var(--muted)">&copy; T&T Edelmetalle</div>
+  </footer>
+
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>
