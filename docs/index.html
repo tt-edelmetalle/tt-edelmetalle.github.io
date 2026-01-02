@@ -1,10 +1,47 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>T&T Edelmetalle | Aktuelle Preise & Portfolio Rechner</title>
-    <meta name="description" content="Aktuelle Händlerpreise für Gold, Silber, Platin und Palladium. Portfolio-Management." />
+    
+    <title>T&T Edelmetalle | Gold & Silber Portfolio Rechner & Aktuelle Kurse</title>
+    <meta name="description" content="Aktuelle Händlerpreise und Spot-Kurse für Gold, Silber, Platin und Palladium. Kostenloser Portfolio-Rechner und Wertentwicklung für Ihre Edelmetalle." />
+    <meta name="keywords" content="Goldpreis, Silberpreis, Edelmetalle Portfolio, Gold Rechner, Platin Kurs, Palladium, Ankaufsrechner, Wertentwicklung" />
+    <meta name="robots" content="index, follow" />
+    
+    <link rel="canonical" href="https://deine-website-url.com/" />
+
+    <meta property="og:title" content="T&T Edelmetalle | Portfolio Rechner & Live Kurse" />
+    <meta property="og:description" content="Verwalten Sie Ihr Edelmetall-Portfolio und sehen Sie aktuelle Händlerpreise für Gold, Silber & Co." />
+    <meta property="og:image" content="https://deine-website-url.com/social-share-image.jpg" />
+    <meta property="og:url" content="https://deine-website-url.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_DE" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="T&T Edelmetalle Portfolio Manager" />
+    <meta name="twitter:description" content="Kostenloses Tool zur Berechnung und Verwaltung Ihres Edelmetallbestandes." />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "T&T Edelmetalle Portfolio Rechner",
+      "url": "https://deine-website-url.com/",
+      "description": "Tool zur Berechnung von Edelmetall-Portfolios (Gold, Silber, Platin, Palladium) mit aktuellen Marktpreisen.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "T&T Edelmetalle"
+      }
+    }
+    </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -108,18 +145,24 @@
             gap: 12px
         }
 
-        .brand-logo {
+        /* H1 styled to look exactly like previous div */
+        h1.brand-logo {
             display: flex;
             align-items: center;
             gap: 10px;
             cursor: pointer;
             font-weight: 700;
-            font-size: 1.15rem
+            font-size: 1.15rem;
+            margin: 0; /* Reset browser default for h1 */
+            padding: 0;
+            border: none;
+            background: none;
+            color: inherit;
         }
 
-            .brand-logo span {
-                color: var(--c-primary)
-            }
+        .brand-logo span {
+            color: var(--c-primary)
+        }
 
         .nav-menu {
             display: flex;
@@ -160,7 +203,7 @@
             }
         }
 
-        /* MOBILE NAV DRAWER (improved) */
+        /* MOBILE NAV DRAWER */
         #mobile-overlay {
             display: none;
             position: fixed;
@@ -243,7 +286,8 @@
             color: var(--c-text-main);
             display: flex;
             align-items: center;
-            gap: 8px
+            gap: 8px;
+            margin: 0; /* Ensuring h2/h3 behave like divs if changed */
         }
 
             .card-title i {
@@ -275,7 +319,7 @@
             display: block
         }
 
-        /* custom select (replaces native popup) */
+        /* custom select */
         .select-wrapper {
             position: relative;
         }
@@ -522,29 +566,25 @@
             grid-template-columns: 1fr 1fr
         }
 
-        /* -------------------------
-           Darken native select dropdowns
-           (best-effort; some OS/browsers keep native UI)
-           ------------------------- */
+        /* select dropdowns */
         select.form-control {
             background: var(--c-bg-card);
             color: var(--c-text-main);
             -webkit-appearance: none;
             appearance: none;
             border: 1px solid var(--c-border);
-            padding-right: 28px; /* space for custom caret if desired */
+            padding-right: 28px;
         }
 
             select.form-control option {
                 background: var(--c-bg-card);
                 color: var(--c-text-main);
             }
-            /* hide default IE/Edge arrow */
+            
             select.form-control::-ms-expand {
                 display: none;
             }
 
-        /* add a subtle caret for selects inside containers */
         .select-inline {
             position: relative;
         }
@@ -569,18 +609,18 @@
         <nav class="navbar" role="navigation" aria-label="Hauptnavigation">
             <div class="nav-inner">
                 <div style="display:flex; align-items:center; gap:12px;">
-                    <div class="brand-logo" onclick="switchView('dashboard')" title="Zur Startseite">
+                    <h1 class="brand-logo" onclick="switchView('dashboard')" title="Zur Startseite">
                         <i class="fa-solid fa-layer-group"></i>
                         <span>T&T</span>Edelmetalle
-                    </div>
+                    </h1>
 
-                    <button id="hamburger" class="btn btn-outline" onclick="toggleMobileNav()" aria-expanded="false" aria-controls="mobile-nav"><i class="fa-solid fa-bars"></i></button>
+                    <button id="hamburger" class="btn btn-outline" onclick="toggleMobileNav()" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menü öffnen"><i class="fa-solid fa-bars"></i></button>
                 </div>
 
                 <div class="nav-menu" id="navMenu">
-                    <div class="nav-item active" id="nav-dash" onclick="switchView('dashboard')" tabindex="0">Marktübersicht</div>
-                    <div class="nav-item" id="nav-calc" onclick="switchView('calculator')" tabindex="0">Portfolio Rechner</div>
-                    <div class="nav-item" id="nav-ana" onclick="switchView('analysis')" tabindex="0">Research</div>
+                    <div class="nav-item active" id="nav-dash" onclick="switchView('dashboard')" tabindex="0" role="button">Marktübersicht</div>
+                    <div class="nav-item" id="nav-calc" onclick="switchView('calculator')" tabindex="0" role="button">Portfolio Rechner</div>
+                    <div class="nav-item" id="nav-ana" onclick="switchView('analysis')" tabindex="0" role="button">Research</div>
                 </div>
 
                 <div style="display:flex; align-items:center; gap:10px;">
@@ -589,7 +629,6 @@
             </div>
         </nav>
 
-        <!-- overlay + mobile drawer moved outside the nav to avoid stacking issues -->
         <div id="mobile-overlay" tabindex="-1" aria-hidden="true"></div>
         <div id="mobile-nav" aria-hidden="true"></div>
 
@@ -617,7 +656,7 @@
                     <aside class="sidebar" style="display:flex; flex-direction:column; gap:16px;">
 
                         <div class="card" style="border-left:4px solid var(--c-primary);">
-                            <div class="source-badge"><i class="fa-solid fa-building-columns"></i> Ankaufspreis (Kann von Händler zu Händler variieren)</div>
+                            <div class="source-badge"><i class="fa-solid fa-building-columns"></i> Ankaufspreis (Händler-Indikation)</div>
                             <div class="input-label" style="margin-top:6px">Gold 1 oz (Ankaufspreis)</div>
                             <div class="big-price" id="dash-gold">...</div>
                             <div class="sub-price">abzüglich spread</div>
@@ -654,7 +693,7 @@
                     <div class="main-content">
                         <div class="card" style="height:560px;">
                             <div class="card-header">
-                                <div class="card-title"><i class="fa-solid fa-chart-area"></i> Spot Markt Entwicklung</div>
+                                <h2 class="card-title" style="margin:0; font-size:1rem;"><i class="fa-solid fa-chart-area"></i> Spot Markt Entwicklung</h2>
                             </div>
                             <div class="tradingview-widget-container" style="height:100%; width:100%;">
                                 <div class="tradingview-widget-container__widget" style="height:100%;"></div>
@@ -682,13 +721,13 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Bestand erweitern</div>
+                            <h2 class="card-title" style="margin:0; font-size:1rem;">Bestand erweitern</h2>
                             <button class="btn btn-outline btn-sm" onclick="clearPortfolio()">Reset</button>
                         </div>
 
                         <div class="calc-tabs" style="display:flex; gap:10px; margin-bottom:16px; background:transparent; padding:6px; border-radius:8px">
-                            <div class="calc-tab btn btn-sm active" id="tab-cat" onclick="toggleCalcMode('catalog')" style="background:var(--c-bg-card); color:var(--c-primary);">Katalog Auswahl</div>
-                            <div class="calc-tab btn btn-sm" id="tab-raw" onclick="toggleCalcMode('raw')">Manuell (Gramm)</div>
+                            <div class="calc-tab btn btn-sm active" id="tab-cat" onclick="toggleCalcMode('catalog')" role="button" tabindex="0" style="background:var(--c-bg-card); color:var(--c-primary);">Katalog Auswahl</div>
+                            <div class="calc-tab btn btn-sm" id="tab-raw" onclick="toggleCalcMode('raw')" role="button" tabindex="0">Manuell (Gramm)</div>
                         </div>
 
                         <div id="mode-catalog">
@@ -703,11 +742,9 @@
 
                             <label class="input-label">Produkt wählen</label>
 
-                            <!-- custom dropdown to avoid native large OS popup -->
                             <div class="select-wrapper">
                                 <button id="catalogToggle" class="select-toggle" aria-haspopup="listbox" aria-expanded="false">Wähle ein Produkt <i class="fa-solid fa-caret-down"></i></button>
                                 <ul id="catalogList" class="custom-select-list" role="listbox" aria-labelledby="catalogToggle" hidden></ul>
-                                <!-- keep a hidden native select in sync so existing code can still query value if needed -->
                                 <select id="catalogSelect" class="form-control visually-hidden" aria-hidden="true"></select>
                             </div>
 
@@ -753,7 +790,7 @@
 
                     <div class="card" style="display:flex; flex-direction:column;">
                         <div class="card-header">
-                            <div class="card-title">Mein Portfolio</div>
+                            <h2 class="card-title" style="margin:0; font-size:1rem;">Mein Portfolio</h2>
                             <div style="display:flex; align-items:center; gap:10px;">
                                 <div id="port-count" style="font-size:0.9rem; color:var(--c-text-muted);">0 Positionen</div>
                                 <button class="btn btn-outline btn-sm" onclick="exportPortfolioPDF()">Export PDF</button>
@@ -775,7 +812,7 @@
 
             <section id="analysis" class="hidden-section">
                 <div class="card">
-                    <div class="card-header"><div class="card-title">Marktkommentar & Analyse</div></div>
+                    <div class="card-header"><h2 class="card-title" style="margin:0; font-size:1rem;">Marktkommentar & Analyse</h2></div>
                     <p class="text-muted">Hier können manuelle Marktanalysen stehen...</p>
                 </div>
             </section>
@@ -797,7 +834,6 @@
             </div>
         </footer>
 
-        <!-- LEGAL MODALS -->
         <div id="legal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:900; align-items:center; justify-content:center; padding:16px;">
             <div id="legal-modal" style="max-width:900px; width:100%; max-height:85vh; overflow:auto; background:var(--c-bg-card); border:1px solid var(--c-border); border-radius:12px; padding:20px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
@@ -816,7 +852,7 @@
         let LAST_UPDATE = "31.12.2025, 08:30 Uhr";
         const PREMIUMS = { gold_coin: 1, gold_bar: 1, silver_coin: 1, silver_bar: 1, plat_coin: 1, pall_coin: 1 };
         const COIN_MODIFIERS = { 'g_phil_1': 1.00, 'g_krue_1': 0.97, 'g_maple_1': 0.99, 'g_brit_1': 1.01, 'g_eagle_1': 0.995, 'g_buff_1': 1.03, 'g_krue_05': 0.99 };
-        const catalogDB = [ /* same as before */
+        const catalogDB = [
             { id: 'g_krue_1', name: 'Krügerrand 1 oz', metal: 'gold', type: 'coin', fine: 31.103 },
             { id: 'g_krue_05', name: 'Krügerrand 1/2 oz', metal: 'gold', type: 'coin', fine: 15.552 },
             { id: 'g_maple_1', name: 'Maple Leaf 1 oz', metal: 'gold', type: 'coin', fine: 31.103 },
@@ -842,23 +878,14 @@
             { id: 'pd_maple', name: 'Palladium Maple Leaf 1 oz', metal: 'palladium', type: 'coin', fine: 31.103 },
             { id: 'pd_bar_1', name: 'Palladiumbarren 1 oz', metal: 'palladium', type: 'bar', fine: 31.103 }
         ];
+        let portfolio = []; let lastAddedIndex = -1; const STANDARD_ANKAUF_SPREAD = 1;
 
-        let portfolio = []; let lastAddedIndex = -1; const STANDARD_ANKAUF_SPREAD = 1
-            ;
-
-        /* ---------------------
-           NEUE MINIMALE ERWEITERUNG:
-           Lade ./prices.json (statisch) und überschreibe die
-           Basis-Spotpreise (DAILY_SPOT_EUR) + LAST_UPDATE.
-           Wenn das Laden fehlschlägt -> benutze die Fallback-Werte oben.
-           --------------------- */
         async function loadPricesThenInit() {
-            const PRICE_JSON_PATH = "./prices.json"; // relative Datei, z.B. von GitHub Pages docs/prices.json
+            const PRICE_JSON_PATH = "./prices.json";
             try {
                 const resp = await fetch(PRICE_JSON_PATH, { cache: "no-store" });
                 if (!resp.ok) throw new Error("prices.json nicht erreichbar: " + resp.status);
                 const data = await resp.json();
-                // Erwartete Struktur: { updated_at: "...", fetched_from: "...", rates: { gold: { per_oz: 3625.12 }, silver: {...}, ... } }
                 if (data && data.rates) {
                     if (data.rates.gold && typeof data.rates.gold.per_oz === 'number') DAILY_SPOT_EUR.gold = data.rates.gold.per_oz;
                     if (data.rates.silver && typeof data.rates.silver.per_oz === 'number') DAILY_SPOT_EUR.silver = data.rates.silver.per_oz;
@@ -874,44 +901,48 @@
                 LAST_UPDATE = "Fallback (offline) " + new Date().toLocaleString('de-DE');
             }
 
-            // init UI wie bisher (keine Änderung)
             try {
-                initCustomSelect(); populateCatalog('all'); renderPrices(); renderCoinComparison(); renderPortfolio(); buildMobileNav(); responsiveInit(); initMobileOverlay();
+                initCustomSelect();
+                populateCatalog('all'); renderPrices(); renderCoinComparison(); renderPortfolio(); buildMobileNav(); responsiveInit(); initMobileOverlay();
             } catch (e) {
                 console.error('Fehler beim Initialisieren der UI:', e);
             }
-            // show main content & update date label
-            const main = document.getElementById('main-app'); if (main) main.style.display = 'block';
+            const main = document.getElementById('main-app');
+            if (main) main.style.display = 'block';
             const updEl = document.getElementById('update-date'); if (updEl) updEl.innerText = LAST_UPDATE;
         }
 
         window.onload = function () {
-            
             loadPricesThenInit();
         };
 
-        function switchView(viewId) { document.querySelectorAll('.hidden-section').forEach(el => el.style.display = 'none'); document.getElementById(viewId).style.display = 'block'; document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); if (viewId === 'dashboard') document.getElementById('nav-dash').classList.add('active'); if (viewId === 'calculator') document.getElementById('nav-calc').classList.add('active'); if (viewId === 'analysis') document.getElementById('nav-ana').classList.add('active'); closeMobileNav(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        function switchView(viewId) { document.querySelectorAll('.hidden-section').forEach(el => el.style.display = 'none'); document.getElementById(viewId).style.display = 'block'; document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); if (viewId === 'dashboard') document.getElementById('nav-dash').classList.add('active');
+        if (viewId === 'calculator') document.getElementById('nav-calc').classList.add('active'); if (viewId === 'analysis') document.getElementById('nav-ana').classList.add('active'); closeMobileNav(); window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-        // MOBILE NAV: improved toggling + body-scroll lock
         function toggleMobileNav() {
-            const mn = document.getElementById('mobile-nav'); const overlay = document.getElementById('mobile-overlay'); const btn = document.getElementById('hamburger'); const isOpen = mn.classList.contains('open');
-            if (isOpen) closeMobileNav(); else {
-                mn.classList.add('open'); overlay.classList.add('active'); overlay.setAttribute('aria-hidden', 'false'); btn.setAttribute('aria-expanded', 'true'); mn.setAttribute('aria-hidden', 'false'); document.body.classList.add('no-scroll'); // lock scroll
-                // focus management: focus first link inside the drawer if exists
+            const mn = document.getElementById('mobile-nav');
+            const overlay = document.getElementById('mobile-overlay'); const btn = document.getElementById('hamburger'); const isOpen = mn.classList.contains('open');
+            if (isOpen) closeMobileNav();
+            else {
+                mn.classList.add('open'); overlay.classList.add('active');
+                overlay.setAttribute('aria-hidden', 'false'); btn.setAttribute('aria-expanded', 'true'); mn.setAttribute('aria-hidden', 'false'); document.body.classList.add('no-scroll');
                 setTimeout(() => { const first = mn.querySelector('.nav-item'); if (first) first.focus(); }, 220);
             }
         }
-        function closeMobileNav() { const mn = document.getElementById('mobile-nav'); const overlay = document.getElementById('mobile-overlay'); const btn = document.getElementById('hamburger'); mn.classList.remove('open'); overlay.classList.remove('active'); overlay.setAttribute('aria-hidden', 'true'); btn.setAttribute('aria-expanded', 'false'); mn.setAttribute('aria-hidden', 'true'); document.body.classList.remove('no-scroll'); }
-        function initMobileOverlay() { const overlay = document.getElementById('mobile-overlay'); overlay.addEventListener('click', closeMobileNav); document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileNav(); }); }
+        function closeMobileNav() { const mn = document.getElementById('mobile-nav');
+        const overlay = document.getElementById('mobile-overlay'); const btn = document.getElementById('hamburger'); mn.classList.remove('open'); overlay.classList.remove('active'); overlay.setAttribute('aria-hidden', 'true'); btn.setAttribute('aria-expanded', 'false'); mn.setAttribute('aria-hidden', 'true'); document.body.classList.remove('no-scroll');
+        }
+        function initMobileOverlay() { const overlay = document.getElementById('mobile-overlay'); overlay.addEventListener('click', closeMobileNav);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileNav(); });
+        }
 
         function buildMobileNav() {
             const mn = document.getElementById('mobile-nav');
-            // BUGFIX: select only the original nav menu items to avoid cloning clones
             const items = document.querySelectorAll('#navMenu .nav-item');
             mn.innerHTML = '';
             items.forEach(it => {
                 const clone = it.cloneNode(true);
-                // ensure cloned item is keyboard-focusable and will close drawer
                 clone.tabIndex = 0;
                 clone.onclick = function (ev) { ev.preventDefault(); it.onclick(); closeMobileNav(); };
                 clone.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { it.onclick(); closeMobileNav(); } });
@@ -920,49 +951,94 @@
             });
         }
 
-        // core functions unchanged (calculate, render etc.)
-        function calculateItemPrice(item) { const spotPerOz = DAILY_SPOT_EUR[item.metal]; const spotPerGram = spotPerOz / 31.1034768; let premium = 1.0; if (item.metal === 'gold') premium = (item.type === 'coin') ? PREMIUMS.gold_coin : PREMIUMS.gold_bar; if (item.metal === 'silver') premium = (item.type === 'coin') ? PREMIUMS.silver_coin : PREMIUMS.silver_bar; if (item.metal === 'platinum') premium = PREMIUMS.plat_coin; if (item.metal === 'palladium') premium = PREMIUMS.pall_coin; const coinModifier = (item.type === 'coin' && COIN_MODIFIERS[item.id]) ? COIN_MODIFIERS[item.id] : 1.0; return item.fine * spotPerGram * premium * coinModifier; }
-        function formatMoney(val) { return val.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }); }
-
-        function renderPrices() { const phil = catalogDB.find(i => i.id === 'g_phil_1'); const philPrice = (phil) ? calculateItemPrice(phil) : (DAILY_SPOT_EUR.gold * PREMIUMS.gold_coin); document.getElementById('dash-gold').innerText = formatMoney(philPrice); const silver1 = catalogDB.find(i => i.id === 's_maple') || { metal: 'silver' }; const plat1 = catalogDB.find(i => i.id === 'pt_maple') || { metal: 'platinum' }; const pall1 = catalogDB.find(i => i.id === 'pd_maple') || { metal: 'palladium' }; document.getElementById('dash-silver').innerText = formatMoney(calculateItemPrice(silver1)); document.getElementById('dash-plat').innerText = formatMoney(calculateItemPrice(plat1)); document.getElementById('dash-pall').innerText = formatMoney(calculateItemPrice(pall1)); document.getElementById('update-date').innerText = LAST_UPDATE; }
-
-        function renderCoinComparison() { const compareIds = ['g_phil_1', 'g_krue_1', 'g_maple_1', 'g_brit_1', 'g_eagle_1', 'g_buff_1']; const container = document.getElementById('coin-compare'); container.innerHTML = ''; compareIds.forEach(id => { const item = catalogDB.find(i => i.id === id); if (!item) return; const price = calculateItemPrice(item); const el = document.createElement('div'); el.style.display = 'flex'; el.style.justifyContent = 'space-between'; el.style.alignItems = 'center'; el.style.gap = '8px'; el.innerHTML = `<div style="font-weight:700; color:var(--c-text-main); font-size:0.95rem;">${item.name}</div><div style='text-align:right; font-size:0.95rem; color:var(--c-primary);'>${formatMoney(price)}</div>`; container.appendChild(el); }); }
-
-        // CUSTOM SELECT IMPLEMENTATION
-        function initCustomSelect() { const toggle = document.getElementById('catalogToggle'); const list = document.getElementById('catalogList'); const native = document.getElementById('catalogSelect'); toggle.addEventListener('click', (e) => { const open = list.hasAttribute('hidden'); if (open) { openCatalogList(); } else { closeCatalogList(); } }); document.addEventListener('click', (e) => { if (!e.target.closest('.select-wrapper')) closeCatalogList(); }); document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCatalogList(); }); function openCatalogList() { list.hidden = false; list.removeAttribute('hidden'); toggle.setAttribute('aria-expanded', 'true'); list.focus(); } function closeCatalogList() { list.hidden = true; toggle.setAttribute('aria-expanded', 'false'); } }
-
-        function populateCatalog(filter) { const sel = document.getElementById('catalogSelect'); const list = document.getElementById('catalogList'); sel.innerHTML = ''; list.innerHTML = ''; catalogDB.forEach(item => { if (filter === 'all' || item.metal === filter) { let opt = document.createElement('option'); opt.value = item.id; opt.text = item.name; sel.appendChild(opt); let li = document.createElement('li'); li.tabIndex = 0; li.setAttribute('role', 'option'); li.dataset.value = item.id; li.innerText = item.name; li.addEventListener('click', () => { selectCatalogItem(item.id); }); li.addEventListener('keydown', (e) => { if (e.key === 'Enter') selectCatalogItem(item.id); }); list.appendChild(li); } }); if (sel.options && sel.options.length > 0) { sel.selectedIndex = 0; selectCatalogItem(sel.options[0].value); } }
-
-        function selectCatalogItem(id) { const sel = document.getElementById('catalogSelect'); const list = document.getElementById('catalogList'); const toggle = document.getElementById('catalogToggle'); sel.value = id; Array.from(list.children).forEach(li => { li.removeAttribute('aria-selected'); if (li.dataset.value === id) { li.setAttribute('aria-selected', 'true'); li.scrollIntoView({ block: 'nearest' }); } }); const item = catalogDB.find(x => x.id === id); toggle.innerHTML = `${item.name} <i class="fa-solid fa-caret-down"></i>`; updateCatDetails(); list.hidden = true; toggle.setAttribute('aria-expanded', 'false'); }
-
-        function updateCatDetails() { const sel = document.getElementById('catalogSelect'); const id = sel.value || (sel.options[0] && sel.options[0].value); if (!id) return; const item = catalogDB.find(x => x.id === id); if (!item) return; const price = calculateItemPrice(item); document.getElementById('cat-price-display').value = formatMoney(price); }
-
-        function toggleCalcMode(mode) { document.getElementById('mode-catalog').style.display = (mode === 'catalog') ? 'block' : 'none'; document.getElementById('mode-raw').style.display = (mode === 'raw') ? 'block' : 'none'; document.getElementById('tab-cat').classList.toggle('active', mode === 'catalog'); document.getElementById('tab-raw').classList.toggle('active', mode === 'raw'); }
-        function filterCatalog(metalType) { populateCatalog(metalType); }
-
-        function addToPortfolio() {
-            let itemToAdd = {}; const spreadVal = STANDARD_ANKAUF_SPREAD; const catalogMode = document.getElementById('tab-cat').classList.contains('active'); if (catalogMode) { const id = document.getElementById('catalogSelect').value; const qty = parseInt(document.getElementById('cat-qty').value) || 1; const dbItem = catalogDB.find(x => x.id === id); if (!dbItem) return alert('Kein Produkt gewählt'); let basePrice = calculateItemPrice(dbItem); itemToAdd = { name: dbItem.name, metal: dbItem.metal, singleVal: basePrice, qty: qty, spread: spreadVal }; } else { const metal = document.getElementById('raw-metal').value; const weight = parseFloat(document.getElementById('raw-weight').value); const purity = parseFloat(document.getElementById('raw-purity').value); if (!weight || weight <= 0) return alert("Gewicht fehlt oder ungültig"); const spotPerOz = DAILY_SPOT_EUR[metal]; const spotPerGram = spotPerOz / 31.1034768; let basePrice = (weight * purity) * spotPerGram; itemToAdd = { name: `Manuell (${metal.toUpperCase()})`, metal: metal, singleVal: basePrice, qty: 1, spread: spreadVal }; }
-            portfolio.push(itemToAdd); lastAddedIndex = portfolio.length - 1; renderPortfolio(); const addBtn = document.querySelector('.btn.btn-primary'); addBtn.style.transform = 'scale(0.98)'; setTimeout(() => addBtn.style.transform = '', 140);
+        function calculateItemPrice(item) { const spotPerOz = DAILY_SPOT_EUR[item.metal];
+        const spotPerGram = spotPerOz / 31.1034768; let premium = 1.0; if (item.metal === 'gold') premium = (item.type === 'coin') ?
+        PREMIUMS.gold_coin : PREMIUMS.gold_bar; if (item.metal === 'silver') premium = (item.type === 'coin') ? PREMIUMS.silver_coin : PREMIUMS.silver_bar;
+        if (item.metal === 'platinum') premium = PREMIUMS.plat_coin; if (item.metal === 'palladium') premium = PREMIUMS.pall_coin;
+        const coinModifier = (item.type === 'coin' && COIN_MODIFIERS[item.id]) ? COIN_MODIFIERS[item.id] : 1.0; return item.fine * spotPerGram * premium * coinModifier;
+        }
+        function formatMoney(val) { return val.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
         }
 
-        function renderPortfolio() { const container = document.getElementById('portfolio-container'); let total = 0; if (portfolio.length === 0) { container.innerHTML = '<p style="text-align:center; color: var(--c-text-muted); padding-top: 40px;">Noch keine Positionen.</p>'; document.getElementById('total-value').innerText = formatMoney(0); document.getElementById('port-count').innerText = "0 Positionen"; return; } let html = '<div class="inventory-list">'; portfolio.forEach((item, index) => { const totalItemVal = item.singleVal * item.qty * item.spread; total += totalItemVal; let spreadLabel = ""; if (item.spread < 1.0 && item.spread > 0.8) spreadLabel = '<span style="font-size:0.7rem; color:var(--c-text-muted)">(Ankaufswert)</span>'; let iconColor = 'var(--c-text-main)'; if (item.metal === 'gold') iconColor = 'var(--color-gold)'; if (item.metal === 'silver') iconColor = 'var(--color-silver)'; if (item.metal === 'platinum') iconColor = 'var(--color-plat)'; if (item.metal === 'palladium') iconColor = 'var(--color-pall)'; html += `\n<div class="inventory-item" data-idx="${index}">\n  <div style="display:flex; align-items:center; gap:10px;">\n    <i class="fa-solid fa-circle" style="font-size:0.7rem; color:${iconColor};"></i>\n    <div>\n      <div style="font-weight:700; color:var(--c-text-main);">${item.name}</div>\n      <div style="font-size:0.82rem; color:var(--c-text-muted);">${item.qty} Stück ${spreadLabel}</div>\n    </div>\n  </div>\n  <div style="text-align:right;">\n    <div style="font-weight:700; color:var(--c-primary);">${formatMoney(totalItemVal)}</div>\n    <i class="fa-solid fa-trash" style="cursor:pointer; color:var(--c-text-muted); font-size:0.88rem; margin-top:6px;" onclick="removeFromPortfolio(${index})" aria-label="Position löschen"></i>\n  </div>\n</div>`; }); html += '</div>'; container.innerHTML = html; if (lastAddedIndex >= 0) { const itemEl = container.querySelector(`.inventory-item[data-idx='${lastAddedIndex}']`); if (itemEl) { itemEl.classList.add('item-added'); setTimeout(() => itemEl.classList.remove('item-added'), 600); } lastAddedIndex = -1; } document.getElementById('total-value').innerText = formatMoney(total); document.getElementById('port-count').innerText = portfolio.length + " Positionen"; }
+        function renderPrices() { const phil = catalogDB.find(i => i.id === 'g_phil_1');
+        const philPrice = (phil) ? calculateItemPrice(phil) : (DAILY_SPOT_EUR.gold * PREMIUMS.gold_coin); document.getElementById('dash-gold').innerText = formatMoney(philPrice);
+        const silver1 = catalogDB.find(i => i.id === 's_maple') || { metal: 'silver' };
+        const plat1 = catalogDB.find(i => i.id === 'pt_maple') || { metal: 'platinum' };
+        const pall1 = catalogDB.find(i => i.id === 'pd_maple') || { metal: 'palladium' }; document.getElementById('dash-silver').innerText = formatMoney(calculateItemPrice(silver1)); document.getElementById('dash-plat').innerText = formatMoney(calculateItemPrice(plat1));
+        document.getElementById('dash-pall').innerText = formatMoney(calculateItemPrice(pall1)); document.getElementById('update-date').innerText = LAST_UPDATE; }
+
+        function renderCoinComparison() { const compareIds = ['g_phil_1', 'g_krue_1', 'g_maple_1', 'g_brit_1', 'g_eagle_1', 'g_buff_1'];
+        const container = document.getElementById('coin-compare'); container.innerHTML = ''; compareIds.forEach(id => { const item = catalogDB.find(i => i.id === id); if (!item) return; const price = calculateItemPrice(item); const el = document.createElement('div'); el.style.display = 'flex'; el.style.justifyContent = 'space-between'; el.style.alignItems = 'center'; el.style.gap = '8px'; el.innerHTML = `<div style="font-weight:700; color:var(--c-text-main); font-size:0.95rem;">${item.name}</div><div style='text-align:right; font-size:0.95rem; color:var(--c-primary);'>${formatMoney(price)}</div>`; container.appendChild(el); });
+        }
+
+        function initCustomSelect() { const toggle = document.getElementById('catalogToggle');
+        const list = document.getElementById('catalogList'); const native = document.getElementById('catalogSelect'); toggle.addEventListener('click', (e) => { const open = list.hasAttribute('hidden'); if (open) { openCatalogList(); } else { closeCatalogList(); } });
+        document.addEventListener('click', (e) => { if (!e.target.closest('.select-wrapper')) closeCatalogList(); }); document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCatalogList(); });
+        function openCatalogList() { list.hidden = false; list.removeAttribute('hidden'); toggle.setAttribute('aria-expanded', 'true'); list.focus(); } function closeCatalogList() { list.hidden = true; toggle.setAttribute('aria-expanded', 'false');
+        } }
+
+        function populateCatalog(filter) { const sel = document.getElementById('catalogSelect'); const list = document.getElementById('catalogList');
+        sel.innerHTML = ''; list.innerHTML = ''; catalogDB.forEach(item => { if (filter === 'all' || item.metal === filter) { let opt = document.createElement('option'); opt.value = item.id; opt.text = item.name; sel.appendChild(opt); let li = document.createElement('li'); li.tabIndex = 0; li.setAttribute('role', 'option'); li.dataset.value = item.id; li.innerText = item.name; li.addEventListener('click', () => { selectCatalogItem(item.id); }); li.addEventListener('keydown', (e) => { if (e.key === 'Enter') selectCatalogItem(item.id); }); list.appendChild(li); } });
+        if (sel.options && sel.options.length > 0) { sel.selectedIndex = 0; selectCatalogItem(sel.options[0].value);
+        } }
+
+        function selectCatalogItem(id) { const sel = document.getElementById('catalogSelect'); const list = document.getElementById('catalogList');
+        const toggle = document.getElementById('catalogToggle'); sel.value = id; Array.from(list.children).forEach(li => { li.removeAttribute('aria-selected'); if (li.dataset.value === id) { li.setAttribute('aria-selected', 'true'); li.scrollIntoView({ block: 'nearest' }); } });
+        const item = catalogDB.find(x => x.id === id); toggle.innerHTML = `${item.name} <i class="fa-solid fa-caret-down"></i>`; updateCatDetails(); list.hidden = true; toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        function updateCatDetails() { const sel = document.getElementById('catalogSelect'); const id = sel.value ||
+        (sel.options[0] && sel.options[0].value); if (!id) return; const item = catalogDB.find(x => x.id === id); if (!item) return;
+        const price = calculateItemPrice(item); document.getElementById('cat-price-display').value = formatMoney(price); }
+
+        function toggleCalcMode(mode) { document.getElementById('mode-catalog').style.display = (mode === 'catalog') ?
+        'block' : 'none'; document.getElementById('mode-raw').style.display = (mode === 'raw') ? 'block' : 'none'; document.getElementById('tab-cat').classList.toggle('active', mode === 'catalog'); document.getElementById('tab-raw').classList.toggle('active', mode === 'raw');
+        }
+        function filterCatalog(metalType) { populateCatalog(metalType);
+        }
+
+        function addToPortfolio() {
+            let itemToAdd = {};
+            const spreadVal = STANDARD_ANKAUF_SPREAD; const catalogMode = document.getElementById('tab-cat').classList.contains('active'); if (catalogMode) { const id = document.getElementById('catalogSelect').value; const qty = parseInt(document.getElementById('cat-qty').value) ||
+            1; const dbItem = catalogDB.find(x => x.id === id); if (!dbItem) return alert('Kein Produkt gewählt'); let basePrice = calculateItemPrice(dbItem);
+            itemToAdd = { name: dbItem.name, metal: dbItem.metal, singleVal: basePrice, qty: qty, spread: spreadVal };
+            } else { const metal = document.getElementById('raw-metal').value; const weight = parseFloat(document.getElementById('raw-weight').value); const purity = parseFloat(document.getElementById('raw-purity').value);
+            if (!weight || weight <= 0) return alert("Gewicht fehlt oder ungültig"); const spotPerOz = DAILY_SPOT_EUR[metal];
+            const spotPerGram = spotPerOz / 31.1034768; let basePrice = (weight * purity) * spotPerGram;
+            itemToAdd = { name: `Manuell (${metal.toUpperCase()})`, metal: metal, singleVal: basePrice, qty: 1, spread: spreadVal };
+            }
+            portfolio.push(itemToAdd); lastAddedIndex = portfolio.length - 1; renderPortfolio();
+            const addBtn = document.querySelector('.btn.btn-primary'); addBtn.style.transform = 'scale(0.98)'; setTimeout(() => addBtn.style.transform = '', 140);
+        }
+
+        function renderPortfolio() { const container = document.getElementById('portfolio-container'); let total = 0;
+        if (portfolio.length === 0) { container.innerHTML = '<p style="text-align:center; color: var(--c-text-muted); padding-top: 40px;">Noch keine Positionen.</p>'; document.getElementById('total-value').innerText = formatMoney(0);
+        document.getElementById('port-count').innerText = "0 Positionen"; return; } let html = '<div class="inventory-list">';
+        portfolio.forEach((item, index) => { const totalItemVal = item.singleVal * item.qty * item.spread; total += totalItemVal; let spreadLabel = ""; if (item.spread < 1.0 && item.spread > 0.8) spreadLabel = '<span style="font-size:0.7rem; color:var(--c-text-muted)">(Ankaufswert)</span>'; let iconColor = 'var(--c-text-main)'; if (item.metal === 'gold') iconColor = 'var(--color-gold)'; if (item.metal === 'silver') iconColor = 'var(--color-silver)'; if (item.metal === 'platinum') iconColor = 'var(--color-plat)'; if (item.metal === 'palladium') iconColor = 'var(--color-pall)'; html += `\n<div class="inventory-item" data-idx="${index}">\n  <div style="display:flex; align-items:center; gap:10px;">\n    <i class="fa-solid fa-circle" style="font-size:0.7rem; color:${iconColor};"></i>\n    <div>\n      <div style="font-weight:700; color:var(--c-text-main);">${item.name}</div>\n      <div style="font-size:0.82rem; color:var(--c-text-muted);">${item.qty} Stück ${spreadLabel}</div>\n    </div>\n  </div>\n  <div style="text-align:right;">\n    <div style="font-weight:700; color:var(--c-primary);">${formatMoney(totalItemVal)}</div>\n    <i class="fa-solid fa-trash" style="cursor:pointer; color:var(--c-text-muted); font-size:0.88rem; margin-top:6px;" onclick="removeFromPortfolio(${index})" aria-label="Position löschen"></i>\n  </div>\n</div>`; }); html += '</div>'; container.innerHTML = html; if (lastAddedIndex >= 0) { const itemEl = container.querySelector(`.inventory-item[data-idx='${lastAddedIndex}']`); if (itemEl) { itemEl.classList.add('item-added'); setTimeout(() => itemEl.classList.remove('item-added'), 600); } lastAddedIndex = -1; } document.getElementById('total-value').innerText = formatMoney(total); document.getElementById('port-count').innerText = portfolio.length + " Positionen"; }
 
         function removeFromPortfolio(idx) { portfolio.splice(idx, 1); renderPortfolio(); }
         function clearPortfolio() { portfolio = []; renderPortfolio(); }
 
-        function responsiveInit() { buildMobileNav(); function adjustCharts() { const tvs = document.querySelectorAll('.tradingview-widget-container'); tvs.forEach(el => { if (window.innerWidth < 700) el.style.minHeight = '220px'; else if (window.innerWidth < 1100) el.style.minHeight = '360px'; else el.style.minHeight = '540px'; }); } adjustCharts(); window.addEventListener('resize', adjustCharts); }
+        function responsiveInit() { buildMobileNav(); function adjustCharts() { const tvs = document.querySelectorAll('.tradingview-widget-container'); tvs.forEach(el => { if (window.innerWidth < 700) el.style.minHeight = '220px'; else if (window.innerWidth < 1100) el.style.minHeight = '360px'; else el.style.minHeight = '540px'; }); } adjustCharts(); window.addEventListener('resize', adjustCharts);
+        }
 
-        // LEGAL modal
-        function openLegal(type) { const overlay = document.getElementById('legal-overlay'); const title = document.getElementById('legal-title'); const content = document.getElementById('legal-content'); overlay.style.display = 'flex'; if (type === 'impressum') { title.innerText = 'Impressum'; content.innerHTML = `<strong>Metallindex Group</strong><br>Österreich<br>Telefon: -------------- <br>E-Mail: info.ttedelmetalle@gmail.com<br>Betreiber: Tobias T.`; } else { title.innerText = 'Haftungsausschluss'; content.innerHTML = `<strong>Haftungsausschluss / Disclaimer</strong><br><br>Die Informationen auf dieser Webseite dienen ausschließlich Informationszwecken und stellen weder ein Angebot noch eine Anlageberatung dar. Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Gewähr für die Aktualität, Richtigkeit, Vollständigkeit oder Qualität der bereitgestellten Informationen. <br><br>Insbesondere sind die dargestellten Preise indikativ und können Abweichungen gegenüber konkreten Händlerspreisen aufweisen. Entscheidungen, die Sie auf Grundlage der Inhalte dieser Seite treffen, liegen in Ihrer Verantwortung. Wir haften nicht für unmittelbare oder mittelbare Schäden, die aus der Nutzung dieser Informationen entstehen.`; } }
-        function closeLegal() { document.getElementById('legal-overlay').style.display = 'none'; }
+        function openLegal(type) { const overlay = document.getElementById('legal-overlay');
+        const title = document.getElementById('legal-title'); const content = document.getElementById('legal-content'); overlay.style.display = 'flex'; if (type === 'impressum') { title.innerText = 'Impressum';
+        content.innerHTML = `<strong>Metallindex Group</strong><br>Österreich<br>Telefon: -------------- <br>E-Mail: info.ttedelmetalle@gmail.com<br>Betreiber: Tobias T.`; } else { title.innerText = 'Haftungsausschluss';
+        content.innerHTML = `<strong>Haftungsausschluss / Disclaimer</strong><br><br>Die Informationen auf dieser Webseite dienen ausschließlich Informationszwecken und stellen weder ein Angebot noch eine Anlageberatung dar.
+        Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Gewähr für die Aktualität, Richtigkeit, Vollständigkeit oder Qualität der bereitgestellten Informationen.
+        <br><br>Insbesondere sind die dargestellten Preise indikativ und können Abweichungen gegenüber konkreten Händlerspreisen aufweisen.
+        Entscheidungen, die Sie auf Grundlage der Inhalte dieser Seite treffen, liegen in Ihrer Verantwortung.
+        Wir haften nicht für unmittelbare oder mittelbare Schäden, die aus der Nutzung dieser Informationen entstehen.`;
+        } }
+        function closeLegal() { document.getElementById('legal-overlay').style.display = 'none';
+        }
 
-        // =========================================================================
-        // PDF Export: professional, text-based export using jsPDF
-        // requires jspdf (loaded below). The export uses the same formatMoney helper.
-        // =========================================================================
         function exportPortfolioPDF() {
-            if (!portfolio || portfolio.length === 0) { alert('Das Portfolio ist leer. Bitte fügen Sie zuerst Positionen hinzu.'); return; }
-            if (!window.jspdf) { alert('PDF-Export: Bibliothek nicht geladen. Bitte prüfen Sie die Verbindung.'); return; }
+            if (!portfolio || portfolio.length === 0) { alert('Das Portfolio ist leer. Bitte fügen Sie zuerst Positionen hinzu.');
+            return; }
+            if (!window.jspdf) { alert('PDF-Export: Bibliothek nicht geladen. Bitte prüfen Sie die Verbindung.');
+            return; }
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ unit: 'mm', format: 'a4' });
             const margin = 15;
@@ -973,8 +1049,6 @@
             y += 6;
             doc.text('Exportdatum: ' + new Date().toLocaleString('de-DE'), margin, y);
             y += 8;
-
-            // header row
             doc.setFontSize(11);
             doc.setFont(undefined, 'bold');
             doc.text('Pos.', margin, y);
@@ -997,7 +1071,7 @@
                 const singleStr = formatMoney(item.singleVal);
                 const totalStr = formatMoney(totalItemVal);
 
-                const maxWidthName = 80; // mm
+                const maxWidthName = 80;
                 const splitName = doc.splitTextToSize(name, maxWidthName);
                 const lines = Math.max(splitName.length, 1);
 
@@ -1016,28 +1090,23 @@
                 }
             });
 
-            if (y > 260) { doc.addPage(); y = 20; }
+            if (y > 260) { doc.addPage();
+            y = 20; }
             y += 4;
             doc.setLineWidth(0.4);
             doc.line(margin, y, 195, y);
             y += 8;
             doc.setFont(undefined, 'bold');
             const totalValueText = document.getElementById('total-value').innerText || formatMoney(0);
-           // ... (oberer Teil der Funktion bleibt gleich) ...
             
             doc.text('Gesamtwert: ' + totalValueText, margin, y);
-
             const filename = 'Metallindex_Portfolio_' + (new Date()).toISOString().slice(0, 10) + '.pdf';
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-            // --- NEUE LÖSUNG FÜR iPHONE (Native Share API) ---
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-                          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-            // Prüfen, ob der Browser das "Teilen" von Dateien unterstützt (Standard auf iOS)
             if (isIOS && navigator.share && navigator.canShare) {
                 const blob = doc.output('blob');
                 const file = new File([blob], filename, { type: 'application/pdf' });
-
                 if (navigator.canShare({ files: [file] })) {
                     navigator.share({
                         files: [file],
@@ -1045,30 +1114,16 @@
                         text: 'Hier ist dein Portfolio Export.'
                     }).catch((err) => {
                         console.error('Teilen abgebrochen oder fehlgeschlagen:', err);
-                        // Fallback, falls Teilen abgebrochen wurde (nichts tun oder alert)
                     });
                 } else {
-                    // Fallback für ältere iOS Versionen
                     window.open(doc.output('bloburl'), '_blank');
                 }
             } else {
-                // Standardweg für Android / Desktop PC
                 doc.save(filename);
             }
 }
     </script>
 
-    <!-- jspdf (UMD) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
