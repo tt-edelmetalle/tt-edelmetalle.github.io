@@ -1,27 +1,29 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Marktübersicht — T&T Edelmetalle</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Marktübersicht — T&amp;T Edelmetalle</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <header class="navbar container">
-    <div class="brand" onclick="location.href='index.html'"><span style="color:var(--c-primary)">T&T</span> Edelmetalle</div>
-    <nav><a href="calculator.html">Rechner</a> · <a href="analysis.html">Wissenswertes</a></nav>
-  </header>
+    <header class="navbar container">
+        <div class="brand" onclick="location.href='index.html'"><span style="color:var(--c-primary)">T&amp;T</span> Edelmetalle</div>
+        <nav>
+            <a class="nav-link" href="index.html">Start</a>
+            <a class="nav-link" href="calculator.html">Rechner</a>
+            <a class="nav-link" href="analysis.html">Wissenswertes</a>
+        </nav>
+    </header>
 
-  <main class="container">
-    <h1>Marktübersicht</h1>
+    <main class="container" style="padding-top:18px;">
+        <h1>Marktübersicht</h1>
 
-    <!-- Charts: Container hat feste min-height -> kein Layout Shift beim Laden -->
-    <section class="card" style="min-height:540px">
-      <div id="chart-root" class="tradingview-widget-container" style="height:100%"></div>
-      <!-- TradingView Widget wird nur geladen, wenn consent accepted (app.js) -->
-    </section>
-  </main>
+        <section class="card" style="min-height:540px; margin-top:12px;">
+            <div id="chart-root" class="tradingview-widget-container" style="height:100%; min-height:360px;"></div>
+        </section>
+    </main>
 
-  <script src="assets/js/app.js" defer></script>
+    <script src="assets/js/app.js" defer></script>
 </body>
 </html>
