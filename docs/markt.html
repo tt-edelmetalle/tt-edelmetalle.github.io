@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>T&T Edelmetalle | Aktuelle Marktpreise Gold & Silber</title>
+    <meta name="description" content="Live Händlerpreise und Charts für Gold, Silber, Platin und Palladium." />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="main-app">
+        <nav class="navbar" role="navigation" aria-label="Hauptnavigation">
+            <div class="nav-inner">
+                <a href="index.html" class="brand-logo"><i class="fa-solid fa-layer-group"></i><span>T&T</span>Edelmetalle</a>
+                <button id="hamburger" class="btn btn-outline" onclick="toggleMobileNav()"><i class="fa-solid fa-bars"></i></button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="markt.html" class="nav-item active">Marktübersicht</a>
+                    <a href="rechner.html" class="nav-item">Portfolio Rechner</a>
+                    <a href="wissen.html" class="nav-item">Wissenswertes</a>
+                </div>
+            </div>
+        </nav>
+
+        <div id="mobile-overlay"></div>
+        <div id="mobile-nav"></div>
+
+        <div style="height:46px; background:transparent; border-bottom:1px solid var(--c-border);">
+            <div class="tradingview-widget-container" style="height:46px;">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+                {
+                "symbols": [
+                    { "proName": "FOREXCOM:XAUUSD", "title": "Gold Spot $" },
+                    { "proName": "FOREXCOM:XAGUSD", "title": "Silber Spot $" },
+                    { "proName": "TVC:PLATINUM", "title": "Platin Spot $" },
+                    { "proName": "TVC:PALLADIUM", "title": "Palladium Spot $" }
+                ],
+                "colorTheme": "dark", "isTransparent": true, "displayMode": "compact", "locale": "de_DE"
+                }
+                </script>
+            </div>
+        </div>
+
+        <main class="container" style="padding-top:20px; padding-bottom:50px;">
+            <div class="grid-dashboard">
+                <aside class="sidebar" style="display:flex; flex-direction:column; gap:16px;">
+                    <div class="card" style="border-left:4px solid var(--c-primary);">
+                        <div class="source-badge"><i class="fa-solid fa-building-columns"></i> Ankaufspreis (Händler-Indikation)</div>
+                        <div class="input-label" style="margin-top:6px">Gold 1 oz (Ankaufspreis)</div>
+                        <div class="big-price" id="dash-gold">...</div>
+                        <div class="sub-price">abzüglich spread</div>
+                    </div>
+                    <div class="card" style="padding:12px;">
+                        <div class="card-title" style="font-size:0.95rem; margin-bottom:8px;"><i class="fa-solid fa-coins"></i> Vergleich: 1 oz Münzen</div>
+                        <div id="coin-compare" style="display:flex; flex-direction:column; gap:8px; font-size:0.95rem; color:var(--c-text-muted);"></div>
+                    </div>
+                    <div class="card" style="border-left:4px solid var(--color-silver);">
+                        <div class="input-label">Silber 1 oz (Münze)</div>
+                        <div class="big-price" id="dash-silver" style="color: var(--color-silver);">...</div>
+                        <div class="sub-price">abzüglich spread</div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card" style="padding:12px; border-left:4px solid var(--color-plat);">
+                            <div class="input-label">Platin 1oz</div>
+                            <div style="font-size:1.05rem; font-weight:700; color: var(--color-plat);" id="dash-plat">...</div>
+                        </div>
+                        <div class="card" style="padding:12px; border-left:4px solid var(--color-pall);">
+                            <div class="input-label">Palladium 1oz</div>
+                            <div style="font-size:1.05rem; font-weight:700; color: var(--color-pall);" id="dash-pall">...</div>
+                        </div>
+                    </div>
+                    <div style="font-size:0.78rem; color:var(--c-text-muted); text-align:center;">
+                        Preise aktualisiert am: <span id="update-date">...</span>
+                    </div>
+                </aside>
+
+                <div class="main-content">
+                    <div class="card" style="height:560px;">
+                        <div class="card-header">
+                            <h2 class="card-title" style="margin:0; font-size:1rem;"><i class="fa-solid fa-chart-area"></i> Spot Markt Entwicklung</h2>
+                        </div>
+                        <div class="tradingview-widget-container">
+                            <div class="tradingview-widget-container__widget"></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+                            {
+                            "symbols": [
+                                ["Gold", "FOREXCOM:XAUUSD|1D"],
+                                ["Silber", "FOREXCOM:XAGUSD|1D"],
+                                ["Platin", "TVC:PLATINUM|1D"],
+                                ["Palladium", "TVC:PALLADIUM|1D"]
+                            ],
+                            "chartOnly": false, "width": "100%", "height": "100%", "locale": "de_DE",
+                            "colorTheme": "dark", "autosize": true, "showVolume": false, "hideDateRanges": false,
+                            "scalePosition": "right", "backgroundColor": "#151e32"
+                            }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+             <div class="container" style="display:flex; flex-direction:column; gap:8px; align-items:center;">
+                <div style="max-width:1000px; text-align:center; color:var(--c-text-muted); font-size:0.9rem;">&copy; 2025. Alle Rechte vorbehalten.</div>
+                <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:6px;">
+                    <button class="btn btn-outline btn-sm" onclick="openLegal('impressum')">Impressum</button>
+                    <button class="btn btn-outline btn-sm" onclick="openLegal('haftung')">Haftungsausschluss</button>
+                    <button class="btn btn-outline btn-sm" onclick="openLegal('datenschutz')">Datenschutz</button>
+                </div>
+            </div>
+        </footer>
+        
+        <div id="legal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:900; align-items:center; justify-content:center; padding:16px;">
+            <div id="legal-modal" style="max-width:900px; width:100%; max-height:85vh; overflow:auto; background:var(--c-bg-card); border:1px solid var(--c-border); border-radius:12px; padding:20px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+                    <h3 id="legal-title">Rechtliches</h3>
+                    <button class="btn btn-outline" onclick="closeLegal()"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div id="legal-content" style="margin-top:12px; color:var(--c-text-muted); line-height:1.45;"></div>
+            </div>
+        </div>
+        
+        <div id="consent-overlay" style="display:none;">
+            <div id="consent-banner">
+                <div class="consent-text"><div style="font-weight:700; color:var(--c-text-main);">Drittanbieter</div><div class="consent-small">Zustimmung erforderlich.</div></div>
+                <div class="consent-actions"><button class="btn btn-outline btn-sm" onclick="declineConsent()">Ablehnen</button><button class="btn btn-primary btn-sm" onclick="acceptConsent()">Akzeptieren</button></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
