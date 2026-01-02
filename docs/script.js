@@ -80,6 +80,7 @@ async function loadPricesThenInit() {
 
 window.onload = function () {
     loadPricesThenInit();
+    // Automatischer Aufruf des Consent-Banners beim Laden
     initConsentState();
 };
 
@@ -364,12 +365,13 @@ function openLegal(type) {
     
     if (type === 'impressum') { 
         headline = 'Impressum'; 
-        // Ich habe hier automatisch die Daten aus deiner Datenschutzerklärung übernommen, damit es einheitlich ist.
+        // Adresse angeglichen an Datenschutz
         html = '<p><strong>Angaben gemäß § 5 TMG</strong></p><p>T&T Edelmetalle<br>Österreich<br>2293 marchegg<br>E-Mail: info.ttedelmetalle@gmail.com</p>'; 
     }
 
     if (type === 'haftung') { 
         headline = 'Haftungsausschluss'; 
+        // Hier sind deine exakten Haftungsausschluss-Texte
         html = `
         <p>
         Die Inhalte dieser Website wurden mit größtmöglicher Sorgfalt erstellt.
@@ -387,6 +389,7 @@ function openLegal(type) {
 
     if (type === 'datenschutz') { 
         headline = 'Datenschutzerklärung'; 
+        // Hier sind deine exakten Datenschutz-Texte inkl. Marchegg Adresse
         html = `
         <p><strong>1. Allgemeine Hinweise</strong></p>
         <p>
@@ -500,24 +503,39 @@ function exportPortfolioPDF() {
     doc.save('Portfolio_Export.pdf');
 }
 
-/* -------- Consent Management -------- */
+/* -------- Consent Management (Automatic Popup) -------- */
 function getConsent() { try { return localStorage.getItem('tt_consent'); } catch (e) { return null; } }
 function setConsent(value) { try { localStorage.setItem('tt_consent', value); } catch (e) { } }
+
 function showConsentBanner() {
     const overlay = document.getElementById('consent-overlay');
     if (!overlay) return;
     overlay.style.display = 'flex';
     document.body.classList.add('no-scroll');
 }
+
 function hideConsentBanner() {
     const overlay = document.getElementById('consent-overlay');
     if (!overlay) return;
     overlay.style.display = 'none';
     document.body.classList.remove('no-scroll');
 }
-function acceptConsent() { setConsent('accepted'); hideConsentBanner(); }
-function declineConsent() { setConsent('declined'); hideConsentBanner(); }
+
+function acceptConsent() { 
+    setConsent('accepted'); 
+    hideConsentBanner(); 
+}
+
+function declineConsent() { 
+    setConsent('declined'); 
+    hideConsentBanner(); 
+}
+
+// Diese Funktion prüft automatisch beim Start, ob bereits eine Wahl getroffen wurde.
+// Falls nicht, wird das Popup angezeigt.
 function initConsentState() {
     const current = getConsent();
-    if (!current) showConsentBanner();
+    if (!current) {
+        showConsentBanner();
+    }
 }
