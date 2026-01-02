@@ -1,29 +1,54 @@
 <!doctype html>
 <html lang="de">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Marktübersicht — T&amp;T Edelmetalle</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Marktübersicht — T&amp;T Edelmetalle</title>
+  <meta name="description" content="Marktübersicht & Charts für Edelmetalle" />
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <header class="navbar container">
-        <div class="brand" onclick="location.href='index.html'"><span style="color:var(--c-primary)">T&amp;T</span> Edelmetalle</div>
-        <nav>
-            <a class="nav-link" href="index.html">Start</a>
-            <a class="nav-link" href="calculator.html">Rechner</a>
-            <a class="nav-link" href="analysis.html">Wissenswertes</a>
-        </nav>
-    </header>
+  <header class="navbar container" role="banner">
+    <div class="brand" onclick="location.href='index.html'"><span style="color:var(--c-primary)">T&amp;T</span> Edelmetalle</div>
+    <nav class="nav-right">
+      <a class="nav-link" href="index.html">Start</a>
+      <a class="nav-link" href="calculator.html">Rechner</a>
+      <a class="nav-link" href="analysis.html">Wissenswertes</a>
+    </nav>
+  </header>
 
-    <main class="container" style="padding-top:18px;">
-        <h1>Marktübersicht</h1>
+  <main class="container" style="padding-top:18px;">
+    <h1>Marktübersicht</h1>
 
-        <section class="card" style="min-height:540px; margin-top:12px;">
-            <div id="chart-root" class="tradingview-widget-container" style="height:100%; min-height:360px;"></div>
-        </section>
-    </main>
+    <section class="cards-grid" style="margin-top:12px;">
+      <article class="card">
+        <h2>Spot Preise (1 oz)</h2>
+        <div id="dash-prices" style="margin-top:10px">Lade Preise…</div>
+        <div style="margin-top:10px;font-size:0.85rem;color:var(--c-text-muted)" id="dash-update">—</div>
+      </article>
 
-    <script src="assets/js/app.js" defer></script>
+      <article class="card" style="min-height:360px">
+        <div class="tradingview-widget-container" id="chart-root" style="height:100%;min-height:320px">
+          <!-- TradingView script injected by app.js only after consent -->
+          <div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--c-text-muted)">Chart wird nach Zustimmung geladen.</div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <div class="footer-inner">
+      <div>&copy; T&amp;T Edelmetalle</div>
+      <div class="footer-links">
+        <a href="index.html" class="footer-link">Start</a>
+        <a href="calculator.html" class="footer-link">Rechner</a>
+        <a href="analysis.html" class="footer-link">Wissenswertes</a>
+        <a href="javascript:void(0)" class="footer-link" onclick="openLegal('impressum')">Impressum</a>
+        <a href="javascript:void(0)" class="footer-link" onclick="openLegal('datenschutz')">Datenschutz</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js" defer></script>
 </body>
 </html>
