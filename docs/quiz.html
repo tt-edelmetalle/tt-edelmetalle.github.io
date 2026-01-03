@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edelmetall Quiz | T&T Edelmetalle</title>
+    <meta name="description" content="Testen Sie Ihr Wissen über Gold, Silber und andere Edelmetalle in unserem interaktiven Quiz." />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Spezifische Quiz-Stile passend zum Design-System */
+        .quiz-container { max-width: 800px; margin: 0 auto; }
+        .question-card { display: none; }
+        .question-card.active { display: block; animation: fadeIn 0.4s ease; }
+        .option-btn { 
+            display: block; width: 100%; text-align: left; margin-bottom: 12px; 
+            padding: 16px; border: 1px solid var(--c-border); border-radius: 8px;
+            background: var(--c-bg-card); color: var(--c-text-main); cursor: pointer;
+            transition: all 0.2s ease; font-size: 1rem;
+        }
+        .option-btn:hover { border-color: var(--c-primary); background: rgba(var(--c-primary-rgb), 0.05); }
+        .option-btn.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+        .option-btn.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+        .progress-bar { height: 8px; background: var(--c-border); border-radius: 4px; margin-bottom: 30px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--c-primary); width: 0%; transition: width 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div id="main-app">
+        <nav class="navbar" role="navigation" aria-label="Hauptnavigation">
+            <div class="nav-inner">
+                <a href="index.html" class="brand-logo" title="Zur Startseite">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>T&T</span>Edelmetalle
+                </a>
+                <button id="hamburger" class="btn btn-outline" onclick="toggleMobileNav()"><i class="fa-solid fa-bars"></i></button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="markt.html" class="nav-item">Marktübersicht</a>
+                    <a href="rechner.html" class="nav-item">Portfolio Rechner</a>
+                    <a href="wissen.html" class="nav-item">Wissenswertes</a>
+                    <a href="quiz.html" class="nav-item active">Quiz</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container quiz-container" style="margin-top: 40px; margin-bottom: 80px;">
+            <div class="hero-section" style="text-align: center; margin-bottom: 40px;">
+                <h1 class="hero-title">Edelmetall Quiz</h1>
+                <p class="hero-text">Testen Sie Ihr Expertenwissen rund um Gold, Silber und Co.</p>
+            </div>
+
+            <div class="card" id="quiz-box">
+                <div class="progress-bar"><div id="progress" class="progress-fill"></div></div>
+                <div id="question-container">
+                    </div>
+                <div id="result-container" style="display:none; text-align:center;">
+                    <h2 id="result-text">Quiz beendet!</h2>
+                    <p id="score-text" style="font-size: 1.2rem; margin: 20px 0;"></p>
+                    <button class="btn btn-primary" onclick="location.reload()">Quiz neu starten</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="container" style="display:flex; flex-direction:column; gap:8px; align-items:center;">
+                <div style="display:flex; gap:10px; align-items:center;"><i class="fa-solid fa-layer-group" style="color:var(--c-primary);"></i> T&T Edelmetalle</div>
+                <div style="text-align:center; color:var(--c-text-muted); font-size:0.9rem;">&copy; 2025. Alle Rechte vorbehalten.</div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                q: "Welches Edelmetall hat die höchste elektrische Leitfähigkeit?",
+                o: ["Gold", "Silber", "Platin", "Kupfer"],
+                a: 1
+            },
+            {
+                q: "Was bedeutet die Angabe '585 Gold'?",
+                o: ["58,5% Goldanteil", "5,85 Gramm Gewicht", "Hergestellt im Jahr 1585", "585 Karat"],
+                a: 0
+            },
+            {
+                q: "Woher stammt der Großteil des weltweit geförderten Platins?",
+                o: ["Australien", "Südafrika", "Kanada", "China"],
+                a: 1
+            },
+            {
+                q: "Was ist 'Scheidegold'?",
+                o: ["Besonders reines Gold", "Gold, das zur Scheidung verschenkt wird", "Altschmuck zur Wiedergewinnung", "Goldmünzen aus dem Mittelalter"],
+                a: 2
+            }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const container = document.getElementById('question-container');
+            const q = quizData[currentQ];
+            const progress = (currentQ / quizData.length) * 100;
+            document.getElementById('progress').style.width = progress + "%";
+
+            container.innerHTML = `
+                <div class="question-card active">
+                    <h3 style="margin-bottom:20px;">Frage ${currentQ + 1} von ${quizData.length}</h3>
+                    <p style="font-size:1.1rem; font-weight:600; margin-bottom:25px;">${q.q}</p>
+                    <div id="options">
+                        ${q.o.map((opt, i) => `<button class="option-btn" onclick="checkAnswer(${i})">${opt}</button>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        window.checkAnswer = function(idx) {
+            const buttons = document.querySelectorAll('.option-btn');
+            const correct = quizData[currentQ].a;
+            
+            buttons.forEach(b => b.style.pointerEvents = 'none');
+            
+            if(idx === correct) {
+                buttons[idx].classList.add('correct');
+                score++;
+            } else {
+                buttons[idx].classList.add('wrong');
+                buttons[correct].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQ++;
+                if(currentQ < quizData.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            }, 1500);
+        }
+
+        function showResults() {
+            document.getElementById('progress').style.width = "100%";
+            document.getElementById('question-container').style.display = 'none';
+            document.getElementById('result-container').style.display = 'block';
+            document.getElementById('score-text').innerText = `Sie haben ${score} von ${quizData.length} Fragen richtig beantwortet.`;
+        }
+
+        loadQuestion();
+
+        // Standard Mobile Nav Integration
+        function toggleMobileNav() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
