@@ -32,7 +32,7 @@
     </script>
 
     <style>
-        /* Fallback Variablen, falls style.css nicht lädt oder Werte fehlen */
+        /* Fallback Variablen */
         :root {
             --c-primary: #D4AF37; /* Goldton */
             --c-primary-rgb: 212, 175, 55;
@@ -40,12 +40,16 @@
             --c-text-main: #333333;
             --c-text-muted: #666666;
             --c-border: #e0e0e0;
-            --c-bg-body: #f9f9f9;
+            /* ÄNDERUNG: Hintergrund auf Weiß gesetzt für Uniformität */
+            --c-bg-body: #ffffff; 
+            /* ÄNDERUNG: Neue Variable für Button-Hintergrund */
+            --c-bg-btn: #f8f9fa; 
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--c-bg-body);
+            color: var(--c-text-main);
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -54,7 +58,7 @@
 
         /* Layout & Container */
         .quiz-container { 
-            max-width: 700px; 
+            max-width: 700px;
             margin: 0 auto; 
             width: 100%;
             padding: 0 15px;
@@ -77,15 +81,16 @@
             line-height: 1.5;
         }
 
-        /* Quiz Card - CLS Optimierung mit min-height */
+        /* ÄNDERUNG: Card-Design flacher gemacht, damit es nahtlos wirkt */
         .card {
             background: var(--c-bg-card);
-            border: 1px solid var(--c-border);
+            /* Rahmen entfernt für nahtlosen Look */
+            border: none; 
             border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            /* WICHTIG gegen Layout Shift: Mindesthöhe reservieren */
-            min-height: 480px; 
+            padding: 10px 0; /* Padding reduziert, da kein Rahmen mehr */
+            /* Schatten entfernt, damit keine weißen Blöcke entstehen */
+            box-shadow: none; 
+            min-height: 480px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -93,14 +98,14 @@
 
         /* Progress Bar */
         .progress-bar { 
-            height: 6px; 
+            height: 6px;
             background: #f0f0f0; 
             border-radius: 3px; 
             margin-bottom: 25px; 
             overflow: hidden; 
         }
         .progress-fill { 
-            height: 100%; 
+            height: 100%;
             background: var(--c-primary); 
             width: 0%; 
             transition: width 0.4s ease; 
@@ -108,9 +113,9 @@
 
         /* Fragen & Optionen */
         .question-text {
-            font-size: 1.15rem;
+            font-size: 1.25rem; /* Leicht vergrößert */
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             line-height: 1.4;
             color: var(--c-text-main);
         }
@@ -120,11 +125,12 @@
             align-items: center;
             width: 100%; 
             text-align: left; 
-            margin-bottom: 10px; 
-            padding: 14px 18px; 
-            border: 1px solid var(--c-border); 
+            margin-bottom: 12px; 
+            padding: 16px 20px; 
+            border: 1px solid transparent; /* Transparent statt grau */
             border-radius: 8px;
-            background: var(--c-bg-card); 
+            /* ÄNDERUNG: Leicht grauer Hintergrund, damit Buttons sichtbar sind */
+            background: var(--c-bg-btn); 
             color: var(--c-text-main); 
             cursor: pointer;
             transition: all 0.2s ease; 
@@ -133,27 +139,28 @@
             position: relative;
         }
 
-        /* Hover nur auf Desktop, um "Sticky Hover" auf Mobile zu vermeiden */
+        /* Hover */
         @media (hover: hover) {
             .option-btn:not(.disabled):hover { 
-                border-color: var(--c-primary); 
-                background: rgba(var(--c-primary-rgb), 0.05); 
+                border-color: var(--c-primary);
+                background: rgba(var(--c-primary-rgb), 0.1); 
+                transform: translateY(-1px); /* Kleiner Hebe-Effekt */
             }
         }
 
         .option-btn.disabled { cursor: default; }
 
         .option-btn.correct { 
-            background: #e6f4ea; 
+            background: #e6f4ea;
             border-color: #34a853; 
             color: #137333; 
             font-weight: 500;
         }
         .option-btn.wrong { 
-            background: #fce8e6; 
+            background: #fce8e6;
             border-color: #ea4335; 
             color: #c5221f; 
-            opacity: 0.8;
+            opacity: 0.9;
         }
         
         /* Icons für Feedback */
@@ -162,17 +169,17 @@
             font-size: 1.1rem;
         }
 
-        /* Erklärungstext (erscheint nach Antwort) */
+        /* Erklärungstext */
         .explanation-box {
             background: #f8f9fa;
             border-left: 4px solid var(--c-primary);
-            padding: 15px;
-            margin-top: 15px;
+            padding: 20px;
+            margin-top: 20px;
             font-size: 0.95rem;
             color: var(--c-text-muted);
-            border-radius: 0 4px 4px 0;
+            border-radius: 0 8px 8px 0;
             animation: fadeIn 0.3s ease;
-            display: none; /* Initial versteckt */
+            display: none; 
         }
         .explanation-box.visible { display: block; }
 
@@ -181,17 +188,18 @@
             background-color: var(--c-primary);
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 14px 28px;
             border-radius: 6px;
             font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 25px;
             float: right;
-            display: none; /* Initial versteckt */
-            transition: background 0.2s;
+            display: none; 
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .btn-next:hover { opacity: 0.9; }
+        .btn-next:hover { opacity: 0.95; transform: translateY(-1px); }
         .btn-next.visible { display: inline-block; }
 
         /* Ergebnis Screen */
@@ -210,28 +218,65 @@
         /* Animationen */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Navigation Styles (Minimal-Fallback) */
-        .navbar { background: #fff; border-bottom: 1px solid var(--c-border); padding: 15px 0; }
-        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;}
-        .brand-logo { text-decoration: none; color: #333; font-weight: 700; font-size: 1.2rem; display: flex; gap: 8px; align-items: center;}
+        /* Navigation Styles */
+        .navbar { 
+            background: #fff;
+            /* Border unten entfernt für cleanen Look, optional */
+            border-bottom: 1px solid var(--c-border); 
+            padding: 15px 0; 
+        }
+        .nav-inner { 
+            max-width: 1200px;
+            margin: 0 auto; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 0 20px;
+        }
+        .brand-logo { 
+            text-decoration: none;
+            color: #333; 
+            font-weight: 700; 
+            font-size: 1.2rem; 
+            display: flex; 
+            gap: 8px;
+            align-items: center;
+        }
         .nav-menu { display: flex; gap: 20px; }
-        .nav-item { text-decoration: none; color: #555; }
+        .nav-item { text-decoration: none; color: #555; font-weight: 500;}
         .nav-item.active { color: var(--c-primary); font-weight: 600; }
         
         /* Mobile Nav Logic */
         @media (max-width: 768px) {
-            .nav-menu { display: none; position: absolute; top: 60px; left: 0; right: 0; background: white; flex-direction: column; padding: 20px; border-bottom: 1px solid var(--c-border); z-index: 100;}
+            .nav-menu { 
+                display: none;
+                position: absolute; 
+                top: 60px; 
+                left: 0; 
+                right: 0; 
+                background: white; 
+                flex-direction: column; 
+                padding: 20px; 
+                border-bottom: 1px solid var(--c-border);
+                box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+                z-index: 100;
+            }
             .nav-menu.active { display: flex; }
             .btn-outline { background: none; border: 1px solid #ddd; padding: 8px 12px; border-radius: 4px; }
             
             /* Mobile Quiz Anpassung */
-            .card { min-height: auto; padding: 20px; }
-            .question-text { font-size: 1.1rem; }
-            .option-btn { padding: 12px 15px; }
+            .card { min-height: auto; padding: 0; }
+            .question-text { font-size: 1.15rem; }
+            .option-btn { padding: 14px 16px; }
         }
         
-        /* Footer Sticky Bottom fix */
-        footer { margin-top: auto; padding: 20px 0; background: #fff; border-top: 1px solid var(--c-border); }
+        /* Footer */
+        footer { 
+            margin-top: auto;
+            padding: 30px 0; 
+            background: #fff; 
+            border-top: 1px solid var(--c-border); 
+        }
     </style>
 </head>
 <body>
@@ -259,7 +304,7 @@
             </div>
 
             <article class="card" id="quiz-box">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; color:var(--c-text-muted); font-size:0.9rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; color:var(--c-text-muted); font-size:0.9rem;">
                     <span id="q-counter">Frage 1 / 10</span>
                     <span><i class="fa-solid fa-trophy" style="color:var(--c-primary);"></i> <span id="score-display">0</span></span>
                 </div>
@@ -308,13 +353,13 @@
             document.getElementById('navMenu').classList.toggle('active');
         }
 
-        // Quiz Daten: Professionell & Informativ
+        [cite_start]// Quiz Daten: Professionell & Informativ [cite: 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85]
         const quizData = [
             {
                 q: "Welches Edelmetall besitzt physikalisch die höchste elektrische Leitfähigkeit?",
                 o: ["Gold", "Silber", "Kupfer", "Platin"],
                 a: 1,
-                info: "Silber hat die höchste elektrische Leitfähigkeit aller Elemente. Gold wird in der Elektronik oft nur wegen seiner Korrosionsbeständigkeit bevorzugt, nicht wegen der Leitfähigkeit."
+                info: "Silber hat die höchste elektrische Leitfähigkeit aller Elemente. Gold wird in der Elektronik oft nur wegen seiner Korrosionsbeständigkeit bevorzugt."
             },
             {
                 q: "Welche Aussage beschreibt den Begriff 'Feingehalt 585' korrekt?",
@@ -330,7 +375,7 @@
             },
             {
                 q: "Was versteht man unter 'Scheidegold'?",
-                o: ["Gold, das bei der Trennung (Scheidung) von Verunreinigungen gewonnen wurde", "Goldmünzen, die als gesetzliches Zahlungsmittel dienen", "Ein spezielles Gold für Eheringe", "Gold, das noch nicht verarbeitet wurde"],
+                o: ["Gold aus Recycling (Scheideanstalt)", "Gesetzliches Zahlungsmittel", "Gold für Eheringe", "Rohgold aus Minen"],
                 a: 0,
                 info: "Scheidegold ist das hochreine Endprodukt einer Scheideanstalt, welches durch Recycling aus Altgold oder Industrieschrott zurückgewonnen wurde."
             },
@@ -354,9 +399,9 @@
             },
             {
                 q: "Was ist ein 'Good Delivery' Barren im professionellen Goldhandel?",
-                o: ["Ein Barren, der innerhalb von 24h geliefert wird", "Ein ca. 12,44 kg schwerer Standardbarren (400 oz)", "Ein Barren mit einem Feingehalt von 999,99", "Ein Geschenkbarren unter 10g"],
+                o: ["Ein 24h-Lieferbarren", "Ein Standardbarren ca. 12,44 kg (400 oz)", "Ein Barren mit 999,99 Reinheit", "Ein Barren unter 10g"],
                 a: 1,
-                info: "London Good Delivery Barren sind der Standard im Interbankenhandel. Sie wiegen ca. 400 Feinunzen (ca. 12,5 kg) und garantieren bestimmte Qualitätsstandards."
+                info: "London Good Delivery Barren sind der Standard im Interbankenhandel. Sie wiegen ca. 400 Feinunzen (ca. 12,5 kg)."
             },
             {
                 q: "Welche Zentralbank hält offiziell die größten Goldreserven der Welt?",
@@ -366,7 +411,7 @@
             },
             {
                 q: "Wodurch zeichnet sich Osmium im Vergleich zu anderen Edelmetallen aus?",
-                o: ["Es ist das leichteste Edelmetall", "Es hat die höchste Dichte aller stabilen Elemente", "Es ist radioaktiv", "Es ist flüssig bei Raumtemperatur"],
+                o: ["Es ist das leichteste", "Es hat die höchste Dichte aller stabilen Elemente", "Es ist radioaktiv", "Es ist flüssig"],
                 a: 1,
                 info: "Osmium besitzt mit 22,59 g/cm³ die höchste Dichte aller natürlich vorkommenden Elemente und ist extrem hart, aber auch spröde."
             }
@@ -399,7 +444,6 @@
 
         function loadQuestion() {
             const data = quizData[currentState.index];
-            
             // Reset UI
             currentState.answered = false;
             elExplanation.classList.remove('visible');
@@ -425,9 +469,9 @@
         }
 
         function handleAnswer(selectedIndex, btnElement) {
-            if (currentState.answered) return; // Prevent multiple clicks
+            if (currentState.answered) return;
+            // Prevent multiple clicks
             currentState.answered = true;
-
             const currentData = quizData[currentState.index];
             const allBtns = document.querySelectorAll('.option-btn');
             
@@ -462,9 +506,11 @@
             elNextBtn.innerText = (currentState.index === quizData.length - 1) ? "Zum Ergebnis" : "Nächste Frage";
             elNextBtn.classList.add('visible');
             
-            // Scroll to bottom only on mobile if necessary to see button
+            // Scroll logic for mobile
             if(window.innerWidth < 768) {
-                elNextBtn.scrollIntoView({behavior: "smooth", block: "nearest"});
+                setTimeout(() => {
+                    elNextBtn.scrollIntoView({behavior: "smooth", block: "nearest"});
+                }, 100);
             }
         }
 
