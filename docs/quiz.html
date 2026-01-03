@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Experten-Quiz: Edelmetalle & Märkte | T&T Edelmetalle</title>
-    <meta name="description" content="Testen Sie Ihr Fachwissen über Gold, Silber, Platin und Märkte. 10 Fragen für Investoren und Experten im interaktiven Edelmetall-Quiz." />
+    <title>Edelmetall Quiz | T&T Edelmetalle</title>
+    <meta name="description" content="Testen Sie Ihr Wissen über Gold, Silber & Platin. 3 Schwierigkeitsstufen für Einsteiger bis Experten." />
     <meta name="robots" content="index, follow" />
     
-    <meta property="og:title" content="Edelmetall Experten-Quiz" />
-    <meta property="og:description" content="Sind Sie ein Gold-Experte? Testen Sie Ihr Wissen in 10 Fragen." />
+    <meta property="og:title" content="Edelmetall Quiz: Testen Sie Ihr Wissen" />
+    <meta property="og:description" content="Wählen Sie Ihre Stufe: Einsteiger, Fortgeschritten oder Experte." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.ihre-domain.de/quiz.html" />
-    <meta property="og:image" content="https://www.ihre-domain.de/social-share-image.jpg" />
 
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -21,482 +18,485 @@
     {
       "@context": "https://schema.org",
       "@type": "Quiz",
-      "name": "Edelmetall Experten-Wissen",
-      "description": "Ein Test über physikalische Eigenschaften und ökonomische Hintergründe von Edelmetallen.",
-      "educationalAlignment": {
-        "@type": "AlignmentObject",
-        "alignmentType": "educationalLevel",
-        "targetName": "Investor"
-      }
+      "name": "Edelmetall Wissenstest",
+      "about": { "@type": "Thing", "name": "Edelmetalle" },
+      "educationalLevel": ["Beginner", "Intermediate", "Advanced"]
     }
     </script>
 
     <style>
-        /* Fallback Variablen, falls style.css nicht lädt oder Werte fehlen */
+        /* --- CSS Variablen --- */
         :root {
-            --c-primary: #D4AF37; /* Goldton */
+            --c-primary: #D4AF37; /* Gold */
+            --c-primary-dark: #b5952f;
             --c-primary-rgb: 212, 175, 55;
+            
+            --c-bg-body: #f3f4f6; /* Dunkleres Grau für besseren Kontrast zur Karte */
             --c-bg-card: #ffffff;
-            --c-text-main: #333333;
-            --c-text-muted: #666666;
-            --c-border: #e0e0e0;
-            --c-bg-body: #f9f9f9;
+            --c-bg-btn: #f9fafb; /* Buttons heben sich jetzt von der Karte ab */
+            
+            --c-text-main: #1f2937;
+            --c-text-muted: #6b7280;
+            --c-border: #e5e7eb;
+            
+            --c-success-bg: #ecfdf5;
+            --c-success-border: #10b981;
+            --c-success-text: #065f46;
+            
+            --c-error-bg: #fef2f2;
+            --c-error-border: #ef4444;
+            --c-error-text: #991b1b;
         }
 
+        /* --- Basis Layout --- */
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--c-bg-body);
+            color: var(--c-text-main);
             margin: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        /* Layout & Container */
+        /* --- Navigation --- */
+        .navbar { background: #fff; border-bottom: 1px solid var(--c-border); padding: 15px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;}
+        .brand-logo { text-decoration: none; color: #111; font-weight: 700; font-size: 1.2rem; display: flex; gap: 8px; align-items: center;}
+        .nav-menu { display: flex; gap: 20px; }
+        .nav-item { text-decoration: none; color: #555; font-weight: 500; transition: color 0.2s;}
+        .nav-item:hover, .nav-item.active { color: var(--c-primary-dark); }
+        
+        /* Mobile Nav */
+        .btn-outline { background: white; border: 1px solid var(--c-border); padding: 8px 12px; border-radius: 6px; cursor: pointer; color: var(--c-text-main); }
+        @media (max-width: 768px) {
+            .nav-menu { display: none; position: absolute; top: 64px; left: 0; right: 0; background: white; flex-direction: column; padding: 20px; border-bottom: 1px solid var(--c-border); z-index: 100; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+            .nav-menu.active { display: flex; }
+        }
+
+        /* --- Quiz Container --- */
         .quiz-container { 
             max-width: 700px; 
             margin: 0 auto; 
             width: 100%;
-            padding: 0 15px;
+            padding: 40px 15px;
             box-sizing: border-box;
+            flex: 1; /* Drückt Footer nach unten */
         }
 
-        /* Hero Section */
-        .hero-section {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-top: 20px;
-        }
-        .hero-title {
-            font-weight: 700;
-            color: var(--c-text-main);
-            margin-bottom: 10px;
-        }
-        .hero-text {
-            color: var(--c-text-muted);
-            line-height: 1.5;
-        }
+        .hero-section { text-align: center; margin-bottom: 30px; }
+        .hero-title { font-weight: 800; color: var(--c-text-main); margin: 0 0 10px 0; font-size: 2rem; letter-spacing: -0.02em; }
+        .hero-text { color: var(--c-text-muted); line-height: 1.5; margin: 0; }
 
-        /* Quiz Card - CLS Optimierung mit min-height */
+        /* --- Die Karte (Card) --- */
         .card {
             background: var(--c-bg-card);
             border: 1px solid var(--c-border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+            min-height: 500px; /* Verhindert Layout Shifts */
+            position: relative;
+        }
+
+        /* --- Level Auswahl Screen --- */
+        .level-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .level-card {
+            background: var(--c-bg-btn);
+            border: 2px solid var(--c-border);
             border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            /* WICHTIG gegen Layout Shift: Mindesthöhe reservieren */
-            min-height: 480px; 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        /* Progress Bar */
-        .progress-bar { 
-            height: 6px; 
-            background: #f0f0f0; 
-            border-radius: 3px; 
-            margin-bottom: 25px; 
-            overflow: hidden; 
-        }
-        .progress-fill { 
-            height: 100%; 
-            background: var(--c-primary); 
-            width: 0%; 
-            transition: width 0.4s ease; 
-        }
-
-        /* Fragen & Optionen */
-        .question-text {
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            line-height: 1.4;
-            color: var(--c-text-main);
-        }
-
-        .option-btn { 
+            padding: 20px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
+            gap: 15px;
+        }
+        .level-card:hover {
+            border-color: var(--c-primary);
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .level-icon {
+            width: 50px; height: 50px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+            color: var(--c-primary);
+            border: 1px solid var(--c-border);
+        }
+        .level-info h3 { margin: 0 0 4px 0; font-size: 1.1rem; }
+        .level-info p { margin: 0; font-size: 0.9rem; color: var(--c-text-muted); }
+
+        /* --- Quiz UI Elemente --- */
+        .progress-bar { height: 8px; background: #e5e7eb; border-radius: 4px; margin-bottom: 25px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--c-primary); width: 0%; transition: width 0.4s ease; }
+
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--c-text-main);
+            line-height: 1.4;
+        }
+
+        /* BUTTON DESIGN FIX: Hintergrund nicht mehr weiß, sondern hellgrau */
+        .option-btn { 
+            display: flex; align-items: center; justify-content: space-between;
             width: 100%; 
             text-align: left; 
-            margin-bottom: 10px; 
-            padding: 14px 18px; 
+            margin-bottom: 12px; 
+            padding: 16px 20px; 
             border: 1px solid var(--c-border); 
-            border-radius: 8px;
-            background: var(--c-bg-card); 
+            border-radius: 10px;
+            background: var(--c-bg-btn); /* WICHTIG: Kontrast zum Karten-Hintergrund */
             color: var(--c-text-main); 
             cursor: pointer;
             transition: all 0.2s ease; 
             font-size: 1rem;
             font-family: inherit;
-            position: relative;
+            font-weight: 500;
         }
 
-        /* Hover nur auf Desktop, um "Sticky Hover" auf Mobile zu vermeiden */
         @media (hover: hover) {
             .option-btn:not(.disabled):hover { 
                 border-color: var(--c-primary); 
-                background: rgba(var(--c-primary-rgb), 0.05); 
+                background: white;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             }
         }
 
-        .option-btn.disabled { cursor: default; }
+        .option-btn.disabled { cursor: default; opacity: 0.7; }
 
         .option-btn.correct { 
-            background: #e6f4ea; 
-            border-color: #34a853; 
-            color: #137333; 
-            font-weight: 500;
+            background: var(--c-success-bg); 
+            border-color: var(--c-success-border); 
+            color: var(--c-success-text); 
         }
         .option-btn.wrong { 
-            background: #fce8e6; 
-            border-color: #ea4335; 
-            color: #c5221f; 
-            opacity: 0.8;
-        }
-        
-        /* Icons für Feedback */
-        .feedback-icon {
-            margin-left: auto;
-            font-size: 1.1rem;
+            background: var(--c-error-bg); 
+            border-color: var(--c-error-border); 
+            color: var(--c-error-text); 
         }
 
-        /* Erklärungstext (erscheint nach Antwort) */
         .explanation-box {
             background: #f8f9fa;
             border-left: 4px solid var(--c-primary);
-            padding: 15px;
-            margin-top: 15px;
+            padding: 16px;
+            margin-top: 20px;
+            border-radius: 0 8px 8px 0;
             font-size: 0.95rem;
-            color: var(--c-text-muted);
-            border-radius: 0 4px 4px 0;
-            animation: fadeIn 0.3s ease;
-            display: none; /* Initial versteckt */
+            color: #4b5563;
+            display: none;
+            line-height: 1.5;
+            animation: fadeIn 0.4s ease;
         }
         .explanation-box.visible { display: block; }
 
-        /* Action Buttons */
-        .btn-next {
+        .btn-primary {
             background-color: var(--c-primary);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
+            padding: 14px 28px;
+            border-radius: 8px;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
-            float: right;
-            display: none; /* Initial versteckt */
+            margin-top: 25px;
+            width: 100%;
             transition: background 0.2s;
+            display: none;
         }
-        .btn-next:hover { opacity: 0.9; }
-        .btn-next.visible { display: inline-block; }
+        .btn-primary:hover { background-color: var(--c-primary-dark); }
+        .btn-primary.visible { display: block; }
 
-        /* Ergebnis Screen */
-        .result-score {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--c-primary);
-            margin: 20px 0;
-        }
-        .result-msg {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            color: var(--c-text-muted);
-        }
-
-        /* Animationen */
+        /* Animation */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Navigation Styles (Minimal-Fallback) */
-        .navbar { background: #fff; border-bottom: 1px solid var(--c-border); padding: 15px 0; }
-        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;}
-        .brand-logo { text-decoration: none; color: #333; font-weight: 700; font-size: 1.2rem; display: flex; gap: 8px; align-items: center;}
-        .nav-menu { display: flex; gap: 20px; }
-        .nav-item { text-decoration: none; color: #555; }
-        .nav-item.active { color: var(--c-primary); font-weight: 600; }
-        
-        /* Mobile Nav Logic */
-        @media (max-width: 768px) {
-            .nav-menu { display: none; position: absolute; top: 60px; left: 0; right: 0; background: white; flex-direction: column; padding: 20px; border-bottom: 1px solid var(--c-border); z-index: 100;}
-            .nav-menu.active { display: flex; }
-            .btn-outline { background: none; border: 1px solid #ddd; padding: 8px 12px; border-radius: 4px; }
-            
-            /* Mobile Quiz Anpassung */
-            .card { min-height: auto; padding: 20px; }
-            .question-text { font-size: 1.1rem; }
-            .option-btn { padding: 12px 15px; }
-        }
-        
-        /* Footer Sticky Bottom fix */
-        footer { margin-top: auto; padding: 20px 0; background: #fff; border-top: 1px solid var(--c-border); }
+        /* Footer */
+        footer { margin-top: auto; padding: 30px 0; background: #fff; border-top: 1px solid var(--c-border); text-align: center; color: var(--c-text-muted); font-size: 0.9rem; }
     </style>
 </head>
 <body>
-    <div id="main-app">
-        <nav class="navbar" role="navigation" aria-label="Hauptnavigation">
-            <div class="nav-inner">
-                <a href="index.html" class="brand-logo" title="Zur Startseite">
-                    <i class="fa-solid fa-layer-group" style="color:var(--c-primary);"></i>
-                    <span>T&T</span> Edelmetalle
-                </a>
-                <button id="hamburger" class="btn btn-outline" style="display:none;" onclick="toggleMobileNav()"><i class="fa-solid fa-bars"></i></button>
-                <div class="nav-menu" id="navMenu">
-                    <a href="markt.html" class="nav-item">Marktübersicht</a>
-                    <a href="rechner.html" class="nav-item">Portfolio Rechner</a>
-                    <a href="wissen.html" class="nav-item">Wissenswertes</a>
-                    <a href="quiz.html" class="nav-item active">Quiz</a>
+
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="brand-logo">
+                <i class="fa-solid fa-coins" style="color:var(--c-primary);"></i>
+                <span>T&T</span> Edelmetalle
+            </a>
+            <button id="hamburger" class="btn btn-outline" style="display:none;" onclick="toggleMobileNav()"><i class="fa-solid fa-bars"></i></button>
+            <div class="nav-menu" id="navMenu">
+                <a href="#" class="nav-item">Marktübersicht</a>
+                <a href="#" class="nav-item">Portfolio</a>
+                <a href="#" class="nav-item">Wissen</a>
+                <a href="#" class="nav-item active">Quiz</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="quiz-container">
+        
+        <div class="hero-section">
+            <h1 class="hero-title">Edelmetall-Wissen</h1>
+            <p class="hero-text">Wählen Sie Ihre Schwierigkeitsstufe.</p>
+        </div>
+
+        <div class="card">
+            
+            <div id="level-selection">
+                <h2 style="margin-top:0;">Wählen Sie den Modus:</h2>
+                <div class="level-grid">
+                    <div class="level-card" onclick="startQuiz('easy')">
+                        <div class="level-icon"><i class="fa-regular fa-star"></i></div>
+                        <div class="level-info">
+                            <h3>Einsteiger</h3>
+                            <p>Grundlagen zu Gold, Silber & Schmuck.</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right" style="margin-left:auto; color:#ccc;"></i>
+                    </div>
+
+                    <div class="level-card" onclick="startQuiz('medium')">
+                        <div class="level-icon"><i class="fa-solid fa-star-half-stroke"></i></div>
+                        <div class="level-info">
+                            <h3>Fortgeschritten</h3>
+                            <p>Märkte, Industrie & Geschichte.</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right" style="margin-left:auto; color:#ccc;"></i>
+                    </div>
+
+                    <div class="level-card" onclick="startQuiz('hard')">
+                        <div class="level-icon"><i class="fa-solid fa-certificate"></i></div>
+                        <div class="level-info">
+                            <h3>Experte</h3>
+                            <p>Zentralbanken, Chemie & Geopolitik.</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right" style="margin-left:auto; color:#ccc;"></i>
+                    </div>
                 </div>
             </div>
-        </nav>
 
-        <main class="container quiz-container" style="margin-top: 40px; margin-bottom: 60px;">
-            <div class="hero-section">
-                <h1 class="hero-title">Edelmetall Experten-Quiz</h1>
-                <p class="hero-text">Beweisen Sie Ihr Wissen über Märkte, Eigenschaften und Geschichte.</p>
-            </div>
-
-            <article class="card" id="quiz-box">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; color:var(--c-text-muted); font-size:0.9rem;">
-                    <span id="q-counter">Frage 1 / 10</span>
-                    <span><i class="fa-solid fa-trophy" style="color:var(--c-primary);"></i> <span id="score-display">0</span></span>
+            <div id="quiz-interface" style="display:none;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-size:0.9rem; color:var(--c-text-muted);">
+                    <span id="level-badge" style="background:#f3f4f6; padding:2px 8px; border-radius:4px; font-weight:600;">Level</span>
+                    <span>Frage <span id="q-current">1</span> / 10</span>
                 </div>
 
-                <div class="progress-bar" role="progressbar" aria-label="Fortschritt im Quiz">
-                    <div id="progress" class="progress-fill"></div>
+                <div class="progress-bar"><div id="progress" class="progress-fill"></div></div>
+
+                <h2 id="question-text" class="question-text">Frage lädt...</h2>
+                <div id="options-container"></div>
+                
+                <div id="explanation" class="explanation-box"></div>
+                
+                <button id="next-btn" class="btn-primary" onclick="nextQuestion()">Nächste Frage</button>
+            </div>
+
+            <div id="result-screen" style="display:none; text-align:center; padding-top:20px;">
+                <div style="width:80px; height:80px; background:var(--c-success-bg); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px auto; color:var(--c-primary);">
+                    <i class="fa-solid fa-trophy fa-2x"></i>
+                </div>
+                <h2 style="margin-bottom:10px;">Quiz beendet!</h2>
+                <p style="color:var(--c-text-muted);">Sie haben im Level <span id="result-level-name"></span> erreicht:</p>
+                
+                <div style="font-size:3rem; font-weight:800; color:var(--c-primary); margin:20px 0;">
+                    <span id="score-final">0</span>/10
                 </div>
                 
-                <div id="quiz-content-area">
-                    <h2 id="question-text" class="question-text">Lädt...</h2>
-                    <div id="options-container"></div>
-                    
-                    <div id="explanation" class="explanation-box"></div>
-                    <button id="next-btn" class="btn-next" onclick="nextQuestion()">Nächste Frage <i class="fa-solid fa-arrow-right"></i></button>
-                </div>
-
-                <div id="result-container" style="display:none; text-align:center; padding: 20px 0;">
-                    <i class="fa-solid fa-medal fa-3x" style="color:var(--c-primary); margin-bottom:10px;"></i>
-                    <h2 id="result-title">Quiz beendet!</h2>
-                    <div class="result-score" id="final-score">0/10</div>
-                    <p id="result-text" class="result-msg"></p>
-                    <button class="btn-next visible" style="float:none;" onclick="location.reload()">Quiz neu starten</button>
-                </div>
-            </article>
-        </main>
-
-        <footer>
-            <div class="container" style="display:flex; flex-direction:column; gap:8px; align-items:center;">
-                <div style="display:flex; gap:10px; align-items:center;">
-                    <i class="fa-solid fa-layer-group" style="color:var(--c-primary);"></i> 
-                    <strong>T&T Edelmetalle</strong>
-                </div>
-                <div style="text-align:center; color:var(--c-text-muted); font-size:0.85rem;">
-                    &copy; 2025. Alle Rechte vorbehalten. | <a href="#" style="color:inherit;">Impressum</a>
-                </div>
+                <p id="result-msg" style="margin-bottom:30px; line-height:1.5;"></p>
+                
+                <button class="btn-primary visible" onclick="location.reload()">Anderes Level wählen</button>
             </div>
-        </footer>
-    </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            &copy; 2025 T&T Edelmetalle. Alle Rechte vorbehalten.
+        </div>
+    </footer>
 
     <script>
-        // Responsive Mobile Nav Logic (Inline for simplicity)
+        // --- DATA: 30 Fragen (3 Levels x 10 Fragen) ---
+        const quizDB = {
+            easy: [
+                { q: "Was ist das chemische Symbol für Gold?", o: ["Go", "Ag", "Au", "Fe"], a: 2, i: "'Au' steht für Aurum, das lateinische Wort für Gold." },
+                { q: "Welche Farbe hat reines Kupfer?", o: ["Silbrig-Weiß", "Rötlich", "Gelb", "Schwarz"], a: 1, i: "Kupfer ist das einzige Gebrauchsmetall mit einer ausgeprägt rötlichen Farbe." },
+                { q: "Was bedeutet die Stempelung '925' bei Silber?", o: ["Es wiegt 9,25 Gramm", "92,5% reines Silber", "Es wurde 1925 hergestellt", "Es kostet 9,25 Euro"], a: 1, i: "Dies wird als Sterlingsilber bezeichnet. Der Rest ist meist Kupfer zur Härtung." },
+                { q: "Welches Edelmetall gilt klassisch als 'Sicherer Hafen' in Krisenzeiten?", o: ["Gold", "Zinn", "Aluminium", "Nickel"], a: 0, i: "Gold hat seinen Wert über Jahrtausende behalten und korreliert oft negativ zu Aktienmärkten." },
+                { q: "Wie nennt man 'Falsches Gold', das oft mit echtem Gold verwechselt wurde?", o: ["Pyrit (Katzengold)", "Bauxit", "Graphit", "Hämatit"], a: 0, i: "Pyrit glänzt metallisch golden, ist aber ein Eisensulfid und nahezu wertlos." },
+                { q: "Aus welchem Material besteht eine olympische Goldmedaille heute hauptsächlich?", o: ["Massives Gold", "Silber", "Bronze", "Platin"], a: 1, i: "Sie besteht zu über 90% aus Silber und ist nur mit mindestens 6g Gold überzogen." },
+                { q: "Fällt beim Kauf von Anlagegold (Barren/Münzen) in Deutschland Mehrwertsteuer an?", o: ["Ja, 19%", "Ja, 7%", "Nein, 0%", "Nur bei Barren"], a: 2, i: "Anlagegold ist in der EU von der Mehrwertsteuer befreit. Silber hingegen nicht." },
+                { q: "Was ist 'Weißgold'?", o: ["Eine natürliche Goldart", "Gold legiert mit entfärbenden Metallen", "Platin", "Lackiertes Gold"], a: 1, i: "Durch Beimischung von Palladium oder Silber wird die gelbe Farbe des Goldes neutralisiert." },
+                { q: "Welche Einheit wird international für das Gewicht von Edelmetallen genutzt?", o: ["Gramm", "Feinunze", "Pfund", "Karat"], a: 1, i: "Die Troy Ounce (Feinunze) entspricht ca. 31,1 Gramm." },
+                { q: "Welches Metall läuft an und wird schwarz (Oxidation)?", o: ["Gold", "Platin", "Silber", "Rhodium"], a: 2, i: "Silber reagiert mit Schwefelwasserstoff in der Luft zu Silbersulfid (schwarz)." }
+            ],
+            medium: [
+                { q: "Welches Ereignis beendete 1971 die Goldbindung des US-Dollars?", o: ["Schwarzer Freitag", "Nixon-Schock", "Plaza-Abkommen", "Dotcom-Blase"], a: 1, i: "Richard Nixon hob die Konvertierbarkeit des Dollars in Gold auf und beendete das Bretton-Woods-System." },
+                { q: "Wofür wird der Großteil des geförderten Platins verwendet?", o: ["Schmuckindustrie", "Fahrzeug-Katalysatoren", "Medizin", "Münzprägung"], a: 1, i: "Platin wird vor allem in Abgaskatalysatoren für Diesel-Fahrzeuge benötigt." },
+                { q: "Was bedeutet die Abkürzung 'LBMA'?", o: ["London Bullion Market Association", "Long Bar Metal Austria", "London Bank of Metal Assets", "Legal Base for Metal Accounting"], a: 0, i: "Die LBMA setzt die Standards für den globalen Großhandel mit Gold und Silber ('Good Delivery')." },
+                { q: "Aus welchem Land stammt die berühmte Anlagemünze 'Krügerrand'?", o: ["Australien", "Kanada", "Südafrika", "USA"], a: 2, i: "Der Krügerrand wird seit 1967 in Südafrika geprägt und ist die meistgehandelte Goldmünze der Welt." },
+                { q: "Was bezeichnet man als 'Papiergold'?", o: ["Gold-Zertifikate, ETFs oder Futures", "Banknoten, die mit Gold gedeckt sind", "Blattgold", "Aktien von Goldminen"], a: 0, i: "Es bezeichnet verbriefte Rechte an Gold, ohne dass man das physische Metall besitzt." },
+                { q: "Wie viel Karat hat Gold mit einem Feingehalt von 585?", o: ["8 Karat", "14 Karat", "18 Karat", "24 Karat"], a: 1, i: "24 Karat ist 999er Gold. 585 entspricht 58,5%, also 14/24 Teilen." },
+                { q: "Welches Edelmetall hat physikalisch die höchste Dichte?", o: ["Gold", "Blei", "Silber", "Platin"], a: 3, i: "In dieser Auswahl hat Platin (21,45 g/cm³) die höchste Dichte, noch vor Gold (19,3 g/cm³)." },
+                { q: "Welches Edelmetall wird vorwiegend für Katalysatoren in Benzinern (Ottomotoren) genutzt?", o: ["Palladium", "Platin", "Silber", "Osmium"], a: 0, i: "Während Platin für Diesel wichtig ist, dominiert Palladium bei Benzinern." },
+                { q: "Was versteht man unter dem 'Spread' beim Goldkauf?", o: ["Die Differenz zwischen Ankauf- und Verkaufspreis", "Die Lagerkosten", "Die Steuer", "Die Transportversicherung"], a: 0, i: "Der Händler muss verdienen: Der Verkaufspreis liegt immer über dem Ankaufspreis." },
+                { q: "Wer sind die 'Big Four' im Edelmetallhandel?", o: ["Gold, Silber, Platin, Palladium", "Gold, Silber, Kupfer, Zinn", "Gold, Silber, Öl, Gas", "Gold, Platin, Diamanten, Lithium"], a: 0, i: "Dies sind die vier an der Börse primär gehandelten Edelmetalle." }
+            ],
+            hard: [
+                { q: "Welches ist das seltenste aller stabilen Edelmetalle in der Erdkruste?", o: ["Gold", "Osmium", "Rhodium", "Platin"], a: 1, i: "Osmium ist extrem selten und kommt oft als Beiprodukt der Platinförderung vor." },
+                { q: "Was ist 'Königswasser' (Aqua Regia)?", o: ["Ein Säuregemisch, das Gold auflösen kann", "Ein spezielles Reinigungsmittel für Münzen", "Das Wasser in der Scheideanstalt", "Ein historisches Heilmittel mit Goldstaub"], a: 0, i: "Eine Mischung aus Salpetersäure und Salzsäure, die selbst Gold und Platin lösen kann." },
+                { q: "Was bedeutet 'Contango' am Terminmarkt (Futures)?", o: ["Der Future-Preis liegt über dem aktuellen Spot-Preis", "Der Markt bricht zusammen", "Der Spot-Preis ist teurer als der Future", "Es gibt kein physisches Angebot"], a: 0, i: "Dies ist der Normalzustand, da der Future-Preis Lager- und Zinskosten (Cost of Carry) enthält." },
+                { q: "Welche Zentralbank kaufte in den letzten Jahren massiv Gold und trieb den Preis?", o: ["Schweizer Nationalbank", "People's Bank of China", "Bank of England", "EZB"], a: 1, i: "China (und andere Schwellenländer) bauen ihre Reserven aus, um unabhängiger vom US-Dollar zu werden." },
+                { q: "Was ist das 'Gold-Silber-Ratio'?", o: ["Das Verhältnis der Fördermengen", "Wie viele Unzen Silber man für eine Unze Gold braucht", "Der Gewichtsunterschied", "Das Verhältnis der Legierung im Schmuck"], a: 1, i: "Es ist ein Indikator, der anzeigt, ob Silber im historischen Vergleich gerade günstig oder teuer zu Gold ist." },
+                { q: "Welche Eigenschaft macht Iridium für die Industrie besonders?", o: ["Extrem hohe Korrosionsbeständigkeit und Härte", "Gute Leitfähigkeit", "Niedriger Schmelzpunkt", "Weiche Verformbarkeit"], a: 0, i: "Iridium ist das korrosionsbeständigste Metall und wird z.B. in Zündkerzen oder Tiegeln verwendet." },
+                { q: "Was regelte das 'Basel III' Abkommen bezüglich Gold?", o: ["Verbot von privatem Goldbesitz", "Einstufung von physischem Gold als Tier-1-Asset (risikofrei)", "Einführung einer Goldsteuer", "Verbot von Gold-Derivaten"], a: 1, i: "Banken können physisches Gold nun zu 100% als Eigenkapital anrechnen, was Gold als Währungsreserve stärkt." },
+                { q: "Wie hoch ist der Schmelzpunkt von reinem Gold?", o: ["962 °C", "1064 °C", "1538 °C", "660 °C"], a: 1, i: "Gold schmilzt bei 1064 Grad Celsius. Silber schon bei 962 Grad." },
+                { q: "Was war der 'Welcome Stranger'?", o: ["Der größte je gefundene Goldnugget", "Ein berühmter Goldgräber", "Eine Goldmine in Alaska", "Ein Schiff mit Goldladung"], a: 0, i: "Gefunden 1869 in Australien, wog er netto unglaubliche 72 kg." },
+                { q: "Welches Metall der Platingruppe ist aktuell (oft) das teuerste?", o: ["Platin", "Palladium", "Rhodium", "Ruthenium"], a: 2, i: "Rhodium hat extreme Preisschwankungen und war zeitweise um ein Vielfaches teurer als Gold, aufgrund der Knappheit und Autoindustrie-Nachfrage." }
+            ]
+        };
+
+        // --- GAME STATE ---
+        let currentLevelData = [];
+        let currentIndex = 0;
+        let score = 0;
+        let isAnswered = false;
+        let currentLevelName = "";
+
+        // UI Referenzen
+        const uiLevelSel = document.getElementById('level-selection');
+        const uiQuiz = document.getElementById('quiz-interface');
+        const uiResult = document.getElementById('result-screen');
+        
+        const elQText = document.getElementById('question-text');
+        const elOpts = document.getElementById('options-container');
+        const elExpl = document.getElementById('explanation');
+        const elNext = document.getElementById('next-btn');
+        const elProg = document.getElementById('progress');
+        const elCurrentQ = document.getElementById('q-current');
+
+        // 1. Quiz Starten
+        function startQuiz(level) {
+            currentLevelData = quizDB[level];
+            currentLevelName = level === 'easy' ? 'Einsteiger' : (level === 'medium' ? 'Fortgeschritten' : 'Experte');
+            currentIndex = 0;
+            score = 0;
+            
+            // UI Switch
+            uiLevelSel.style.display = 'none';
+            uiResult.style.display = 'none';
+            uiQuiz.style.display = 'block';
+            
+            document.getElementById('level-badge').innerText = currentLevelName;
+            
+            loadQuestion();
+        }
+
+        // 2. Frage laden
+        function loadQuestion() {
+            isAnswered = false;
+            elExpl.classList.remove('visible');
+            elNext.classList.remove('visible');
+            elExpl.style.display = 'none';
+            elNext.style.display = 'none';
+            
+            const data = currentLevelData[currentIndex];
+            
+            elQText.innerText = data.q;
+            elCurrentQ.innerText = currentIndex + 1;
+            elProg.style.width = ((currentIndex) / currentLevelData.length) * 100 + "%";
+
+            elOpts.innerHTML = '';
+            data.o.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span>${opt}</span>`;
+                btn.onclick = () => checkAnswer(idx, btn);
+                elOpts.appendChild(btn);
+            });
+        }
+
+        // 3. Antwort prüfen
+        function checkAnswer(selectedIdx, btn) {
+            if(isAnswered) return;
+            isAnswered = true;
+            
+            const data = currentLevelData[currentIndex];
+            const allBtns = document.querySelectorAll('.option-btn');
+            
+            allBtns.forEach(b => b.classList.add('disabled'));
+
+            if(selectedIdx === data.a) {
+                btn.classList.add('correct');
+                btn.innerHTML += `<i class="fa-solid fa-check"></i>`;
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                btn.innerHTML += `<i class="fa-solid fa-xmark"></i>`;
+                // Richtige zeigen
+                const correctBtn = allBtns[data.a];
+                correctBtn.classList.add('correct');
+                correctBtn.innerHTML += `<i class="fa-solid fa-check"></i>`;
+            }
+
+            // Erklärung anzeigen
+            elExpl.innerHTML = `<strong>Wissenswert:</strong> ${data.i}`;
+            elExpl.style.display = 'block';
+            setTimeout(() => elExpl.classList.add('visible'), 50);
+
+            // Button anzeigen
+            elNext.innerText = (currentIndex === 9) ? "Ergebnis ansehen" : "Nächste Frage";
+            elNext.style.display = 'block';
+            setTimeout(() => elNext.classList.add('visible'), 50);
+            
+            // Scroll auf Mobile
+            if(window.innerWidth < 768) {
+                elNext.scrollIntoView({behavior: "smooth", block: "nearest"});
+            }
+        }
+
+        // 4. Nächste Frage
+        function nextQuestion() {
+            currentIndex++;
+            if(currentIndex < 10) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        // 5. Ergebnis
+        function showResult() {
+            uiQuiz.style.display = 'none';
+            uiResult.style.display = 'block';
+            
+            document.getElementById('result-level-name').innerText = currentLevelName;
+            document.getElementById('score-final').innerText = score;
+            
+            const msgEl = document.getElementById('result-msg');
+            if(score === 10) msgEl.innerText = "Perfekt! Sie sind ein wahrer Meister der Edelmetalle.";
+            else if(score >= 8) msgEl.innerText = "Hervorragende Leistung! Sie kennen sich sehr gut aus.";
+            else if(score >= 5) msgEl.innerText = "Gute Leistung. Mit etwas Übung werden Sie zum Experten.";
+            else msgEl.innerText = "Ein guter Anfang. Schauen Sie sich unsere Wissens-Sektion an!";
+        }
+
+        // Mobile Nav
         if(window.innerWidth <= 768) {
             document.getElementById('hamburger').style.display = 'block';
         }
         function toggleMobileNav() {
             document.getElementById('navMenu').classList.toggle('active');
         }
-
-        // Quiz Daten: Professionell & Informativ
-        const quizData = [
-            {
-                q: "Welches Edelmetall besitzt physikalisch die höchste elektrische Leitfähigkeit?",
-                o: ["Gold", "Silber", "Kupfer", "Platin"],
-                a: 1,
-                info: "Silber hat die höchste elektrische Leitfähigkeit aller Elemente. Gold wird in der Elektronik oft nur wegen seiner Korrosionsbeständigkeit bevorzugt, nicht wegen der Leitfähigkeit."
-            },
-            {
-                q: "Welche Aussage beschreibt den Begriff 'Feingehalt 585' korrekt?",
-                o: ["Der Goldanteil beträgt 58,5 %", "Das Schmuckstück wiegt genau 5,85 Gramm", "Es handelt sich um 585 Karat Gold", "Es ist eine Legierung aus dem Jahr 1585"],
-                a: 0,
-                info: "585er Gold entspricht 14 Karat. Es bedeutet, dass von 1000 Gewichtsanteilen der Legierung 585 Anteile reines Gold sind."
-            },
-            {
-                q: "Welches Land ist der weltweit größte Produzent von Platin?",
-                o: ["Russland", "Kanada", "Südafrika", "USA"],
-                a: 2,
-                info: "Südafrika dominiert den Platinmarkt massiv und ist für ca. 70-80% der weltweiten Primärproduktion verantwortlich, gefolgt von Russland."
-            },
-            {
-                q: "Was versteht man unter 'Scheidegold'?",
-                o: ["Gold, das bei der Trennung (Scheidung) von Verunreinigungen gewonnen wurde", "Goldmünzen, die als gesetzliches Zahlungsmittel dienen", "Ein spezielles Gold für Eheringe", "Gold, das noch nicht verarbeitet wurde"],
-                a: 0,
-                info: "Scheidegold ist das hochreine Endprodukt einer Scheideanstalt, welches durch Recycling aus Altgold oder Industrieschrott zurückgewonnen wurde."
-            },
-            {
-                q: "Welches Ereignis beendete 1971 die direkte Konvertierbarkeit des US-Dollars in Gold?",
-                o: ["Der Schwarze Freitag", "Der Nixon-Schock", "Das Bretton-Woods-Abkommen", "Die Einführung des Euro"],
-                a: 1,
-                info: "Beim 'Nixon-Schock' hob US-Präsident Richard Nixon die Goldbindung des US-Dollars auf, was das Ende des Bretton-Woods-Systems besiegelte."
-            },
-            {
-                q: "Wie schwer ist eine Feinunze (Troy Ounce) exakt?",
-                o: ["28,35 Gramm", "30,00 Gramm", "31,1034768 Gramm", "33,33 Gramm"],
-                a: 2,
-                info: "Die Feinunze (oz. tr.) ist das Standardgewicht im Edelmetallhandel. Sie wiegt ca. 31,103 Gramm und ist schwerer als eine gewöhnliche Unze (28,35g)."
-            },
-            {
-                q: "Welches Edelmetall wird primär in Katalysatoren für Benzinmotoren verwendet?",
-                o: ["Palladium", "Silber", "Platin", "Rhodium"],
-                a: 0,
-                info: "Palladium wird hauptsächlich in Katalysatoren für Benziner eingesetzt, während Platin eher bei Dieselfahrzeugen Verwendung findet."
-            },
-            {
-                q: "Was ist ein 'Good Delivery' Barren im professionellen Goldhandel?",
-                o: ["Ein Barren, der innerhalb von 24h geliefert wird", "Ein ca. 12,44 kg schwerer Standardbarren (400 oz)", "Ein Barren mit einem Feingehalt von 999,99", "Ein Geschenkbarren unter 10g"],
-                a: 1,
-                info: "London Good Delivery Barren sind der Standard im Interbankenhandel. Sie wiegen ca. 400 Feinunzen (ca. 12,5 kg) und garantieren bestimmte Qualitätsstandards."
-            },
-            {
-                q: "Welche Zentralbank hält offiziell die größten Goldreserven der Welt?",
-                o: ["Deutsche Bundesbank", "People's Bank of China", "Federal Reserve (USA)", "IWF"],
-                a: 2,
-                info: "Die USA halten mit über 8.100 Tonnen die größten Goldreserven der Welt, gefolgt von Deutschland mit ca. 3.350 Tonnen."
-            },
-            {
-                q: "Wodurch zeichnet sich Osmium im Vergleich zu anderen Edelmetallen aus?",
-                o: ["Es ist das leichteste Edelmetall", "Es hat die höchste Dichte aller stabilen Elemente", "Es ist radioaktiv", "Es ist flüssig bei Raumtemperatur"],
-                a: 1,
-                info: "Osmium besitzt mit 22,59 g/cm³ die höchste Dichte aller natürlich vorkommenden Elemente und ist extrem hart, aber auch spröde."
-            }
-        ];
-
-        // State Management
-        let currentState = {
-            index: 0,
-            score: 0,
-            answered: false
-        };
-
-        // DOM Elements
-        const elQuestionText = document.getElementById('question-text');
-        const elOptionsContainer = document.getElementById('options-container');
-        const elProgress = document.getElementById('progress');
-        const elCounter = document.getElementById('q-counter');
-        const elScoreDisplay = document.getElementById('score-display');
-        const elExplanation = document.getElementById('explanation');
-        const elNextBtn = document.getElementById('next-btn');
-        const elResultContainer = document.getElementById('result-container');
-        const elQuizContent = document.getElementById('quiz-content-area');
-
-        function initQuiz() {
-            currentState.index = 0;
-            currentState.score = 0;
-            currentState.answered = false;
-            loadQuestion();
-        }
-
-        function loadQuestion() {
-            const data = quizData[currentState.index];
-            
-            // Reset UI
-            currentState.answered = false;
-            elExplanation.classList.remove('visible');
-            elNextBtn.classList.remove('visible');
-            elOptionsContainer.innerHTML = '';
-            
-            // Update Text
-            elQuestionText.innerText = data.q;
-            elCounter.innerText = `Frage ${currentState.index + 1} / ${quizData.length}`;
-            
-            // Update Progress Bar
-            const progressPercent = ((currentState.index) / quizData.length) * 100;
-            elProgress.style.width = `${progressPercent}%`;
-
-            // Render Options
-            data.o.forEach((opt, i) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerHTML = `<span>${opt}</span>`; // Span for flex alignment
-                btn.onclick = () => handleAnswer(i, btn);
-                elOptionsContainer.appendChild(btn);
-            });
-        }
-
-        function handleAnswer(selectedIndex, btnElement) {
-            if (currentState.answered) return; // Prevent multiple clicks
-            currentState.answered = true;
-
-            const currentData = quizData[currentState.index];
-            const allBtns = document.querySelectorAll('.option-btn');
-            
-            // Icon Logic
-            const iconCorrect = `<i class="fa-solid fa-check feedback-icon"></i>`;
-            const iconWrong = `<i class="fa-solid fa-xmark feedback-icon"></i>`;
-
-            // Disable all buttons
-            allBtns.forEach(btn => btn.classList.add('disabled'));
-
-            if (selectedIndex === currentData.a) {
-                // Richtig
-                btnElement.classList.add('correct');
-                btnElement.innerHTML += iconCorrect;
-                currentState.score++;
-                elScoreDisplay.innerText = currentState.score;
-            } else {
-                // Falsch
-                btnElement.classList.add('wrong');
-                btnElement.innerHTML += iconWrong;
-                // Zeige richtige Antwort an
-                const correctBtn = allBtns[currentData.a];
-                correctBtn.classList.add('correct');
-                correctBtn.innerHTML += iconCorrect;
-            }
-
-            // Show Explanation
-            elExplanation.innerHTML = `<strong>Wissenswert:</strong> ${currentData.info}`;
-            elExplanation.classList.add('visible');
-            
-            // Show Next Button
-            elNextBtn.innerText = (currentState.index === quizData.length - 1) ? "Zum Ergebnis" : "Nächste Frage";
-            elNextBtn.classList.add('visible');
-            
-            // Scroll to bottom only on mobile if necessary to see button
-            if(window.innerWidth < 768) {
-                elNextBtn.scrollIntoView({behavior: "smooth", block: "nearest"});
-            }
-        }
-
-        function nextQuestion() {
-            currentState.index++;
-            if (currentState.index < quizData.length) {
-                loadQuestion();
-            } else {
-                showResults();
-            }
-        }
-
-        function showResults() {
-            elQuizContent.style.display = 'none';
-            elResultContainer.style.display = 'block';
-            elProgress.style.width = '100%';
-            elCounter.innerText = "Beendet";
-
-            const percentage = (currentState.score / quizData.length) * 100;
-            document.getElementById('final-score').innerText = `${currentState.score} / ${quizData.length}`;
-            
-            let msg = "";
-            if(percentage === 100) msg = "Perfekt! Sie sind ein wahrer Edelmetall-Experte.";
-            else if(percentage >= 80) msg = "Hervorragend! Sie kennen sich sehr gut aus.";
-            else if(percentage >= 50) msg = "Gut gemacht! Sie haben solides Basiswissen.";
-            else msg = "Ein guter Anfang. Nutzen Sie unseren Wissensbereich, um mehr zu lernen.";
-            
-            document.getElementById('result-text').innerText = msg;
-        }
-
-        // Start
-        initQuiz();
     </script>
 </body>
 </html>
