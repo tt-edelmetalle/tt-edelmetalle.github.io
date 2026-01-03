@@ -5,19 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <title>Edelmetall Experten-Quiz | T&T Edelmetalle</title>
-    <meta name="description" content="Testen Sie Ihr Investoren-Wissen zu Gold, Silber und Platin. 10 Experten-Fragen zu Märkten, Geschichte und Physik der Edelmetalle." />
-    <meta name="keywords" content="Edelmetall Quiz, Gold wissen, Silber Investment, Platin Markt, T&T Edelmetalle" />
+    <meta name="description" content="Testen Sie Ihr Wissen über Gold, Silber, Platin und Märkte. 10 Fragen für Investoren und Experten im interaktiven Edelmetall-Quiz." />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://www.ihre-domain.de/quiz.html" />
-
-    <meta property="og:title" content="Sind Sie ein Gold-Experte? Das T&T Edelmetall-Quiz" />
-    <meta property="og:description" content="Beweisen Sie Ihr Fachwissen in 10 Fragen rund um Edelmetalle und Märkte." />
+    <meta property="og:site_name" content="T&T Edelmetalle" />
+    <meta property="og:title" content="Edelmetall Experten-Quiz" />
+    <meta property="og:description" content="Sind Sie ein Gold-Experte? Testen Sie Ihr Wissen in 10 Fragen." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.ihre-domain.de/quiz.html" />
-    <meta property="og:image" content="https://www.ihre-domain.de/assets/quiz-share.jpg" />
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script type="application/ld+json">
     {
@@ -25,454 +18,274 @@
       "@type": "Quiz",
       "name": "Edelmetall Experten-Quiz",
       "description": "Testen Sie Ihr Wissen über Edelmetalle.",
-      "educationalUse": "Assessment",
-      "about": {
-        "@type": "Thing",
-        "name": "Edelmetalle"
-      }
+      "educationalUse": "Assessment"
     }
     </script>
 
+    <link rel="stylesheet" href="style.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* --------------------------------------------------
-           DESIGN SYSTEM: Compact, trustful, responsive
-           (Exakt aus Ihrer Vorgabe übernommen)
-           -------------------------------------------------- */
-        :root {
-            --c-primary: #c5a059;
-            --c-primary-dark: #a38234;
-            --c-bg-app: #0b1120;
-            --c-bg-card: #121824;
-            --c-text-main: #f1f5f9;
-            --c-text-muted: #9aa7bb;
-            --c-border: #24313f;
-            --c-success: #10b981;
-            --c-danger: #ef4444;
-            --radius-sm: 6px;
-            --radius-md: 10px;
-            --radius-lg: 14px;
-            --font-stack: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-            --nav-height: 72px;
-            --glass: rgba(255,255,255,0.03);
-            --card-elev: 18px;
-        }
-
-        * { box-sizing: border-box; }
-        html, body { height: 100%; }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-stack);
-            background: linear-gradient(180deg,#070912 0%,var(--c-bg-app) 100%);
-            color: var(--c-text-main);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            -webkit-tap-highlight-color: transparent;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Container + grid */
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 16px; width: 100%; }
-
-        /* NAV */
-        .navbar {
-            position: sticky; top: 0; z-index: 120; height: var(--nav-height);
-            display: flex; align-items: center; backdrop-filter: blur(8px);
-            background: linear-gradient(180deg, rgba(11,17,32,0.95), rgba(11,17,32,0.8));
-            border-bottom: 1px solid var(--c-border); padding: 0 8px;
-        }
-        .nav-inner { width: 100%; max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-
-        a { text-decoration: none; color: inherit; }
-
-        .brand-logo {
-            display: flex; align-items: center; gap: 10px; cursor: pointer;
-            font-weight: 700; font-size: 1.15rem; margin: 0; padding: 0;
-            border: none; background: none; color: inherit;
-        }
-        .brand-logo span { color: var(--c-primary); }
-
-        .nav-menu { display: flex; gap: 8px; align-items: center; }
-        .nav-item {
-            padding: 8px 12px; border-radius: 10px; color: var(--c-text-muted);
-            font-weight: 600; cursor: pointer; transition: all 160ms ease;
-            display: inline-block;
-        }
-        .nav-item:hover { color: var(--c-text-main); background: var(--glass); }
-        .nav-item.active { background: linear-gradient(90deg,var(--c-primary),var(--c-primary-dark)); color: #000; }
-
-        #hamburger { display: none; background: transparent; border: 1px solid var(--c-border); color: var(--c-text-main); padding: 8px 12px; border-radius: 8px; cursor: pointer; }
-        
-        @media(max-width:900px) {
-            .nav-menu { display: none; }
-            #hamburger { display: inline-flex; }
-        }
-
-        /* MOBILE NAV DRAWER */
-        #mobile-overlay {
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
-            z-index: 140; opacity: 0; transition: opacity 220ms ease; pointer-events: none;
-        }
-        #mobile-overlay.active { display: block; opacity: 1; pointer-events: auto; }
-
-        #mobile-nav {
-            position: fixed; top: var(--nav-height); left: 0; bottom: 0; width: 80vw; max-width: 320px;
-            transform: translateX(-120%); background: var(--c-bg-card); border-right: 1px solid var(--c-border);
-            padding: 12px; z-index: 150; transition: transform 280ms cubic-bezier(.2,.9,.2,1);
-            overflow-y: auto; -webkit-overflow-scrolling: touch; box-shadow: 6px 0 30px rgba(2,6,23,0.5);
-        }
-        #mobile-nav.open { transform: translateX(0); }
-        #mobile-nav .nav-item { display: block; margin-bottom: 8px; }
-
-        /* CARDS */
-        .card {
-            background: var(--c-bg-card); border: 1px solid var(--c-border); border-radius: var(--radius-lg);
-            padding: 24px; display: flex; flex-direction: column; gap: 16px;
-            box-shadow: 0 8px 30px rgba(2,6,23,0.6); transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms;
-        }
-        .card-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .card-title { font-weight: 700; font-size: 1rem; color: var(--c-text-main); display: flex; align-items: center; gap: 8px; margin: 0; }
-        
-        /* Buttons */
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 12px 18px; border-radius: 10px; font-weight: 600; cursor: pointer;
-            transition: all 180ms ease; border: 1px solid transparent; text-decoration: none; font-size: 1rem;
-        }
-        .btn:active { transform: translateY(1px); }
-        .btn-primary { background: linear-gradient(135deg,var(--c-primary),var(--c-primary-dark)); color: #000; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.2); }
-        .btn-primary:hover { box-shadow: 0 6px 20px rgba(197, 160, 89, 0.3); }
-        .btn-outline { background: transparent; border-color: var(--c-border); color: var(--c-text-muted); }
-        .btn-outline:hover { border-color: var(--c-primary); color: var(--c-text-main); background: var(--glass); }
-
-        /* Hero Section */
-        .hero-section {
-            text-align: center;
-            padding: 60px 20px 40px;
-            background: radial-gradient(circle at center, rgba(197,160,89,0.08) 0%, transparent 70%);
-        }
-        .hero-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 800;
-            margin: 0 0 16px 0;
-            background: linear-gradient(135deg, #fff 30%, var(--c-primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero-text {
-            font-size: 1.1rem;
-            color: var(--c-text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        /* -------------------------
-           Quiz Specific Styles (Adapted to Design System)
-           ------------------------- */
-        
-        /* Progress Bar */
+        /* Quiz Spezifisch */
         .quiz-progress-track {
             height: 6px;
             background: rgba(255,255,255,0.05);
             border-radius: 99px;
             overflow: hidden;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
         .quiz-progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--c-primary), #eab308);
+            background: linear-gradient(90deg, var(--c-primary, #c5a059), #eab308);
             width: 0%;
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 99px;
-            box-shadow: 0 0 10px rgba(197,160,89,0.3);
+            transition: width 0.4s ease;
         }
-
-        /* Options */
         .quiz-options { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
         
         .option-btn {
-            width: 100%;
-            justify-content: flex-start; /* Left align text */
-            text-align: left;
+            width: 100%; text-align: left;
             background: rgba(255,255,255,0.02);
-            border: 1px solid var(--c-border);
-            color: var(--c-text-main);
-            padding: 16px 20px;
-            font-weight: 500;
-            position: relative;
+            border: 1px solid var(--c-border, #24313f);
+            color: var(--c-text-main, #f1f5f9);
+            padding: 16px; border-radius: 10px;
+            font-weight: 500; cursor: pointer; transition: all 0.2s;
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: inherit; font-size: 0.95rem;
         }
-
-        .option-btn:hover:not(.disabled) {
-            background: rgba(255,255,255,0.04);
-            border-color: var(--c-primary);
-            transform: translateY(-2px);
-        }
-
-        .option-btn.disabled { opacity: 0.9; cursor: default; }
-
-        /* States */
-        .option-btn.correct {
-            background: rgba(16, 185, 129, 0.15); /* Success transparent */
-            border-color: var(--c-success);
-            color: var(--c-success);
-        }
-        .option-btn.wrong {
-            background: rgba(239, 68, 68, 0.15); /* Danger transparent */
-            border-color: var(--c-danger);
-            color: var(--c-danger);
-        }
+        .option-btn:hover:not(.disabled) { background: rgba(255,255,255,0.05); border-color: var(--c-primary, #c5a059); }
+        .option-btn.disabled { opacity: 0.8; cursor: default; }
         
-        .feedback-icon { margin-left: auto; font-size: 1.1rem; }
+        /* Quiz Status Farben */
+        .option-btn.correct { background: rgba(16, 185, 129, 0.15); border-color: #10b981; color: #10b981; }
+        .option-btn.wrong { background: rgba(239, 68, 68, 0.15); border-color: #ef4444; color: #ef4444; }
 
-        /* Typography */
-        .question-text {
-            font-size: 1.35rem;
-            font-weight: 600;
-            line-height: 1.4;
-            color: var(--c-text-main);
-            margin: 10px 0 20px;
-        }
-
-        /* Explanation Box */
         .explanation-box {
-            display: none;
-            margin-top: 20px;
-            padding: 16px;
-            background: rgba(197, 160, 89, 0.08); /* Primary tint */
-            border-left: 3px solid var(--c-primary);
-            border-radius: var(--radius-sm);
-            color: var(--c-text-muted);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            animation: fadeIn 420ms ease;
+            display: none; margin-top: 20px; padding: 16px;
+            background: rgba(197, 160, 89, 0.1);
+            border-left: 3px solid var(--c-primary, #c5a059);
+            border-radius: 6px; color: var(--c-text-muted, #9aa7bb);
+            font-size: 0.95rem; line-height: 1.5;
+            animation: fadeIn 0.4s ease;
         }
         .explanation-box.visible { display: block; }
-
-        /* Footer */
-        footer {
-            margin-top: auto;
-            background: var(--c-bg-card);
-            border-top: 1px solid var(--c-border);
-            padding: 28px 0;
-            text-align: center;
-            color: var(--c-text-muted);
-            font-size: 0.88rem;
-        }
-
-        /* Animations */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         
-        /* Result styles */
-        .result-container { text-align: center; padding: 30px 0; display: none; animation: fadeIn 0.5s ease; }
-        .score-big { font-size: 3.5rem; font-weight: 800; color: var(--c-primary); margin: 10px 0; text-shadow: 0 0 30px rgba(197,160,89,0.15); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 
+        /* Mobile Nav Simple Toggle Styles (falls nicht in style.css) */
+        @media(max-width: 900px) {
+            .nav-menu {
+                display: none; position: absolute; top: 100%; left: 0; right: 0;
+                background: var(--c-bg-card, #121824); border-bottom: 1px solid var(--c-border, #24313f);
+                flex-direction: column; padding: 10px; z-index: 1000;
+            }
+            .nav-menu.active { display: flex; }
+            .nav-item { width: 100%; display: block; margin-bottom: 5px; }
+        }
     </style>
 </head>
 <body>
-
-    <div id="mobile-overlay" onclick="toggleMobileNav()"></div>
-
-    <aside id="mobile-nav">
-        <div style="padding-bottom: 20px; border-bottom: 1px solid var(--c-border); margin-bottom: 16px;">
-            <div class="brand-logo">
-                <i class="fa-solid fa-layer-group" style="color:var(--c-primary);"></i>
-                <span>T&T</span> Edelmetalle
-            </div>
-        </div>
-        <a href="markt.html" class="nav-item">Marktübersicht</a>
-        <a href="rechner.html" class="nav-item">Portfolio Rechner</a>
-        <a href="wissen.html" class="nav-item">Wissenswertes</a>
-        <a href="quiz.html" class="nav-item active">Quiz</a>
-    </aside>
-
-    <nav class="navbar" role="navigation" aria-label="Hauptnavigation">
-        <div class="nav-inner">
-            <a href="index.html" class="brand-logo" title="Zur Startseite">
-                <i class="fa-solid fa-layer-group" style="color:var(--c-primary);"></i>
-                <span>T&T</span> Edelmetalle
-            </a>
-
-            <div class="nav-menu">
-                <a href="markt.html" class="nav-item">Marktübersicht</a>
-                <a href="rechner.html" class="nav-item">Portfolio Rechner</a>
-                <a href="wissen.html" class="nav-item">Wissenswertes</a>
-                <a href="quiz.html" class="nav-item active">Quiz</a>
-            </div>
-
-            <button id="hamburger" onclick="toggleMobileNav()" aria-label="Menü öffnen">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-        </div>
-    </nav>
-
-    <header class="hero-section">
-        <div class="container">
-            <h1 class="hero-title">Edelmetall Experten-Quiz</h1>
-            <p class="hero-text">Beweisen Sie Ihr Wissen über Märkte, Eigenschaften und Geschichte von Gold, Silber & Co.</p>
-        </div>
-    </header>
-
-    <main class="container" style="margin-bottom: 60px;">
-        <article class="card" id="quiz-box">
-            
-            <div class="card-header">
-                <span class="card-title" id="q-counter" style="font-weight:500; color:var(--c-text-muted);">Frage 1 / 10</span>
-                <div class="card-title">
-                    <i class="fa-solid fa-trophy"></i>
-                    <span id="score-display">0</span>
+    <div id="main-app">
+        
+        <nav class="navbar" role="navigation" aria-label="Hauptnavigation">
+            <div class="nav-inner">
+                <a href="index.html" class="brand-logo"><i class="fa-solid fa-layer-group"></i><span>T&T</span>Edelmetalle</a>
+                
+                <button id="hamburger" class="btn btn-outline" onclick="toggleMobileNav()" aria-label="Menü"><i class="fa-solid fa-bars"></i></button>
+                
+                <div class="nav-menu" id="navMenu">
+                    <a href="markt.html" class="nav-item">Marktübersicht</a>
+                    <a href="rechner.html" class="nav-item">Portfolio Rechner</a>
+                    <a href="wissen.html" class="nav-item">Wissenswertes</a>
+                    <a href="quiz.html" class="nav-item active">Quiz</a>
                 </div>
             </div>
+        </nav>
 
-            <div class="quiz-progress-track" role="progressbar" aria-label="Fortschritt">
-                <div id="progress" class="quiz-progress-fill"></div>
-            </div>
+        <div id="mobile-overlay" onclick="toggleMobileNav()"></div>
 
-            <div id="quiz-content-area">
-                <h2 id="question-text" class="question-text">Lädt...</h2>
+        <main class="container" style="padding-top:20px; padding-bottom:50px;">
+            <div style="display:flex; flex-direction:column; gap:20px;">
                 
-                <div id="options-container" class="quiz-options" aria-live="polite">
+                <div class="card" id="quiz-box">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fa-solid fa-clipboard-question"></i> Experten-Quiz</h2>
+                        <div class="card-title">
+                            <span id="score-display">0</span> <i class="fa-solid fa-trophy" style="color:var(--c-primary, #c5a059); font-size:0.9em;"></i>
+                        </div>
                     </div>
-                
-                <div id="explanation" class="explanation-box" aria-hidden="true"></div>
-                
-                <div style="display:flex; justify-content:flex-end; margin-top: 20px;">
-                    <button id="next-btn" class="btn btn-primary" onclick="nextQuestion()" style="display:none;">
-                        Nächste Frage <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+
+                    <div style="color:var(--c-text-muted); line-height:1.6; font-size:0.95rem; margin-bottom: 10px;">
+                        <p style="margin-top:0;">
+                            Testen Sie Ihr Investoren-Wissen zu Gold, Silber und Märkten in 10 Fragen.
+                        </p>
+                    </div>
+
+                    <div class="quiz-progress-track">
+                        <div id="progress" class="quiz-progress-fill"></div>
+                    </div>
+
+                    <div id="quiz-content-area">
+                        <div style="display:flex; justify-content:space-between; color:var(--c-text-muted); font-size:0.85rem; margin-bottom:8px;">
+                            <span id="q-counter">Frage 1 / 10</span>
+                        </div>
+                        
+                        <h3 id="question-text" style="font-size: 1.25rem; font-weight: 600; margin: 0 0 20px 0; color:var(--c-text-main);">Lädt...</h3>
+                        
+                        <div id="options-container" class="quiz-options">
+                            </div>
+                        
+                        <div id="explanation" class="explanation-box"></div>
+                        
+                        <div style="display:flex; justify-content:flex-end; margin-top: 20px;">
+                            <button id="next-btn" class="btn btn-primary" onclick="nextQuestion()" style="display:none;">
+                                Nächste Frage <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="result-container" style="display:none; text-align:center; padding: 20px 0; animation: fadeIn 0.5s ease;">
+                        <i class="fa-solid fa-medal fa-3x" style="color:var(--c-primary, #c5a059); margin-bottom:16px;"></i>
+                        <h2 style="margin:0 0 10px 0; font-size:1.8rem;">Quiz beendet!</h2>
+                        
+                        <div style="font-size: 2.5rem; font-weight: 800; color:var(--c-primary, #c5a059); margin: 10px 0;" id="final-score">0/10</div>
+                        
+                        <p id="result-text" style="color:var(--c-text-muted); margin:0 auto 24px; max-width:500px;"></p>
+                        
+                        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+                            <button class="btn btn-outline" onclick="location.reload()">
+                                <i class="fa-solid fa-rotate-right"></i> Neu starten
+                            </button>
+                            <a href="markt.html" class="btn btn-primary">
+                                Zur Marktanalyse
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="border-top: 4px solid var(--c-primary, #c5a059);">
+                    <div class="card-title" style="margin-bottom:12px;">Wussten Sie schon?</div>
+                    <div style="font-size:0.9rem; color:var(--c-text-muted); line-height:1.5;">
+                        Unsere Quizfragen basieren auf realen Marktdaten und historischen Fakten. Nutzen Sie den <a href="wissen.html" style="color:var(--c-primary, #c5a059);">Wissensbereich</a>, um sich auf das nächste Level vorzubereiten.
+                    </div>
+                </div>
+
+            </div>
+        </main>
+        
+        <footer>
+            <div class="container" style="display:flex; flex-direction:column; gap:8px; align-items:center;">
+                <div style="max-width:1000px; text-align:center; color:var(--c-text-muted, #9aa7bb); font-size:0.9rem;">&copy; 2025 T&T Edelmetalle. Alle Rechte vorbehalten.</div>
+                <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:6px;">
+                    <button class="btn btn-outline btn-sm" onclick="openLegal('impressum')">Impressum</button>
+                    <button class="btn btn-outline btn-sm" onclick="openLegal('haftung')">Haftungsausschluss</button>
+                    <button class="btn btn-outline btn-sm" onclick="openLegal('datenschutz')">Datenschutz</button>
                 </div>
             </div>
-
-            <div id="result-container" class="result-container">
-                <i class="fa-solid fa-medal fa-4x" style="color:var(--c-primary); margin-bottom:16px;"></i>
-                <h2 style="margin:0; font-size:1.8rem;">Quiz beendet!</h2>
-                
-                <div class="score-big" id="final-score">0/10</div>
-                
-                <p id="result-text" style="color:var(--c-text-muted); font-size:1.1rem; max-width:500px; margin:0 auto 24px;"></p>
-                
-                <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-                    <button class="btn btn-outline" onclick="location.reload()">
-                        <i class="fa-solid fa-rotate-right"></i> Neu starten
-                    </button>
-                    <a href="markt.html" class="btn btn-primary">
-                        Zur Marktanalyse
-                    </a>
+        </footer>
+        
+        <div id="legal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:900; align-items:center; justify-content:center; padding:16px;">
+            <div id="legal-modal" style="max-width:900px; width:100%; max-height:85vh; overflow:auto; background:var(--c-bg-card, #121824); border:1px solid var(--c-border, #24313f); border-radius:12px; padding:20px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+                    <h3 id="legal-title" style="margin:0;">Rechtliches</h3>
+                    <button class="btn btn-outline" onclick="closeLegal()"><i class="fa-solid fa-xmark"></i></button>
                 </div>
-            </div>
-
-        </article>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div style="display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:12px;">
-                <i class="fa-solid fa-layer-group" style="color:var(--c-primary);"></i> 
-                <strong style="color:var(--c-text-main)">T&T Edelmetalle</strong>
-            </div>
-            <div>
-                &copy; 2025 T&T Edelmetalle. Alle Rechte vorbehalten. | <a href="#" style="text-decoration:underline;">Impressum</a>
+                <div id="legal-content" style="margin-top:12px; color:var(--c-text-muted, #9aa7bb); line-height:1.45;"></div>
             </div>
         </div>
-    </footer>
+        
+        <div id="consent-overlay" style="display:none;">
+            </div>
+    </div>
+
+    <script src="script.js"></script>
 
     <script>
-        // --- Mobile Nav Logic (Adapted for Drawer) ---
+        // --- 1. Basic UI Logic (Falls script.js fehlt oder das Menü steuert) ---
         function toggleMobileNav() {
-            const nav = document.getElementById('mobile-nav');
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('active');
+            // Falls ein Overlay genutzt wird:
             const overlay = document.getElementById('mobile-overlay');
-            
-            if (nav.classList.contains('open')) {
-                nav.classList.remove('open');
-                overlay.classList.remove('active');
-            } else {
-                nav.classList.add('open');
-                overlay.classList.add('active');
-            }
+            if(overlay) overlay.style.display = menu.classList.contains('active') ? 'block' : 'none';
         }
-        
-        // Close nav on resize if screen gets larger
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 900) {
-                document.getElementById('mobile-nav').classList.remove('open');
-                document.getElementById('mobile-overlay').classList.remove('active');
-            }
-        });
 
-        // --- QUIZ DATA & LOGIC ---
+        // Dummy Funktionen für Footer, falls script.js fehlt
+        if (typeof openLegal === 'undefined') {
+            window.openLegal = function(type) { 
+                document.getElementById('legal-overlay').style.display = 'flex';
+                document.getElementById('legal-title').innerText = type.toUpperCase();
+                document.getElementById('legal-content').innerText = "Inhalt für " + type + " wird geladen...";
+            };
+            window.closeLegal = function() { document.getElementById('legal-overlay').style.display = 'none'; };
+        }
+
+        // --- 2. QUIZ DATA & LOGIC ---
         const quizData = [
             {
                 q: "Welches Edelmetall besitzt physikalisch die höchste elektrische Leitfähigkeit?",
                 o: ["Gold", "Silber", "Kupfer", "Platin"],
                 a: 1,
-                info: "Silber hat die höchste elektrische Leitfähigkeit aller Elemente. Gold wird in der Elektronik oft nur wegen seiner Korrosionsbeständigkeit bevorzugt."
+                info: "Silber leitet Strom besser als jedes andere Metall. Gold wird nur wegen der Korrosionsbeständigkeit verwendet."
             },
             {
-                q: "Welche Aussage beschreibt den Begriff 'Feingehalt 585' korrekt?",
-                o: ["Der Goldanteil beträgt 58,5 %", "Das Schmuckstück wiegt genau 5,85 Gramm", "Es handelt sich um 585 Karat Gold", "Es ist eine Legierung aus dem Jahr 1585"],
+                q: "Was bedeutet 'Feingehalt 585'?",
+                o: ["58,5 % Goldanteil", "Gewicht von 5,85g", "585 Karat", "Eine Jahreszahl"],
                 a: 0,
-                info: "585er Gold entspricht 14 Karat. Es bedeutet, dass von 1000 Gewichtsanteilen der Legierung 585 Anteile reines Gold sind."
+                info: "585er Gold entspricht 14 Karat (585 von 1000 Teilen sind reines Gold)."
             },
             {
-                q: "Welches Land ist der weltweit größte Produzent von Platin?",
+                q: "Welches Land ist der größte Platin-Produzent?",
                 o: ["Russland", "Kanada", "Südafrika", "USA"],
                 a: 2,
-                info: "Südafrika dominiert den Platinmarkt massiv und ist für ca. 70-80% der weltweiten Primärproduktion verantwortlich."
+                info: "Südafrika kontrolliert ca. 70-80% der weltweiten Platin-Primärförderung."
             },
             {
-                q: "Was versteht man unter 'Scheidegold'?",
-                o: ["Gold aus Recycling (Scheideanstalt)", "Gesetzliches Zahlungsmittel", "Gold für Eheringe", "Rohgold aus Minen"],
-                a: 0,
-                info: "Scheidegold ist das hochreine Endprodukt einer Scheideanstalt, welches durch Recycling aus Altgold oder Industrieschrott zurückgewonnen wurde."
-            },
-            {
-                q: "Welches Ereignis beendete 1971 die direkte Konvertierbarkeit des US-Dollars in Gold?",
-                o: ["Der Schwarze Freitag", "Der Nixon-Schock", "Das Bretton-Woods-Abkommen", "Die Einführung des Euro"],
+                q: "Wann wurde die Goldbindung des US-Dollars aufgehoben?",
+                o: ["1929", "1971", "1944", "2001"],
                 a: 1,
-                info: "Beim 'Nixon-Schock' hob US-Präsident Richard Nixon die Goldbindung des US-Dollars auf, was das Ende des Bretton-Woods-Systems besiegelte."
+                info: "1971 beendete Richard Nixon die direkte Konvertierbarkeit (Nixon-Schock)."
             },
             {
-                q: "Wie schwer ist eine Feinunze (Troy Ounce) exakt?",
-                o: ["28,35 Gramm", "30,00 Gramm", "31,1034768 Gramm", "33,33 Gramm"],
+                q: "Wie schwer ist eine Feinunze (Troy Ounce)?",
+                o: ["28,35g", "30,00g", "31,10g", "33,33g"],
                 a: 2,
-                info: "Die Feinunze (oz. tr.) ist das Standardgewicht im Edelmetallhandel. Sie wiegt ca. 31,103 Gramm und ist schwerer als eine gewöhnliche Unze (28,35g)."
+                info: "Die Feinunze wiegt exakt ca. 31,1034768 Gramm."
             },
             {
-                q: "Welches Edelmetall wird primär in Katalysatoren für Benzinmotoren verwendet?",
-                o: ["Palladium", "Silber", "Platin", "Rhodium"],
+                q: "Wofür wird Palladium hauptsächlich genutzt?",
+                o: ["Katalysatoren (Benziner)", "Schmuck", "Zahnmedizin", "Raumfahrt"],
                 a: 0,
-                info: "Palladium wird hauptsächlich in Katalysatoren für Benziner eingesetzt, während Platin eher bei Dieselfahrzeugen Verwendung findet."
+                info: "Der Großteil der Nachfrage kommt aus der Automobilindustrie für Benzin-Katalysatoren."
             },
             {
-                q: "Was ist ein 'Good Delivery' Barren im professionellen Goldhandel?",
-                o: ["Ein 24h-Lieferbarren", "Ein Standardbarren ca. 12,44 kg (400 oz)", "Ein Barren mit 999,99 Reinheit", "Ein Barren unter 10g"],
-                a: 1,
-                info: "London Good Delivery Barren sind der Standard im Interbankenhandel. Sie wiegen ca. 400 Feinunzen (ca. 12,5 kg)."
-            },
-            {
-                q: "Welche Zentralbank hält offiziell die größten Goldreserven der Welt?",
-                o: ["Deutsche Bundesbank", "People's Bank of China", "Federal Reserve (USA)", "IWF"],
+                q: "Wer hält die größten Goldreserven?",
+                o: ["Deutschland", "China", "USA", "IWF"],
                 a: 2,
-                info: "Die USA halten mit über 8.100 Tonnen die größten Goldreserven der Welt, gefolgt von Deutschland mit ca. 3.350 Tonnen."
+                info: "Die USA besitzen offiziell über 8.100 Tonnen Gold."
             },
             {
-                q: "Wodurch zeichnet sich Osmium im Vergleich zu anderen Edelmetallen aus?",
-                o: ["Es ist das leichteste", "Es hat die höchste Dichte aller stabilen Elemente", "Es ist radioaktiv", "Es ist flüssig"],
+                q: "Was ist ein 'Good Delivery' Barren?",
+                o: ["Kleiner Geschenkbarren", "Standardbarren (ca. 12,5kg)", "Münzbarren", "Rohgold"],
                 a: 1,
-                info: "Osmium besitzt mit 22,59 g/cm³ die höchste Dichte aller natürlich vorkommenden Elemente und ist extrem hart, aber auch spröde."
+                info: "Im professionellen Handel ist der 'London Good Delivery' (ca. 400 oz / 12,5 kg) Standard."
+            },
+            {
+                q: "Welches Metall ist am dichtesten?",
+                o: ["Gold", "Blei", "Osmium", "Silber"],
+                a: 2,
+                info: "Osmium ist mit 22,59 g/cm³ das dichteste natürlich vorkommende Element."
+            },
+            {
+                q: "Wie verhält sich Silber in Krisenzeiten oft im Vergleich zu Gold?",
+                o: ["Es schwankt weniger", "Es ist volatiler", "Es verliert immer an Wert", "Es bleibt gleich"],
+                a: 1,
+                info: "Silber hat einen kleineren Markt und ist oft deutlich volatiler (stärkere Schwankungen) als Gold."
             }
         ];
 
-        // State
-        let currentState = {
-            index: 0,
-            score: 0,
-            answered: false
-        };
+        let currentState = { index: 0, score: 0, answered: false };
 
-        // Selectors
+        // DOM Elemente
         const elQuestionText = document.getElementById('question-text');
         const elOptionsContainer = document.getElementById('options-container');
         const elProgress = document.getElementById('progress');
@@ -484,42 +297,36 @@
         const elQuizContent = document.getElementById('quiz-content-area');
 
         function initQuiz() {
-            currentState.index = 0;
-            currentState.score = 0;
-            currentState.answered = false;
-            
+            currentState = { index: 0, score: 0, answered: false };
             elResultContainer.style.display = 'none';
             elQuizContent.style.display = 'block';
             elScoreDisplay.innerText = "0";
-            
             loadQuestion();
         }
 
         function loadQuestion() {
             const data = quizData[currentState.index];
+            currentState.answered = false;
             
             // Reset UI
-            currentState.answered = false;
             elExplanation.classList.remove('visible');
-            elExplanation.setAttribute('aria-hidden', 'true');
+            elExplanation.innerHTML = '';
             elNextBtn.style.display = 'none';
             elOptionsContainer.innerHTML = '';
             
-            // Update Text
+            // Set Text
             elQuestionText.innerText = data.q;
             elCounter.innerText = `Frage ${currentState.index + 1} / ${quizData.length}`;
             
-            // Update Progress Bar
-            const progressPercent = ((currentState.index) / quizData.length) * 100;
-            elProgress.style.width = `${progressPercent}%`;
+            // Progress Bar
+            const pct = (currentState.index / quizData.length) * 100;
+            elProgress.style.width = `${pct}%`;
 
-            // Render Options
+            // Create Buttons
             data.o.forEach((opt, i) => {
                 const btn = document.createElement('button');
-                btn.className = 'btn option-btn'; // Use Design System styling
-                btn.type = 'button';
+                btn.className = 'option-btn';
                 btn.innerHTML = `<span>${opt}</span>`;
-                
                 btn.onclick = () => handleAnswer(i, btn);
                 elOptionsContainer.appendChild(btn);
             });
@@ -530,53 +337,34 @@
             currentState.answered = true;
             
             const currentData = quizData[currentState.index];
-            const allBtns = Array.from(document.querySelectorAll('.option-btn'));
+            const allBtns = elOptionsContainer.querySelectorAll('.option-btn');
             
-            const iconCorrect = `<i class="fa-solid fa-check feedback-icon"></i>`;
-            const iconWrong = `<i class="fa-solid fa-xmark feedback-icon"></i>`;
-
-            // Disable all buttons
-            allBtns.forEach(btn => {
-                btn.classList.add('disabled');
-            });
+            // Disable all
+            allBtns.forEach(b => b.classList.add('disabled'));
 
             if (selectedIndex === currentData.a) {
-                // Correct
                 btnElement.classList.add('correct');
-                btnElement.innerHTML += iconCorrect;
+                btnElement.innerHTML += ` <i class="fa-solid fa-check"></i>`;
                 currentState.score++;
                 elScoreDisplay.innerText = currentState.score;
             } else {
-                // Wrong
                 btnElement.classList.add('wrong');
-                btnElement.innerHTML += iconWrong;
-                
-                // Highlight Correct One
+                btnElement.innerHTML += ` <i class="fa-solid fa-xmark"></i>`;
+                // Show correct one
                 const correctBtn = allBtns[currentData.a];
-                if (correctBtn) {
-                    correctBtn.classList.add('correct');
-                    correctBtn.innerHTML += iconCorrect;
-                }
+                correctBtn.classList.add('correct');
+                correctBtn.innerHTML += ` <i class="fa-solid fa-check"></i>`;
             }
 
             // Explanation
-            elExplanation.innerHTML = `<strong>Wissenswert:</strong> ${currentData.info}`;
+            elExplanation.innerHTML = `<strong>Info:</strong> ${currentData.info}`;
             elExplanation.classList.add('visible');
-            elExplanation.setAttribute('aria-hidden','false');
             
-            // Next Button logic
+            // Next Button
             elNextBtn.innerHTML = (currentState.index === quizData.length - 1) 
-                ? `Zum Ergebnis <i class="fa-solid fa-flag-checkered"></i>` 
-                : `Nächste Frage <i class="fa-solid fa-arrow-right"></i>`;
-            
+                ? `Ergebnis <i class="fa-solid fa-flag-checkered"></i>` 
+                : `Weiter <i class="fa-solid fa-arrow-right"></i>`;
             elNextBtn.style.display = 'inline-flex';
-            
-            // Auto scroll on mobile to see explanation
-            if (window.innerWidth < 768) {
-                setTimeout(() => {
-                    elNextBtn.scrollIntoView({behavior: "smooth", block: "nearest"});
-                }, 100);
-            }
         }
 
         function nextQuestion() {
@@ -590,24 +378,22 @@
 
         function showResults() {
             elQuizContent.style.display = 'none';
-            elResultContainer.style.display = 'block'; // Ensure block display for centering
+            elResultContainer.style.display = 'block';
             elProgress.style.width = '100%';
-            elCounter.innerText = "Beendet";
+            elCounter.innerText = "Fertig";
 
             document.getElementById('final-score').innerText = `${currentState.score} / ${quizData.length}`;
             
-            const percentage = (currentState.score / quizData.length) * 100;
-            let msg = "";
-            if (percentage === 100) msg = "Perfekt! Sie sind ein wahrer Edelmetall-Experte.";
-            else if (percentage >= 80) msg = "Hervorragend! Sie kennen sich sehr gut aus.";
-            else if (percentage >= 50) msg = "Gut gemacht! Sie haben solides Basiswissen.";
-            else msg = "Ein guter Anfang. Schauen Sie sich unsere Marktübersicht an, um mehr zu lernen.";
+            const pct = (currentState.score / quizData.length);
+            let msg = "Nicht schlecht! Schauen Sie nochmal in unseren Wissensbereich.";
+            if (pct >= 0.8) msg = "Hervorragend! Sie sind ein echter Experte.";
+            else if (pct >= 0.5) msg = "Gut gemacht! Solides Basiswissen.";
             
             document.getElementById('result-text').innerText = msg;
         }
 
         // Start
-        initQuiz();
+        document.addEventListener('DOMContentLoaded', initQuiz);
     </script>
 </body>
 </html>
