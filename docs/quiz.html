@@ -4,11 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Experten-Quiz: Edelmetalle & Märkte | T&T Edelmetalle</title>
-    <meta name="description" content="Testen Sie Ihr Fachwissen über Gold, Silber, Platin und Märkte. 10 Fragen für Investoren und Experten im interaktiven Edelmetall-Quiz." />
+    <meta name="description" content="Testen Sie Ihr Fachwissen über Gold, Silber, Platin und Märkte. 10 Fragen pro Schwierigkeitsstufe im interaktiven Edelmetall-Quiz." />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- DESIGN SYSTEM (vom bereitgestellten CSS) -->
     <style>
     :root {
         --c-primary: #c5a059;
@@ -20,17 +19,10 @@
         --c-border: #24313f;
         --c-success: #10b981;
         --c-danger: #ef4444;
-        --color-gold: #c5a059;
-        --color-silver: #cbd5e1;
-        --color-plat: #e2e8f0;
-        --color-pall: #a8a29e;
-        --radius-sm: 6px;
-        --radius-md: 10px;
         --radius-lg: 14px;
         --font-stack: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
         --nav-height: 72px;
         --glass: rgba(255,255,255,0.03);
-        --card-elev: 18px;
     }
 
     * { box-sizing: border-box; }
@@ -83,22 +75,9 @@
         #hamburger { display: inline-flex; }
     }
 
-    /* MOBILE NAV DRAWER */
-    #mobile-overlay {
-        display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
-        z-index: 140; opacity: 0; transition: opacity 220ms ease; pointer-events: none;
-    }
-    #mobile-overlay.active { display: block; opacity: 1; pointer-events: auto; }
-
-    #mobile-nav {
-        position: fixed; top: var(--nav-height); left: 0; bottom: 0; width: 80vw; max-width: 320px;
-        transform: translateX(-120%); background: var(--c-bg-card); border-right: 1px solid var(--c-border);
-        padding: 12px; z-index: 150; transition: transform 280ms cubic-bezier(.2,.9,.2,1);
-        overflow-y: auto; -webkit-overflow-scrolling: touch; box-shadow: 6px 0 30px rgba(2,6,23,0.5);
-    }
-    #mobile-nav.open { transform: translateX(0); }
-    #mobile-nav .nav-item { display: block; margin-bottom: 8px; }
-    .no-scroll { overflow: hidden; }
+    /* mobile drawer */
+    #mobile-overlay { display:none; }
+    #mobile-nav { display:none; }
 
     .card {
         background: var(--c-bg-card); border: 1px solid var(--c-border); border-radius: var(--radius-lg);
@@ -114,94 +93,40 @@
         width: 100%; background: transparent; border: 1px solid var(--c-border);
         color: var(--c-text-main); padding: 10px 12px; border-radius: 8px; font-size: 0.95rem;
     }
-    .form-control:focus { outline: none; border-color: var(--c-primary); box-shadow: 0 6px 20px rgba(165,130,52,0.12); }
     .input-label { font-size: 0.72rem; text-transform: uppercase; color: var(--c-text-muted); margin-bottom: 6px; display: block; }
-
-    .select-wrapper { position: relative; }
-    .select-toggle {
-        width: 100%; text-align: left; display: flex; align-items: center; justify-content: space-between;
-        gap: 8px; padding: 10px 12px; border-radius: 8px; background: transparent; border: 1px solid var(--c-border);
-        color: var(--c-text-main); cursor: pointer;
-    }
-    .select-toggle:focus { outline: none; box-shadow: 0 6px 20px rgba(165,130,52,0.12); }
-    .custom-select-list {
-        position: absolute; left: 0; right: 0; top: calc(100% + 8px); background: var(--c-bg-card);
-        border: 1px solid var(--c-border); border-radius: 8px; max-height: 260px; overflow-y: auto;
-        z-index: 220; padding: 6px; box-shadow: 0 10px 30px rgba(2,6,23,0.6);
-    }
-    .custom-select-list li { list-style: none; padding: 10px 12px; border-radius: 6px; cursor: pointer; color: var(--c-text-main); background: transparent; }
-    .custom-select-list li:hover, .custom-select-list li[aria-selected="true"] { background: var(--glass); color: var(--c-text-main); }
-    .visually-hidden { position: absolute !important; height: 1px; width: 1px; overflow: hidden; clip: rect(1px,1px,1px,1px); white-space: nowrap; }
 
     .btn {
         display: inline-flex; align-items: center; justify-content: center; gap: 8px;
         padding: 10px 14px; border-radius: 10px; font-weight: 600; cursor: pointer;
         transition: all 180ms ease; border: 1px solid transparent; text-decoration: none;
+        background: transparent; color: var(--c-text-main);
     }
-    .btn:active { transform: translateY(1px); }
     .btn-primary { background: linear-gradient(135deg,var(--c-primary),var(--c-primary-dark)); color: #000; }
     .btn-outline { background: transparent; border-color: var(--c-border); color: var(--c-text-muted); }
-    .btn-outline.active { border-color: var(--c-primary); color: var(--c-primary); }
-    .btn-sm { padding: 8px 10px; font-size: 0.85rem; }
+    .btn-outline.active { border-color: var(--c-primary); color: var(--c-primary); background: rgba(197,160,89,0.03); }
 
-    .big-price { font-size: clamp(1.25rem,2.3vw,2rem); font-weight: 800; color: var(--c-primary); }
-    .sub-price { font-size: 0.85rem; color: var(--c-text-muted); }
-    .source-badge { font-size: 0.78rem; background: rgba(255,255,255,0.02); padding: 6px 10px; border-radius: 8px; color: var(--c-text-muted); border: 1px solid var(--c-border); }
-
-    .inventory-list { margin-top: 6px; border-radius: 8px; overflow: hidden; }
-    .inventory-item {
-        display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; gap: 14px;
-        border-bottom: 1px solid var(--c-border); background: linear-gradient(180deg, transparent, rgba(0,0,0,0.02));
-        transition: transform 300ms ease, opacity 260ms;
-    }
-    .inventory-item:last-child { border-bottom: none; }
-
-    @keyframes popIn { 0% { transform: scale(0.96); opacity: 0; } 60% { transform: scale(1.02); opacity: 1; } 100% { transform: scale(1); } }
-    .item-added { animation: popIn 360ms cubic-bezier(.2,.9,.2,1); }
-    .fade-in { animation: fadeIn 420ms ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-
-    @media(max-width:768px) {
-        .container { padding: 0 12px; }
-        .card { padding: 14px; }
-        .big-price { font-size: 1.3rem; }
-        .brand-logo { font-size: 1rem; }
-        .navbar { height: 64px; }
-        #mobile-nav { top: 64px; }
-        .custom-select-list { max-height: 40vh; }
-    }
-
-    .tradingview-widget-container { width: 100%; height: 100%; min-height: 180px; }
-    footer { background: var(--c-bg-card); border-top: 1px solid var(--c-border); padding: 28px 0; text-align: center; color: var(--c-text-muted); font-size: 0.88rem; }
-    .btn:focus, .form-control:focus, .nav-item:focus { outline: 3px solid rgba(197,160,89,0.12); outline-offset: 2px; }
-    .text-muted { color: var(--c-text-muted); }
-    .grid-2 { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
-
-    /* quiz-specific small additions to map the quiz UI to the design system */
-    .quiz-hero {
+    .hero-section {
         text-align: center;
-        padding: 48px 16px;
+        padding: 40px 16px;
         background: radial-gradient(circle at center, rgba(197,160,89,0.04) 0%, transparent 70%);
         border-radius: var(--radius-lg);
-        margin-bottom: 18px;
+        margin: 22px 0;
     }
+    /* Fix: use visible color fallback to avoid gradient-only text issue */
     .hero-title {
-        font-size: clamp(1.5rem, 3.2vw, 2.8rem);
+        font-size: clamp(1.6rem, 4vw, 2.8rem);
         font-weight: 800;
         margin: 0 0 8px 0;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background: linear-gradient(135deg, #fff 30%, var(--c-primary));
+        color: var(--c-text-main); /* visible fallback, avoids being a plain bar in some browsers */
     }
     .hero-text { color: var(--c-text-muted); margin: 0; }
 
-    .quiz-wrapper {
-        max-width: 980px;
-        margin: 0 auto 48px;
-        padding: 12px;
-    }
+    .quiz-wrapper { max-width: 980px; margin: 0 auto 48px; padding: 12px; }
 
-    /* Progress bar */
+    .difficulty-row { display:flex; gap:10px; align-items:center; margin-bottom:8px; flex-wrap:wrap; }
+    .difficulty-row .btn { padding:8px 12px; font-size:0.95rem; border-radius:10px; }
+    .difficulty-label { color:var(--c-text-muted); font-weight:600; font-size:0.9rem; margin-right:6px; }
+
     .progress-bar {
         height: 10px;
         background: rgba(255,255,255,0.02);
@@ -307,27 +232,29 @@
     .result-score { font-size: 2.6rem; font-weight: 800; color: var(--c-primary); margin: 10px 0; }
     .result-msg { color: var(--c-text-muted); font-size: 1.05rem; margin-bottom: 12px; }
 
+    footer { background: var(--c-bg-card); border-top: 1px solid var(--c-border); padding: 28px 0; text-align: center; color: var(--c-text-muted); font-size: 0.88rem; }
+    .btn:focus, .form-control:focus, .nav-item:focus { outline: 3px solid rgba(197,160,89,0.12); outline-offset: 2px; }
+
     @media(max-width:768px) {
-        .question-text { font-size: 1.05rem; }
-        .option-btn { padding: 12px 14px; font-size: 0.98rem; }
+        .container { padding: 0 12px; }
+        .card { padding: 14px; }
         .hero-title { font-size: 1.6rem; }
-        .result-score { font-size: 2rem; }
     }
     </style>
 </head>
 <body>
     <header class="navbar" role="banner" aria-label="Top Navigation">
         <div class="nav-inner">
-            <a href="index.html" class="brand-logo" title="Zur Startseite">
+            <a href="#" class="brand-logo" title="Zur Startseite">
                 <i class="fa-solid fa-layer-group" style="color:var(--c-primary);"></i>
                 <span>T&T</span> Edelmetalle
             </a>
 
             <div class="nav-menu" id="navMenu">
-                <a href="markt.html" class="nav-item">Marktübersicht</a>
-                <a href="rechner.html" class="nav-item">Portfolio Rechner</a>
-                <a href="wissen.html" class="nav-item">Wissenswertes</a>
-                <a href="quiz.html" class="nav-item active">Quiz</a>
+                <a href="#" class="nav-item">Marktübersicht</a>
+                <a href="#" class="nav-item">Portfolio Rechner</a>
+                <a href="#" class="nav-item">Wissenswertes</a>
+                <a href="#" class="nav-item active">Quiz</a>
             </div>
 
             <button id="hamburger" class="btn btn-outline" aria-expanded="false" aria-controls="navMenu" onclick="toggleMobileNav()">
@@ -337,17 +264,34 @@
     </header>
 
     <main class="container quiz-wrapper" id="main-app" role="main">
-        <section class="quiz-hero" aria-hidden="true">
+        <section class="hero-section" aria-hidden="false">
             <h1 class="hero-title">Edelmetall Experten-Quiz</h1>
-            <p class="hero-text">Beweisen Sie Ihr Wissen über Märkte, Eigenschaften und Geschichte.</p>
+            <p class="hero-text">Beweisen Sie Ihr Wissen über Märkte, Eigenschaften und Geschichte. Wählen Sie zuerst eine Schwierigkeit.</p>
         </section>
 
         <article class="card" id="quiz-card" aria-labelledby="quiz-title">
-            <div class="card-header">
-                <div class="card-title" id="quiz-title"><i class="fa-solid fa-question"></i> Experten-Quiz</div>
-                <div class="top-meta" aria-hidden="true">
-                    <span id="q-counter">Frage 1 / 10</span>
-                    <span style="display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-trophy" style="color:var(--c-primary);"></i> <span id="score-display">0</span></span>
+            <div class="card-header" style="flex-direction:column; align-items:stretch; gap:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <div class="card-title" id="quiz-title"><i class="fa-solid fa-question"></i> Experten-Quiz</div>
+                        <div style="font-size:0.92rem; color:var(--c-text-muted); margin-left:8px;">Wähle Schwierigkeit &amp; starte</div>
+                    </div>
+
+                    <div class="top-meta" aria-hidden="true" style="min-width:160px; justify-content:flex-end;">
+                        <span id="q-counter">— / 10</span>
+                        <span style="display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-trophy" style="color:var(--c-primary);"></i> <span id="score-display">0</span></span>
+                    </div>
+                </div>
+
+                <div class="difficulty-row" role="radiogroup" aria-label="Schwierigkeitsgrad wählen">
+                    <div class="difficulty-label">Schwierigkeit:</div>
+                    <button id="btn-easy" class="btn btn-outline" role="radio" aria-checked="false" onclick="selectDifficulty('easy')"><i class="fa-solid fa-seedling"></i> Leicht</button>
+                    <button id="btn-medium" class="btn btn-outline" role="radio" aria-checked="false" onclick="selectDifficulty('medium')"><i class="fa-solid fa-chart-line"></i> Mittel</button>
+                    <button id="btn-hard" class="btn btn-outline" role="radio" aria-checked="false" onclick="selectDifficulty('hard')"><i class="fa-solid fa-fire"></i> Schwer</button>
+
+                    <div style="margin-left:auto;">
+                        <button id="start-btn" class="btn btn-primary" onclick="startSelectedDifficulty()" aria-disabled="true" disabled>Quiz starten</button>
+                    </div>
                 </div>
             </div>
 
@@ -356,7 +300,7 @@
             </div>
 
             <div id="quiz-content-area">
-                <h2 id="question-text" class="question-text">Lädt...</h2>
+                <h2 id="question-text" class="question-text">Wähle eine Schwierigkeit und starte das Quiz.</h2>
 
                 <div id="options-container" class="options-wrap" aria-live="polite"></div>
 
@@ -372,7 +316,10 @@
                 <h2 id="result-title">Quiz beendet!</h2>
                 <div class="result-score" id="final-score">0/10</div>
                 <p id="result-text" class="result-msg"></p>
-                <button class="btn-next visible" style="float:none;" onclick="location.reload()">Quiz neu starten</button>
+                <div style="display:flex; gap:8px; justify-content:center; margin-top:12px;">
+                    <button class="btn btn-primary" onclick="restartSameDifficulty()">Quiz neu starten</button>
+                    <button class="btn btn-outline" onclick="resetToDifficultySelection()">Andere Schwierigkeit wählen</button>
+                </div>
             </div>
         </article>
     </main>
@@ -384,91 +331,63 @@
                 <strong style="color:var(--c-text-main)">T&T Edelmetalle</strong>
             </div>
             <div style="text-align:center; color:var(--c-text-muted); font-size:0.85rem;">
-                &copy; 2025. Alle Rechte vorbehalten. | <a href="#" style="color:inherit;">Impressum</a>
+                &copy; 2025. Alle Rechte vorbehalten.
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile nav logic
+        // Mobile nav minimal
         function toggleMobileNav() {
             const nav = document.getElementById('navMenu');
             nav.classList.toggle('active');
             const expanded = nav.classList.contains('active');
             document.getElementById('hamburger').setAttribute('aria-expanded', expanded ? 'true' : 'false');
         }
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 900) {
-                document.getElementById('navMenu').classList.remove('active');
-                document.getElementById('hamburger').setAttribute('aria-expanded', 'false');
-            }
-        });
 
-        // Quiz Data (unchanged)
-        const quizData = [
-            {
-                q: "Welches Edelmetall besitzt physikalisch die höchste elektrische Leitfähigkeit?",
-                o: ["Gold", "Silber", "Kupfer", "Platin"],
-                a: 1,
-                info: "Silber hat die höchste elektrische Leitfähigkeit aller Elemente. Gold wird in der Elektronik oft nur wegen seiner Korrosionsbeständigkeit bevorzugt."
-            },
-            {
-                q: "Welche Aussage beschreibt den Begriff 'Feingehalt 585' korrekt?",
-                o: ["Der Goldanteil beträgt 58,5 %", "Das Schmuckstück wiegt genau 5,85 Gramm", "Es handelt sich um 585 Karat Gold", "Es ist eine Legierung aus dem Jahr 1585"],
-                a: 0,
-                info: "585er Gold entspricht 14 Karat. Es bedeutet, dass von 1000 Gewichtsanteilen der Legierung 585 Anteile reines Gold sind."
-            },
-            {
-                q: "Welches Land ist der weltweit größte Produzent von Platin?",
-                o: ["Russland", "Kanada", "Südafrika", "USA"],
-                a: 2,
-                info: "Südafrika dominiert den Platinmarkt massiv und ist für ca. 70-80% der weltweiten Primärproduktion verantwortlich, gefolgt von Russland."
-            },
-            {
-                q: "Was versteht man unter 'Scheidegold'?",
-                o: ["Gold aus Recycling (Scheideanstalt)", "Gesetzliches Zahlungsmittel", "Gold für Eheringe", "Rohgold aus Minen"],
-                a: 0,
-                info: "Scheidegold ist das hochreine Endprodukt einer Scheideanstalt, welches durch Recycling aus Altgold oder Industrieschrott zurückgewonnen wurde."
-            },
-            {
-                q: "Welches Ereignis beendete 1971 die direkte Konvertierbarkeit des US-Dollars in Gold?",
-                o: ["Der Schwarze Freitag", "Der Nixon-Schock", "Das Bretton-Woods-Abkommen", "Die Einführung des Euro"],
-                a: 1,
-                info: "Beim 'Nixon-Schock' hob US-Präsident Richard Nixon die Goldbindung des US-Dollars auf, was das Ende des Bretton-Woods-Systems besiegelte."
-            },
-            {
-                q: "Wie schwer ist eine Feinunze (Troy Ounce) exakt?",
-                o: ["28,35 Gramm", "30,00 Gramm", "31,1034768 Gramm", "33,33 Gramm"],
-                a: 2,
-                info: "Die Feinunze (oz. tr.) ist das Standardgewicht im Edelmetallhandel. Sie wiegt ca. 31,103 Gramm und ist schwerer als eine gewöhnliche Unze (28,35g)."
-            },
-            {
-                q: "Welches Edelmetall wird primär in Katalysatoren für Benzinmotoren verwendet?",
-                o: ["Palladium", "Silber", "Platin", "Rhodium"],
-                a: 0,
-                info: "Palladium wird hauptsächlich in Katalysatoren für Benziner eingesetzt, während Platin eher bei Dieselfahrzeugen Verwendung findet."
-            },
-            {
-                q: "Was ist ein 'Good Delivery' Barren im professionellen Goldhandel?",
-                o: ["Ein 24h-Lieferbarren", "Ein Standardbarren ca. 12,44 kg (400 oz)", "Ein Barren mit 999,99 Reinheit", "Ein Barren unter 10g"],
-                a: 1,
-                info: "London Good Delivery Barren sind der Standard im Interbankenhandel. Sie wiegen ca. 400 Feinunzen (ca. 12,5 kg)."
-            },
-            {
-                q: "Welche Zentralbank hält offiziell die größten Goldreserven der Welt?",
-                o: ["Deutsche Bundesbank", "People's Bank of China", "Federal Reserve (USA)", "IWF"],
-                a: 2,
-                info: "Die USA halten mit über 8.100 Tonnen die größten Goldreserven der Welt, gefolgt von Deutschland mit ca. 3.350 Tonnen."
-            },
-            {
-                q: "Wodurch zeichnet sich Osmium im Vergleich zu anderen Edelmetallen aus?",
-                o: ["Es ist das leichteste", "Es hat die höchste Dichte aller stabilen Elemente", "Es ist radioaktiv", "Es ist flüssig"],
-                a: 1,
-                info: "Osmium besitzt mit 22,59 g/cm³ die höchste Dichte aller natürlich vorkommenden Elemente und ist extrem hart, aber auch spröde."
-            }
+        // --- Fragebänke: jeweils 10 professionelle Fragen pro Schwierigkeitsgrad ---
+        const EASY = [
+            { q: "Welche Farbe hat reines Gold in normalem Licht?", o: ["Silbrig", "Gelb", "Blau", "Fahlgrün"], a: 1, info: "Reines Gold erscheint gelblich aufgrund seiner elektronischen Struktur, die bestimmte Wellenlängen absorbiert." },
+            { q: "Welche Einheit wird im Edelmetallhandel für Münzen und Barren oft benutzt?", o: ["Gramm", "Kilogramm", "Feinunze (troy oz)", "Unze (avoirdupois)"], a: 2, info: "Die Feinunze (troy ounce) ist der Standard für Edelmetalle (~31,1035 g)." },
+            { q: "Welches Metall neigt am stärksten zur Anlaufen/Verfärbung?", o: ["Gold", "Silber", "Platin", "Palladium"], a: 1, info: "Silber läuft (tarnishes) aufgrund von Schwefelverbindungen in der Luft an." },
+            { q: "Wie nennt man 999er Gold häufiger?", o: ["Feingold", "Halbgold", "Sterling", "14 Karat"], a: 0, info: "999er steht für nahezu reines Gold (99,9 %), oft als Feingold bezeichnet." },
+            { q: "Welches Metall ist typischerweise am teuersten pro Gewichtseinheit (historisch)?", o: ["Silber", "Kupfer", "Gold", "Aluminium"], a: 2, info: "Gold war lange Zeit wertvoller als Silber und ist oft teurer pro Gewichtseinheit." },
+            { q: "Was ist ein gängiger Reinheitsstempel bei Silberbesteck?", o: ["925", "585", "999", "750"], a: 0, info: "925 steht für Sterlingsilber (92,5% Silber, 7,5% meist Kupfer)." },
+            { q: "Welches Edelmetall ist bekannt für sehr gute Korrosionsbeständigkeit?", o: ["Eisen", "Kupfer", "Platin", "Zink"], a: 2, info: "Platin ist chemisch sehr inert und korrodiert kaum." },
+            { q: "Was bedeutet 'barren' im Edelmetallkontext?", o: ["Münze", "Geprägtes Wertpapier", "Gegossener Metallblock", "Legierter Draht"], a: 2, info: "Ein Barren ist ein gegossener oder geprägter Block eines Edelmetalls, oft standardisiert." },
+            { q: "Welche Methode wird oft verwendet, um Feinheit von Gold zu messen (Schnelltest)?", o: ["Röntgenfluoreszenz (XRF)", "PCR-Test", "Spektralphotometer", "pH-Indikator"], a: 0, info: "XRF ist ein zerstörungsfreier Standardtest zur Bestimmung der Metallzusammensetzung." },
+            { q: "Warum bevorzugt man bei Schmuck häufig legiertes Gold statt 24k?", o: ["Billiger", "Härter & widerstandsfähiger", "Besserer Glanz", "Leichter zu schmelzen"], a: 1, info: "Weiches 24k Gold wird mit Legierungsmetallen härter und widerstandsfähiger gemacht." }
         ];
 
-        // State
+        const MEDIUM = [
+            { q: "Was kennzeichnet einen 'Good Delivery' Goldbarren formal?", o: ["12,5 kg & anerkannte Raffinerie", "1 kg mit Prüfsiegel", "24 Karat-Only", "Nur für Münzprägeanstalten"], a: 0, info: "Good Delivery Barren ~400 oz (ca. 12,44 kg) von akkreditierten Raffinerien sind Standard im Interbankenhandel." },
+            { q: "Welche Auswirkung hat ein starker US-Dollar in der Regel auf den Goldpreis?", o: ["Gold steigt", "Gold fällt", "Kein Einfluss", "Gold wird volatiler aber bleibt gleich"], a: 1, info: "Ein stärkerer US-Dollar macht Gold für Inhaber anderer Währungen teurer und drückt tendenziell den Preis." },
+            { q: "Welches Metall ist als sehr effektiver Katalysator in Abgasreinigern für Benziner bekannt?", o: ["Palladium", "Gold", "Silber", "Kupfer"], a: 0, info: "Palladium wird häufig in Katalysatoren für Benzinmotoren verwendet." },
+            { q: "Was bedeutet 'Lot' im Edelmetallhandel (z.B. beim Handel mit Futures)?", o: ["Einheitsgewicht der Lieferung", "Reinheitsgrad", "Verpackungsart", "Handelsgebühr"], a: 0, info: "Lot bezeichnet die standardisierte Menge, z.B. eine Kontraktgröße bei Futures." },
+            { q: "Welches Land war historisch führend im Goldabbau (20. Jh.) und prägt noch Märkte?", o: ["Südafrika", "China", "Peru", "USA"], a: 0, info: "Südafrika war lange Zeit der größte Produzent; aktuell hat sich das Bild verschoben (z.B. China bedeutend)." },
+            { q: "Was ist 'London Fix' (historisch) im Zusammenhang mit Goldpreisen?", o: ["Tägliche Referenzpreis-Festsetzung", "Transportfirma", "Münzprägung", "Schmelzverfahren"], a: 0, info: "Der London Gold Fix war ein täglicher Referenzpreis, der als Benchmark im Handel diente." },
+            { q: "Welche Eigenschaft macht Platin wertvoll in der Industrie (automotive) neben Seltenheit?", o: ["Hochleitfähig", "Katalytische Aktivität", "Malleabilität", "Geringe Dichte"], a: 1, info: "Platin ist ein ausgezeichneter Katalysator, daher industriell sehr wichtig." },
+            { q: "Warum sind Feinunze-Preise sinnvoller für internationale Vergleiche als Grammpreise?", o: ["Historische Konvention & Liquidität", "Bessere Lesbarkeit", "Staatliche Regelung", "Rundungsfehler vermeiden"], a: 0, info: "Feinunze ist Marktstandard und erleichtert internationalen Handel und Vergleichbarkeit." },
+            { q: "Welche Rolle spielt 'Recycling' bei der Goldversorgung?", o: ["Unbedeutend", "Signifikanter Anteil (Sekundärversorgung)", "Nur für Schmuck", "Nur in Bankreserven"], a: 1, info: "Altgoldrecycling liefert einen signifikanten Anteil der verfügbaren Goldmenge." },
+            { q: "Welches Risiko beeinflusst besonders physische Lagerhaltung von Edelmetallen?", o: ["Inflation", "Diebstahl & Verwahrungskosten", "Währungswechselkurs", "Dividendenausfall"], a: 1, info: "Lagerung bringt Sicherheits- und Versicherungskosten, daher Kosten/Risiken." }
+        ];
+
+        const HARD = [
+            { q: "Welche metallurgische Eigenschaft unterscheidet Gold-Legierungen mit Kupfer vs. Nickel als Weißmacher?", o: ["Härte", "Oxidationsverhalten & Farbton", "Elektrische Leitfähigkeit", "Dichte"], a: 1, info: "Kupfer vs. Nickel beeinflussen Farbe, Allergie-Verhalten und Oxidationsverhalten (Nickelweiß häufig heller)." },
+            { q: "Wie wirkt sich eine Erhöhung der globalen Minenproduktion kurzfristig auf den Goldpreis aus (Marktmechanik)?", o: ["Sofortiger Preissturz", "Angebotsdruck, aber Markt kann antizipieren & Teil bereits eingepreist werden", "Keine Wirkung", "Nur langfristig relevant"], a: 1, info: "Minenproduktion beeinflusst Angebot, Märkte antizipieren Änderungen; kurzfristig kann Preis moderat reagieren." },
+            { q: "Welches Messverfahren liefert zerstörungsfrei den genauesten Reinheitswert am Ort (Refinery/Assay)?", o: ["Aqua Regia (chemisch)", "XRF (schnell) kombiniert mit Fire Assay (referenz)", "Röntgenaufnahme", "ICP-OES vor Ort"], a: 1, info: "XRF ist schnell und zerstörungsfrei; Fire Assay bleibt Goldstandard für Genauigkeit." },
+            { q: "Was ist ein typisches Merkmal eines 'London Good Delivery' Zertifikats (Raffinerie) bezüglich Reinheit?", o: ["Mind. 995,0‰ für Gold", "Genau 999,999‰", "Mind. 900‰", "Keine Reinheitsangabe"], a: 0, info: "London Good Delivery Barren haben definierte Reinheitsanforderungen (meist > 995/1000)." },
+            { q: "Welches Edelmetall hat den höchsten Schmelzpunkt?", o: ["Gold", "Wolfram (kein Edelmetall)", "Iridium", "Platin"], a: 2, info: "Iridium (ein Platin-Gruppen-Metall) hat extrem hohen Schmelzpunkt relativ zu vielen Edelmetallen." },
+            { q: "Wodurch unterscheiden sich 'allocated' vs. 'unallocated' Lagerkonzepte für physisches Gold?", o: ["Allocated = physisch zugewiesen; Unallocated = Forderungsposition (pool)", "Allocated = teurer", "Keine praktischen Unterschiede", "Allocated = nur Münzen"], a: 0, info: "Allocated bedeutet konkrete Identifikation der einzelnen Barren/Münzen; unallocated ist eine buchmäßige Forderung." },
+            { q: "Welche Rolle spielt Rhodium in Katalysatoren und warum ist sein Preis oft extrem volatil?", o: ["Weniger wirksam als Palladium", "Sehr knappes Angebot & hohe Nachfrage für Katalyse, begrenzte Recyclingpfade", "Nur als Legierungsmetall für Schmuck", "Ersetzt Silber in Elektronik"], a: 1, info: "Rhodium ist selten und stark nachgefragt für Katalysatoren; begrenzte Versorgung erzeugt Volatilität." },
+            { q: "Welche Kennzahl ist wichtig, um die Liquidität eines Edelmetallprodukts (z.B. Münze) zu beurteilen?", o: ["Händleranzahl & Bid-Ask-Spanne", "Gewicht", "Prägejahr", "Farbton"], a: 0, info: "Liquidität bestimmt sich aus Handelsvolumen, Anzahl Marktteilnehmern und Bid-Ask-Spanne." },
+            { q: "Was beschreibt ein 'basis risk' bei physischem vs. Termingeschäft auf Gold?", o: ["Differenz zwischen Spot- und Futures-Preis bei Lieferung", "Währungsrisiko", "Transportrisiko", "Lagerkosten"], a: 0, info: "Basis Risk ist die Differenz zwischen Spotpreis und Futurespreis (relevant bei Hedging)." },
+            { q: "Welche Herausforderung besteht beim Einsatz von ICP-OES für sehr kleine Goldkonzentrationen im Recyclingstrom?", o: ["Interferenzen & Matrixeffekte erfordern aufwendige Aufbereitung", "Fehlende Empfindlichkeit", "Zu teuer", "Nicht standardisiert"], a: 0, info: "Matrixeffekte können Messungen verfälschen; Probenaufbereitung ist kritisch." }
+        ];
+
+        // Variables
+        let selectedDifficulty = null;
+        let quizData = [];
         let currentState = { index: 0, score: 0, answered: false };
 
         // Elements
@@ -481,15 +400,43 @@
         const elNextBtn = document.getElementById('next-btn');
         const elResultContainer = document.getElementById('result-container');
         const elQuizContent = document.getElementById('quiz-content-area');
+        const startBtn = document.getElementById('start-btn');
 
-        function initQuiz() {
+        // Difficulty selection handlers
+        function selectDifficulty(level) {
+            selectedDifficulty = level;
+            document.getElementById('btn-easy').classList.toggle('active', level === 'easy');
+            document.getElementById('btn-medium').classList.toggle('active', level === 'medium');
+            document.getElementById('btn-hard').classList.toggle('active', level === 'hard');
+
+            // update aria-checked
+            document.getElementById('btn-easy').setAttribute('aria-checked', level === 'easy');
+            document.getElementById('btn-medium').setAttribute('aria-checked', level === 'medium');
+            document.getElementById('btn-hard').setAttribute('aria-checked', level === 'hard');
+
+            startBtn.disabled = false;
+            startBtn.setAttribute('aria-disabled','false');
+        }
+
+        function startSelectedDifficulty() {
+            if (!selectedDifficulty) return;
+            // assign appropriate set (clone to avoid mutation)
+            if (selectedDifficulty === 'easy') quizData = JSON.parse(JSON.stringify(EASY));
+            else if (selectedDifficulty === 'medium') quizData = JSON.parse(JSON.stringify(MEDIUM));
+            else quizData = JSON.parse(JSON.stringify(HARD));
+
+            // reset state
             currentState.index = 0;
             currentState.score = 0;
             currentState.answered = false;
             elResultContainer.style.display = 'none';
             elQuizContent.style.display = '';
-            elScoreDisplay.innerText = currentState.score;
+            elScoreDisplay.innerText = '0';
+            elProgress.style.width = '0%';
+            document.getElementById('q-counter').innerText = `Frage 1 / ${quizData.length}`;
             loadQuestion();
+            // Scroll to quiz on mobile
+            setTimeout(()=>{ document.getElementById('quiz-card').scrollIntoView({behavior:'smooth'}); }, 80);
         }
 
         function loadQuestion() {
@@ -534,7 +481,6 @@
 
             if (selectedIndex === currentData.a) {
                 btnElement.classList.add('correct');
-                // append icon safely
                 btnElement.insertAdjacentHTML('beforeend', iconCorrect);
                 currentState.score++;
                 elScoreDisplay.innerText = currentState.score;
@@ -556,10 +502,8 @@
             elNextBtn.classList.add('visible');
             elNextBtn.setAttribute('aria-hidden','false');
 
-            // Keep Next button visible on small screens
-            if (window.innerWidth < 768) {
-                setTimeout(() => elNextBtn.scrollIntoView({behavior: "smooth", block: "nearest"}), 120);
-            }
+            // focus next button for keyboard users
+            setTimeout(()=> elNextBtn.focus(), 120);
         }
 
         function nextQuestion() {
@@ -588,8 +532,41 @@
             document.getElementById('result-text').innerText = msg;
         }
 
-        // initialize
-        initQuiz();
+        function restartSameDifficulty() {
+            // restart with same set
+            if (!selectedDifficulty) return;
+            startSelectedDifficulty();
+        }
+
+        function resetToDifficultySelection() {
+            // show selection state
+            elResultContainer.style.display = 'none';
+            elQuizContent.style.display = '';
+            elQuestionText.innerText = 'Wähle eine Schwierigkeit und starte das Quiz.';
+            elOptionsContainer.innerHTML = '';
+            elExplanation.classList.remove('visible');
+            elScoreDisplay.innerText = '0';
+            elProgress.style.width = '0%';
+            selectedDifficulty = null;
+            document.getElementById('btn-easy').classList.remove('active');
+            document.getElementById('btn-medium').classList.remove('active');
+            document.getElementById('btn-hard').classList.remove('active');
+            document.getElementById('btn-easy').setAttribute('aria-checked','false');
+            document.getElementById('btn-medium').setAttribute('aria-checked','false');
+            document.getElementById('btn-hard').setAttribute('aria-checked','false');
+            startBtn.disabled = true;
+            startBtn.setAttribute('aria-disabled','true');
+            document.getElementById('q-counter').innerText = `— / 10`;
+            // scroll to selection
+            setTimeout(()=> document.querySelector('.difficulty-row').scrollIntoView({behavior:'smooth'}), 80);
+        }
+
+        // init: disable start until difficulty chosen
+        (function init() {
+            startBtn.disabled = true;
+            startBtn.setAttribute('aria-disabled','true');
+            document.getElementById('q-counter').innerText = `— / 10`;
+        })();
     </script>
 </body>
 </html>
