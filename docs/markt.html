@@ -1,327 +1,265 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
+
 <html lang="de">
+
 <head>
+
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Aktuelle Marktpreise Gold, Silber, Platin | T&T Edelmetalle</title>
+
     <meta name="description" content="Live Spotpreise und Charts für Gold, Silber, Platin und Palladium. Aktuelle Händlerpreise." />
 
-    <!-- Schrift & Icons -->
+    <link rel="stylesheet" href="style.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Inline CSS: komplett responsiv, verhindert 'zusammengequetschten' TradingView-Chart auf Mobil -->
-    <style>
-        :root{
-            --c-bg: #0f1724;
-            --c-bg-card: #0f1728;
-            --c-text-main: #e6eef8;
-            --c-text-muted: #9aa7bf;
-            --c-border: rgba(255,255,255,0.06);
-            --c-primary: #3273dc;
-            --color-silver: #c9ced6;
-            --color-plat: #b8a7ff;
-            --color-pall: #ffd28a;
-            --max-width: 1200px;
-            font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-        }
-
-        html,body{
-            height:100%;
-            margin:0;
-            background:var(--c-bg);
-            color:var(--c-text-main);
-            -webkit-font-smoothing:antialiased;
-            -moz-osx-font-smoothing:grayscale;
-        }
-
-        a{ color:inherit; text-decoration:none; }
-
-        /* Layout container */
-        #main-app{ max-width: var(--max-width); margin:0 auto; padding:0 16px; box-sizing:border-box; min-height:100vh; display:flex; flex-direction:column; }
-
-        /* Navbar */
-        .navbar{ display:flex; align-items:center; height:64px; border-bottom:1px solid var(--c-border); }
-        .nav-inner{ display:flex; align-items:center; justify-content:space-between; width:100%; }
-        .brand-logo{ display:flex; align-items:center; gap:8px; font-weight:700; color:var(--c-text-main); }
-        .brand-logo i{ font-size:1.1rem; }
-        .nav-menu{ display:flex; gap:12px; align-items:center; }
-        .nav-item{ padding:8px 10px; border-radius:6px; color:var(--c-text-muted); }
-        .nav-item.active{ color:var(--c-text-main); background:rgba(255,255,255,0.02); }
-
-        /* TradingView ticker row */
-        .ticker-row{ height:46px; background:transparent; border-bottom:1px solid var(--c-border); display:flex; align-items:center; width:100%; }
-
-        /* Main area */
-        main.container{ padding-top:20px; padding-bottom:50px; flex:1; }
-
-        .grid-dashboard{ display:grid; grid-template-columns: 320px 1fr; gap:18px; align-items:start; }
-        aside.sidebar{ display:flex; flex-direction:column; gap:16px; }
-
-        .card{ background:var(--c-bg-card); border:1px solid var(--c-border); border-radius:12px; padding:16px; box-sizing:border-box; }
-        .card-header{ margin-bottom:8px; }
-        .card-title{ color:var(--c-text-main); font-size:1rem; margin:0; display:flex; gap:8px; align-items:center; }
-
-        .source-badge{ font-size:0.85rem; color:var(--c-text-muted); display:flex; gap:8px; align-items:center; }
-        .input-label{ font-size:0.9rem; color:var(--c-text-muted); margin-top:6px; }
-        .big-price{ font-size:1.6rem; font-weight:700; margin-top:6px; }
-
-        .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-
-        footer{ margin-top:24px; padding:20px 0; }
-
-        /* TradingView widget sizing: critical section */
-        /* The important part: force the widget and its inner iframe to have a sane min-height on all viewports */
-        .tradingview-widget-container{ width:100%; height:100%; min-height:360px; box-sizing:border-box; display:block; }
-        .tradingview-widget-container__widget{ width:100% !important; height:100% !important; min-height:320px !important; display:block !important; }
-
-        /* Card that contains chart: keep a fixed-ish min-height and allow content to flow */
-        .chart-card{ display:flex; flex-direction:column; height:auto; min-height:520px; }
-
-        /* Make header not consume too much vertical room on very small screens */
-        .chart-card .card-header{ flex:0 0 auto; padding-bottom:8px; }
-
-        /* Responsive tweaks */
-        @media (max-width: 1024px){
-            .grid-dashboard{ grid-template-columns: 300px 1fr; gap:14px; }
-            .chart-card{ min-height:480px; }
-            .tradingview-widget-container{ min-height:360px; }
-            .tradingview-widget-container__widget{ min-height:320px !important; }
-        }
-
-        @media (max-width: 820px){
-            /* Stack sidebar on top for phones/tablets */
-            .grid-dashboard{ grid-template-columns: 1fr; }
-            aside.sidebar{ order:0; }
-            .main-content{ order:1; }
-            .chart-card{ min-height:420px; }
-            .tradingview-widget-container{ min-height:360px; }
-            .tradingview-widget-container__widget{ min-height:340px !important; }
-            .nav-item{ display:none; } /* simplify nav on small screens, hamburger expected */
-        }
-
-        @media (max-width: 420px){
-            .chart-card{ min-height:360px; }
-            .tradingview-widget-container{ min-height:320px; }
-            .tradingview-widget-container__widget{ min-height:300px !important; }
-            .big-price{ font-size:1.25rem; }
-        }
-
-        /* Utility buttons / modal / overlays (kept simple) */
-        .btn{ background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--c-text-main); padding:8px 12px; border-radius:8px; cursor:pointer; }
-        .btn-outline{ background:transparent; }
-        .btn-primary{ background:var(--c-primary); border-color:var(--c-primary); color:#fff; }
-        .btn-sm{ padding:6px 8px; font-size:0.85rem; }
-
-        #legal-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:900; align-items:center; justify-content:center; padding:16px; }
-        #legal-modal{ max-width:900px; width:100%; max-height:85vh; overflow:auto; background:var(--c-bg-card); border:1px solid var(--c-border); border-radius:12px; padding:20px; }
-
-        /* small helpers */
-        .sub-price{ font-size:0.85rem; color:var(--c-text-muted); margin-top:6px; }
-        .source-badge i{ color:var(--c-text-muted); }
-    </style>
 </head>
+
 <body>
+
     <div id="main-app">
+
         <nav class="navbar" role="navigation" aria-label="Hauptnavigation">
+
             <div class="nav-inner">
+
                 <a href="index.html" class="brand-logo"><i class="fa-solid fa-layer-group"></i><span>T&T</span>Edelmetalle</a>
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <button id="hamburger" class="btn btn-outline" onclick="toggleMobileNav()"><i class="fa-solid fa-bars"></i></button>
-                    <div class="nav-menu" id="navMenu" aria-hidden="false">
-                        <a href="markt.html" class="nav-item active">Marktübersicht</a>
-                        <a href="rechner.html" class="nav-item">Portfolio Rechner</a>
-                        <a href="wissen.html" class="nav-item">Wissenswertes</a>
-                    </div>
+
+                <button id="hamburger" class="btn btn-outline" onclick="toggleMobileNav()"><i class="fa-solid fa-bars"></i></button>
+
+                <div class="nav-menu" id="navMenu">
+
+                    <a href="markt.html" class="nav-item active">Marktübersicht</a>
+
+                    <a href="rechner.html" class="nav-item">Portfolio Rechner</a>
+
+                    <a href="wissen.html" class="nav-item">Wissenswertes</a>
+
                 </div>
+
             </div>
+
         </nav>
 
-        <!-- Ticker Row -->
-        <div class="ticker-row">
-            <div class="tradingview-widget-container" style="height:46px; width:100%;">
+
+        <div id="mobile-overlay"></div>
+
+        <div id="mobile-nav"></div>
+
+
+        <div style="height:46px; background:transparent; border-bottom:1px solid var(--c-border);">
+
+            <div class="tradingview-widget-container" style="height:46px;">
+
                 <div class="tradingview-widget-container__widget"></div>
+
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+
                 {
-                  "symbols": [
+
+                "symbols": [
+
                     { "proName": "FOREXCOM:XAUUSD", "title": "Gold Spot $" },
+
                     { "proName": "FOREXCOM:XAGUSD", "title": "Silber Spot $" },
+
                     { "proName": "TVC:PLATINUM", "title": "Platin Spot $" },
+
                     { "proName": "TVC:PALLADIUM", "title": "Palladium Spot $" }
-                  ],
-                  "colorTheme": "dark", "isTransparent": true, "displayMode": "compact", "locale": "de_DE"
+
+                ],
+
+                "colorTheme": "dark", "isTransparent": true, "displayMode": "compact", "locale": "de_DE"
+
                 }
+
                 </script>
+
             </div>
+
         </div>
 
-        <main class="container">
+
+        <main class="container" style="padding-top:20px; padding-bottom:50px;">
+
             <div class="grid-dashboard">
+
                 <aside class="sidebar" style="display:flex; flex-direction:column; gap:16px;">
+
                     <div class="card" style="border-left:4px solid var(--c-primary);">
+
                         <div class="source-badge"><i class="fa-solid fa-building-columns"></i> Ankaufspreis (Händler-Indikation)</div>
+
                         <div class="input-label" style="margin-top:6px">Gold 1 oz (Ankaufspreis)</div>
-                        <div class="big-price" id="dash-gold">--</div>
+
+                        <div class="big-price" id="dash-gold">...</div>
+
                         <div class="sub-price">Händlerpreise können variieren</div>
+
                     </div>
 
                     <div class="card" style="padding:12px;">
+
                         <div class="card-title" style="font-size:0.95rem; margin-bottom:8px;"><i class="fa-solid fa-coins"></i> Vergleich: 1 oz Münzen</div>
+
                         <div id="coin-compare" style="display:flex; flex-direction:column; gap:8px; font-size:0.95rem; color:var(--c-text-muted);"></div>
+
                     </div>
 
                     <div class="card" style="border-left:4px solid var(--color-silver);">
+
                         <div class="input-label">Silber 1 oz (Ankaufspreis)</div>
-                        <div class="big-price" id="dash-silver" style="color: var(--color-silver);">--</div>
+
+                        <div class="big-price" id="dash-silver" style="color: var(--color-silver);">...</div>
+
                         <div class="sub-price">Händlerpreise können variieren</div>
+
                     </div>
 
                     <div class="grid-2">
+
                         <div class="card" style="padding:12px; border-left:4px solid var(--color-plat);">
+
                             <div class="input-label">Platin 1oz</div>
-                            <div style="font-size:1.05rem; font-weight:700; color: var(--color-plat);" id="dash-plat">--</div>
+
+                            <div style="font-size:1.05rem; font-weight:700; color: var(--color-plat);" id="dash-plat">...</div>
+
                         </div>
+
                         <div class="card" style="padding:12px; border-left:4px solid var(--color-pall);">
+
                             <div class="input-label">Palladium 1oz</div>
-                            <div style="font-size:1.05rem; font-weight:700; color: var(--color-pall);" id="dash-pall">--</div>
+
+                            <div style="font-size:1.05rem; font-weight:700; color: var(--color-pall);" id="dash-pall">...</div>
+
                         </div>
+
                     </div>
 
                     <div style="font-size:0.78rem; color:var(--c-text-muted); text-align:center;">
-                        Preise aktualisiert am: <span id="update-date">--</span>
+
+                        Preise aktualisiert am: <span id="update-date">...</span>
+
                     </div>
+
                 </aside>
 
+
                 <div class="main-content">
-                    <!-- Chart card: critical container with explicit min-heights so TradingView always has enough vertical space -->
-                    <div class="card chart-card">
+
+                    <div class="card" style="height:560px;">
+
                         <div class="card-header">
-                            <h2 class="card-title"><i class="fa-solid fa-chart-area"></i> Spot Markt Entwicklung</h2>
+
+                            <h2 class="card-title" style="margin:0; font-size:1rem;"><i class="fa-solid fa-chart-area"></i> Spot Markt Entwicklung</h2>
+
                         </div>
 
-                        <!-- TradingView symbol overview widget -->
-                        <div class="tradingview-widget-container" id="tv-overview" aria-hidden="false" style="flex:1 1 auto;">
+                        <div class="tradingview-widget-container">
+
                             <div class="tradingview-widget-container__widget"></div>
+
                             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+
                             {
-                              "symbols": [
+
+                            "symbols": [
+
                                 ["Gold", "FOREXCOM:XAUUSD|1D"],
+
                                 ["Silber", "FOREXCOM:XAGUSD|1D"],
+
                                 ["Platin", "TVC:PLATINUM|1D"],
+
                                 ["Palladium", "TVC:PALLADIUM|1D"]
-                              ],
-                              "chartOnly": false,
-                              "width": "100%",
-                              "height": "100%",
-                              "locale": "de_DE",
-                              "colorTheme": "dark",
-                              "autosize": true,
-                              "showVolume": false,
-                              "hideDateRanges": false,
-                              "scalePosition": "right",
-                              "backgroundColor": "#151e32"
+
+                            ],
+
+                            "chartOnly": false, "width": "100%", "height": "100%", "locale": "de_DE",
+
+                            "colorTheme": "dark", "autosize": true, "showVolume": false, "hideDateRanges": false,
+
+                            "scalePosition": "right", "backgroundColor": "#151e32"
+
                             }
+
                             </script>
+
                         </div>
+
                     </div>
+
                 </div>
+
             </div>
+
         </main>
 
+        
+
         <footer>
-            <div class="container" style="display:flex; flex-direction:column; gap:8px; align-items:center;">
+
+             <div class="container" style="display:flex; flex-direction:column; gap:8px; align-items:center;">
+
                 <div style="max-width:1000px; text-align:center; color:var(--c-text-muted); font-size:0.9rem;">&copy; 2025. Alle Rechte vorbehalten.</div>
+
                 <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:6px;">
+
                     <button class="btn btn-outline btn-sm" onclick="openLegal('impressum')">Impressum</button>
+
                     <button class="btn btn-outline btn-sm" onclick="openLegal('haftung')">Haftungsausschluss</button>
+
                     <button class="btn btn-outline btn-sm" onclick="openLegal('datenschutz')">Datenschutz</button>
+
                 </div>
+
             </div>
+
         </footer>
 
-        <div id="legal-overlay" style="display:none; align-items:center; justify-content:center;">
-            <div id="legal-modal">
+        
+
+        <div id="legal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:900; align-items:center; justify-content:center; padding:16px;">
+
+            <div id="legal-modal" style="max-width:900px; width:100%; max-height:85vh; overflow:auto; background:var(--c-bg-card); border:1px solid var(--c-border); border-radius:12px; padding:20px;">
+
                 <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+
                     <h3 id="legal-title">Rechtliches</h3>
+
                     <button class="btn btn-outline" onclick="closeLegal()"><i class="fa-solid fa-xmark"></i></button>
+
                 </div>
+
                 <div id="legal-content" style="margin-top:12px; color:var(--c-text-muted); line-height:1.45;"></div>
+
             </div>
+
         </div>
+
+        
 
         <div id="consent-overlay" style="display:none;">
+
             <div id="consent-banner">
+
                 <div class="consent-text"><div style="font-weight:700; color:var(--c-text-main);">Drittanbieter</div><div class="consent-small">Zustimmung erforderlich.</div></div>
+
                 <div class="consent-actions"><button class="btn btn-outline btn-sm" onclick="declineConsent()">Ablehnen</button><button class="btn btn-primary btn-sm" onclick="acceptConsent()">Akzeptieren</button></div>
+
             </div>
+
         </div>
+
     </div>
 
-    <!-- Inline Script: minimale Funktionalität, plus Layout-safe adjustments -->
-    <script>
-        // Simple mobile nav toggle (keeps original behaviour)
-        function toggleMobileNav(){
-            const menu = document.getElementById('navMenu');
-            if(!menu) return;
-            const hidden = menu.getAttribute('aria-hidden') === 'true' || menu.style.display === 'none';
-            menu.style.display = hidden ? 'flex' : (window.innerWidth <= 820 ? 'none' : 'flex');
-            menu.setAttribute('aria-hidden', !hidden);
-        }
+    <script src="script.js"></script>
 
-        // Legal modal helpers
-        function openLegal(page){
-            const overlay = document.getElementById('legal-overlay');
-            const content = document.getElementById('legal-content');
-            const title = document.getElementById('legal-title');
-            title.textContent = page === 'impressum' ? 'Impressum' : (page === 'haftung' ? 'Haftungsausschluss' : 'Datenschutz');
-            content.innerHTML = '<p style="color:var(--c-text-muted)">Hier steht der Inhalt für: ' + title.textContent + '.</p>';
-            overlay.style.display = 'flex';
-        }
-        function closeLegal(){
-            document.getElementById('legal-overlay').style.display = 'none';
-        }
-
-        // Consent placeholders
-        function acceptConsent(){ document.getElementById('consent-overlay').style.display = 'none'; }
-        function declineConsent(){ document.getElementById('consent-overlay').style.display = 'none'; }
-
-        // Ensure TradingView widget gets proper size after viewport resize/orientation change.
-        // TradingView uses iframes; giving it time to re-render helps on some devices.
-        (function watchResize(){
-            let timeout = null;
-            function onResize(){
-                // enforce min-heights again (some mobile browsers shrink iframes during resize)
-                const tvContainers = document.querySelectorAll('.tradingview-widget-container, .tradingview-widget-container__widget');
-                tvContainers.forEach(node => {
-                    // Re-apply min-height in case of browser quirk
-                    node.style.minHeight = node.id === 'tv-overview' ? (window.innerWidth <= 420 ? '320px' : '360px') : node.style.minHeight;
-                });
-                // Some mobile browsers need a short delay before TradingView adjusts
-                if(timeout) clearTimeout(timeout);
-                timeout = setTimeout(() => {
-                    // Try to trigger a visual recalculation by toggling a harmless style
-                    tvContainers.forEach(n => {
-                        n.style.willChange = 'transform';
-                        requestAnimationFrame(()=> n.style.willChange = '');
-                    });
-                }, 220);
-            }
-            window.addEventListener('resize', onResize);
-            window.addEventListener('orientationchange', onResize);
-            // initial call
-            onResize();
-        })();
-
-        // Demo: fill placeholder prices/date if you want quick visible content (non-essential)
-        (function seedDemoValues(){
-            const g = document.getElementById('dash-gold'), s = document.getElementById('dash-silver'), p = document.getElementById('dash-plat'), pa = document.getElementById('dash-pall');
-            const u = document.getElementById('update-date');
-            if(g) g.textContent = '–';
-            if(s) s.textContent = '–';
-            if(p) p.textContent = '–';
-            if(pa) pa.textContent = '–';
-            if(u) u.textContent = new Date().toLocaleString('de-DE', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
-        })();
-    </script>
 </body>
-</html>
+
+</html> 
