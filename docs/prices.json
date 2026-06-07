@@ -1,11 +1,11 @@
 {
   "fetched_from": "goldapi.io",
-  "updated_at": "2026-06-07T02:55:28.272Z",
+  "updated_at": "2026-06-07T10:23:48.082Z",
   "rates": {
     "gold": {
       "per_oz": 3756.885,
       "raw": {
-        "timestamp": 1780800891,
+        "timestamp": 1780827821,
         "metal": "XAU",
         "currency": "EUR",
         "exchange": "FOREXCOM",
@@ -33,7 +33,7 @@
     "silver": {
       "per_oz": 58.86,
       "raw": {
-        "timestamp": 1780800926,
+        "timestamp": 1780827818,
         "metal": "XAG",
         "currency": "EUR",
         "exchange": "SAXO",
@@ -61,7 +61,7 @@
     "platinum": {
       "per_oz": 1537.53,
       "raw": {
-        "timestamp": 1780800925,
+        "timestamp": 1780827805,
         "metal": "XPT",
         "currency": "EUR",
         "exchange": "IDC",
@@ -89,7 +89,7 @@
     "palladium": {
       "per_oz": 1064.58,
       "raw": {
-        "timestamp": 1780800905,
+        "timestamp": 1780827794,
         "metal": "XPD",
         "currency": "EUR",
         "exchange": "IDC",
